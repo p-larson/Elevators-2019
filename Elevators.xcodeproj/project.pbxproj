@@ -7,44 +7,240 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D003FAEB226D1E3600C86CB0 /* ScoreboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D003FAEA226D1E3600C86CB0 /* ScoreboardManager.swift */; };
+		D016F915223AB84C0007AC6D /* ElevatorTouchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */; };
+		D02262DF222376E9009D15E7 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02262DE222376E9009D15E7 /* CameraManager.swift */; };
+		D0305FDE22235AC400C76819 /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FDD22235AC400C76819 /* PlayerManager.swift */; };
+		D0305FE022235AEC00C76819 /* ElevatorsGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FDF22235AEC00C76819 /* ElevatorsGame.swift */; };
+		D0305FE222235B5300C76819 /* ElevatorsGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FE122235B5300C76819 /* ElevatorsGameScene.swift */; };
+		D0305FE922235C7E00C76819 /* PlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FE822235C7E00C76819 /* PlayerNode.swift */; };
+		D0305FEB22235CCE00C76819 /* ElevatorsGameSceneDependable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FEA22235CCE00C76819 /* ElevatorsGameSceneDependable.swift */; };
+		D043B4AE224BE7A4005210CB /* CoreGraphics+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043B4AD224BE7A4005210CB /* CoreGraphics+.swift */; };
+		D04DAE662214A63200ADA7F0 /* extensions-CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DAE652214A63200ADA7F0 /* extensions-CGPoint.swift */; };
+		D096F8B6225E93B5002CC444 /* JoystickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D096F8B5225E93B5002CC444 /* JoystickView.swift */; };
+		D09A06DB223839C000A9CAB1 /* Larson.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09A06DA223839C000A9CAB1 /* Larson.swift */; };
+		D0A1B241226E61E9003F53E7 /* WaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B240226E61E9003F53E7 /* WaveManager.swift */; };
+		D0AADE2A221C8E6800BF71B3 /* ElCore.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AADE28221C8E6800BF71B3 /* ElCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0AADE2D221C8E6800BF71B3 /* ElCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AADE26221C8E6800BF71B3 /* ElCore.framework */; };
+		D0AADE2E221C8E6800BF71B3 /* ElCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0AADE26221C8E6800BF71B3 /* ElCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D0AADE32221C8E7900BF71B3 /* Elevator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E593AD220687030082B293 /* Elevator.swift */; };
+		D0AADE33221C8E7900BF71B3 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E593AB220686B30082B293 /* Floor.swift */; };
+		D0AADE34221C8E7900BF71B3 /* Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8524122069CF800ED606C /* Graphics.swift */; };
+		D0AADE36221C8E9800BF71B3 /* ElevatorsGameColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8523F220693BB00ED606C /* ElevatorsGameColors.swift */; };
+		D0AADE38221C8F2600BF71B3 /* FloorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AADE37221C8F2600BF71B3 /* FloorManager.swift */; };
 		D0AE27192201564D00D29E62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE27182201564D00D29E62 /* AppDelegate.swift */; };
-		D0AE271B2201564D00D29E62 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D0AE271A2201564D00D29E62 /* GameScene.sks */; };
-		D0AE271D2201564D00D29E62 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D0AE271C2201564D00D29E62 /* Actions.sks */; };
 		D0AE271F2201564D00D29E62 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE271E2201564D00D29E62 /* GameScene.swift */; };
 		D0AE27212201564D00D29E62 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE27202201564D00D29E62 /* GameViewController.swift */; };
 		D0AE27242201564D00D29E62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0AE27222201564D00D29E62 /* Main.storyboard */; };
 		D0AE27262201564F00D29E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0AE27252201564F00D29E62 /* Assets.xcassets */; };
 		D0AE27292201564F00D29E62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0AE27272201564F00D29E62 /* LaunchScreen.storyboard */; };
+		D0D80C4222246FF300CF25A8 /* LevelManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D80C4122246FF300CF25A8 /* LevelManagerTests.swift */; };
+		D0DB7D052267BD9400D775B6 /* SpriteKit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB7D042267BD9400D775B6 /* SpriteKit+.swift */; };
+		D0F0D6C7224855030040E595 /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0D6C6224855030040E595 /* MovementManager.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D02262EA222449E4009D15E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0AE270D2201564D00D29E62 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0AE27142201564D00D29E62;
+			remoteInfo = Elevators;
+		};
+		D0AADE2B221C8E6800BF71B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0AE270D2201564D00D29E62 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0AADE25221C8E6800BF71B3;
+			remoteInfo = ElCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D00EAC61221C8CE500161C8F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D0AADE2E221C8E6800BF71B3 /* ElCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D003FAEA226D1E3600C86CB0 /* ScoreboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardManager.swift; sourceTree = "<group>"; };
+		D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorTouchHandler.swift; sourceTree = "<group>"; };
+		D02262DE222376E9009D15E7 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		D02262E5222449E4009D15E7 /* ElevatorsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ElevatorsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D02262E9222449E4009D15E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0305FDD22235AC400C76819 /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
+		D0305FDF22235AEC00C76819 /* ElevatorsGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorsGame.swift; sourceTree = "<group>"; };
+		D0305FE122235B5300C76819 /* ElevatorsGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorsGameScene.swift; sourceTree = "<group>"; };
+		D0305FE622235BD400C76819 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D0305FE822235C7E00C76819 /* PlayerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNode.swift; sourceTree = "<group>"; };
+		D0305FEA22235CCE00C76819 /* ElevatorsGameSceneDependable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorsGameSceneDependable.swift; sourceTree = "<group>"; };
+		D043B4AD224BE7A4005210CB /* CoreGraphics+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+.swift"; sourceTree = "<group>"; };
+		D04DAE652214A63200ADA7F0 /* extensions-CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "extensions-CGPoint.swift"; sourceTree = "<group>"; };
+		D096F8B5225E93B5002CC444 /* JoystickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickView.swift; sourceTree = "<group>"; };
+		D09A06DA223839C000A9CAB1 /* Larson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Larson.swift; sourceTree = "<group>"; };
+		D0A1B240226E61E9003F53E7 /* WaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveManager.swift; sourceTree = "<group>"; };
+		D0AADE26221C8E6800BF71B3 /* ElCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ElCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0AADE28221C8E6800BF71B3 /* ElCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElCore.h; sourceTree = "<group>"; };
+		D0AADE29221C8E6800BF71B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0AADE37221C8F2600BF71B3 /* FloorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorManager.swift; sourceTree = "<group>"; };
 		D0AE27152201564D00D29E62 /* Elevators.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Elevators.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0AE27182201564D00D29E62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D0AE271A2201564D00D29E62 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		D0AE271C2201564D00D29E62 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		D0AE271E2201564D00D29E62 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		D0AE27202201564D00D29E62 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D0AE27232201564D00D29E62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0AE27252201564F00D29E62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0AE27282201564F00D29E62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0AE272A2201564F00D29E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0D80C4122246FF300CF25A8 /* LevelManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelManagerTests.swift; sourceTree = "<group>"; };
+		D0D8523F220693BB00ED606C /* ElevatorsGameColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorsGameColors.swift; sourceTree = "<group>"; };
+		D0D8524122069CF800ED606C /* Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphics.swift; sourceTree = "<group>"; };
+		D0DB7D042267BD9400D775B6 /* SpriteKit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpriteKit+.swift"; sourceTree = "<group>"; };
+		D0E593AB220686B30082B293 /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
+		D0E593AD220687030082B293 /* Elevator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elevator.swift; sourceTree = "<group>"; };
+		D0F0D6C6224855030040E595 /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D0AE27122201564D00D29E62 /* Frameworks */ = {
+		D02262E2222449E4009D15E7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0AADE23221C8E6800BF71B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0AE27122201564D00D29E62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0AADE2D221C8E6800BF71B3 /* ElCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D003FAE9226D1E2600C86CB0 /* Scoreboard */ = {
+			isa = PBXGroup;
+			children = (
+				D003FAEA226D1E3600C86CB0 /* ScoreboardManager.swift */,
+			);
+			path = Scoreboard;
+			sourceTree = "<group>";
+		};
+		D02262E0222376EF009D15E7 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				D02262DE222376E9009D15E7 /* CameraManager.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		D02262E6222449E4009D15E7 /* ElevatorsTests */ = {
+			isa = PBXGroup;
+			children = (
+				D0D80C4122246FF300CF25A8 /* LevelManagerTests.swift */,
+				D02262E9222449E4009D15E7 /* Info.plist */,
+			);
+			path = ElevatorsTests;
+			sourceTree = "<group>";
+		};
+		D0305FE722235C7200C76819 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				D0305FDD22235AC400C76819 /* PlayerManager.swift */,
+				D0305FE822235C7E00C76819 /* PlayerNode.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		D0305FEC22235DCB00C76819 /* ElevatorGame */ = {
+			isa = PBXGroup;
+			children = (
+				D0A1B23F226E61DB003F53E7 /* Wave */,
+				D003FAE9226D1E2600C86CB0 /* Scoreboard */,
+				D0F0D6C5224854F20040E595 /* Movement */,
+				D02262E0222376EF009D15E7 /* Camera */,
+				D0305FE722235C7200C76819 /* Player */,
+				D0AADE39221C8FB000BF71B3 /* Floor */,
+				D0D8523F220693BB00ED606C /* ElevatorsGameColors.swift */,
+				D0305FDF22235AEC00C76819 /* ElevatorsGame.swift */,
+				D09A06DA223839C000A9CAB1 /* Larson.swift */,
+				D0305FE122235B5300C76819 /* ElevatorsGameScene.swift */,
+				D0305FEA22235CCE00C76819 /* ElevatorsGameSceneDependable.swift */,
+			);
+			path = ElevatorGame;
+			sourceTree = "<group>";
+		};
+		D0305FED22235DE000C76819 /* Elevator */ = {
+			isa = PBXGroup;
+			children = (
+				D0E593AD220687030082B293 /* Elevator.swift */,
+				D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */,
+			);
+			path = Elevator;
+			sourceTree = "<group>";
+		};
+		D0A1B23F226E61DB003F53E7 /* Wave */ = {
+			isa = PBXGroup;
+			children = (
+				D0A1B240226E61E9003F53E7 /* WaveManager.swift */,
+			);
+			path = Wave;
+			sourceTree = "<group>";
+		};
+		D0AADE27221C8E6800BF71B3 /* ElCore */ = {
+			isa = PBXGroup;
+			children = (
+				D0305FE622235BD400C76819 /* README.md */,
+				D0305FEC22235DCB00C76819 /* ElevatorGame */,
+				D0AADE3A221C8FB900BF71B3 /* Utilities */,
+				D0AADE28221C8E6800BF71B3 /* ElCore.h */,
+				D0AADE29221C8E6800BF71B3 /* Info.plist */,
+			);
+			path = ElCore;
+			sourceTree = "<group>";
+		};
+		D0AADE39221C8FB000BF71B3 /* Floor */ = {
+			isa = PBXGroup;
+			children = (
+				D0305FED22235DE000C76819 /* Elevator */,
+				D0E593AB220686B30082B293 /* Floor.swift */,
+				D0AADE37221C8F2600BF71B3 /* FloorManager.swift */,
+			);
+			path = Floor;
+			sourceTree = "<group>";
+		};
+		D0AADE3A221C8FB900BF71B3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D0D8524122069CF800ED606C /* Graphics.swift */,
+				D0DB7D042267BD9400D775B6 /* SpriteKit+.swift */,
+				D043B4AD224BE7A4005210CB /* CoreGraphics+.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		D0AE270C2201564D00D29E62 = {
 			isa = PBXGroup;
 			children = (
 				D0AE27172201564D00D29E62 /* Elevators */,
+				D0AADE27221C8E6800BF71B3 /* ElCore */,
+				D02262E6222449E4009D15E7 /* ElevatorsTests */,
 				D0AE27162201564D00D29E62 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,6 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				D0AE27152201564D00D29E62 /* Elevators.app */,
+				D0AADE26221C8E6800BF71B3 /* ElCore.framework */,
+				D02262E5222449E4009D15E7 /* ElevatorsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,10 +259,9 @@
 			isa = PBXGroup;
 			children = (
 				D0AE27182201564D00D29E62 /* AppDelegate.swift */,
-				D0AE271A2201564D00D29E62 /* GameScene.sks */,
-				D0AE271C2201564D00D29E62 /* Actions.sks */,
-				D0AE271E2201564D00D29E62 /* GameScene.swift */,
 				D0AE27202201564D00D29E62 /* GameViewController.swift */,
+				D0D8523A2206917500ED606C /* GameScene */,
+				D04DAE652214A63200ADA7F0 /* extensions-CGPoint.swift */,
 				D0AE27222201564D00D29E62 /* Main.storyboard */,
 				D0AE27252201564F00D29E62 /* Assets.xcassets */,
 				D0AE27272201564F00D29E62 /* LaunchScreen.storyboard */,
@@ -73,9 +270,73 @@
 			path = Elevators;
 			sourceTree = "<group>";
 		};
+		D0D8523A2206917500ED606C /* GameScene */ = {
+			isa = PBXGroup;
+			children = (
+				D0AE271E2201564D00D29E62 /* GameScene.swift */,
+			);
+			path = GameScene;
+			sourceTree = "<group>";
+		};
+		D0F0D6C5224854F20040E595 /* Movement */ = {
+			isa = PBXGroup;
+			children = (
+				D0F0D6C6224855030040E595 /* MovementManager.swift */,
+				D096F8B5225E93B5002CC444 /* JoystickView.swift */,
+			);
+			path = Movement;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		D0AADE21221C8E6800BF71B3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0AADE2A221C8E6800BF71B3 /* ElCore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		D02262E4222449E4009D15E7 /* ElevatorsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D02262EE222449E4009D15E7 /* Build configuration list for PBXNativeTarget "ElevatorsTests" */;
+			buildPhases = (
+				D02262E1222449E4009D15E7 /* Sources */,
+				D02262E2222449E4009D15E7 /* Frameworks */,
+				D02262E3222449E4009D15E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D02262EB222449E4009D15E7 /* PBXTargetDependency */,
+			);
+			name = ElevatorsTests;
+			productName = ElevatorsTests;
+			productReference = D02262E5222449E4009D15E7 /* ElevatorsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D0AADE25221C8E6800BF71B3 /* ElCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0AADE2F221C8E6800BF71B3 /* Build configuration list for PBXNativeTarget "ElCore" */;
+			buildPhases = (
+				D0AADE21221C8E6800BF71B3 /* Headers */,
+				D0AADE22221C8E6800BF71B3 /* Sources */,
+				D0AADE23221C8E6800BF71B3 /* Frameworks */,
+				D0AADE24221C8E6800BF71B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ElCore;
+			productName = ElCore;
+			productReference = D0AADE26221C8E6800BF71B3 /* ElCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		D0AE27142201564D00D29E62 /* Elevators */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0AE272D2201564F00D29E62 /* Build configuration list for PBXNativeTarget "Elevators" */;
@@ -83,10 +344,12 @@
 				D0AE27112201564D00D29E62 /* Sources */,
 				D0AE27122201564D00D29E62 /* Frameworks */,
 				D0AE27132201564D00D29E62 /* Resources */,
+				D00EAC61221C8CE500161C8F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D0AADE2C221C8E6800BF71B3 /* PBXTargetDependency */,
 			);
 			name = Elevators;
 			productName = Elevators;
@@ -103,8 +366,18 @@
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Peter Larson";
 				TargetAttributes = {
+					D02262E4222449E4009D15E7 = {
+						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
+						TestTargetID = D0AE27142201564D00D29E62;
+					};
+					D0AADE25221C8E6800BF71B3 = {
+						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
+					};
 					D0AE27142201564D00D29E62 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -122,37 +395,99 @@
 			projectRoot = "";
 			targets = (
 				D0AE27142201564D00D29E62 /* Elevators */,
+				D0AADE25221C8E6800BF71B3 /* ElCore */,
+				D02262E4222449E4009D15E7 /* ElevatorsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D02262E3222449E4009D15E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0AADE24221C8E6800BF71B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0AE27132201564D00D29E62 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D0AE27242201564D00D29E62 /* Main.storyboard in Resources */,
-				D0AE271B2201564D00D29E62 /* GameScene.sks in Resources */,
 				D0AE27262201564F00D29E62 /* Assets.xcassets in Resources */,
 				D0AE27292201564F00D29E62 /* LaunchScreen.storyboard in Resources */,
-				D0AE271D2201564D00D29E62 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D02262E1222449E4009D15E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0D80C4222246FF300CF25A8 /* LevelManagerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0AADE22221C8E6800BF71B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0F0D6C7224855030040E595 /* MovementManager.swift in Sources */,
+				D003FAEB226D1E3600C86CB0 /* ScoreboardManager.swift in Sources */,
+				D0305FE222235B5300C76819 /* ElevatorsGameScene.swift in Sources */,
+				D0DB7D052267BD9400D775B6 /* SpriteKit+.swift in Sources */,
+				D0AADE34221C8E7900BF71B3 /* Graphics.swift in Sources */,
+				D09A06DB223839C000A9CAB1 /* Larson.swift in Sources */,
+				D0305FEB22235CCE00C76819 /* ElevatorsGameSceneDependable.swift in Sources */,
+				D0305FE922235C7E00C76819 /* PlayerNode.swift in Sources */,
+				D0AADE33221C8E7900BF71B3 /* Floor.swift in Sources */,
+				D043B4AE224BE7A4005210CB /* CoreGraphics+.swift in Sources */,
+				D096F8B6225E93B5002CC444 /* JoystickView.swift in Sources */,
+				D0AADE32221C8E7900BF71B3 /* Elevator.swift in Sources */,
+				D0305FDE22235AC400C76819 /* PlayerManager.swift in Sources */,
+				D0305FE022235AEC00C76819 /* ElevatorsGame.swift in Sources */,
+				D016F915223AB84C0007AC6D /* ElevatorTouchHandler.swift in Sources */,
+				D0AADE38221C8F2600BF71B3 /* FloorManager.swift in Sources */,
+				D0AADE36221C8E9800BF71B3 /* ElevatorsGameColors.swift in Sources */,
+				D0A1B241226E61E9003F53E7 /* WaveManager.swift in Sources */,
+				D02262DF222376E9009D15E7 /* CameraManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0AE27112201564D00D29E62 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D0AE271F2201564D00D29E62 /* GameScene.swift in Sources */,
 				D0AE27212201564D00D29E62 /* GameViewController.swift in Sources */,
+				D04DAE662214A63200ADA7F0 /* extensions-CGPoint.swift in Sources */,
 				D0AE27192201564D00D29E62 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D02262EB222449E4009D15E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0AE27142201564D00D29E62 /* Elevators */;
+			targetProxy = D02262EA222449E4009D15E7 /* PBXContainerItemProxy */;
+		};
+		D0AADE2C221C8E6800BF71B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0AADE25221C8E6800BF71B3 /* ElCore */;
+			targetProxy = D0AADE2B221C8E6800BF71B3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D0AE27222201564D00D29E62 /* Main.storyboard */ = {
@@ -174,6 +509,102 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D02262EC222449E4009D15E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FKDE872F3V;
+				INFOPLIST_FILE = ElevatorsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElevatorsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Elevators.app/Elevators";
+			};
+			name = Debug;
+		};
+		D02262ED222449E4009D15E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FKDE872F3V;
+				INFOPLIST_FILE = ElevatorsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElevatorsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Elevators.app/Elevators";
+			};
+			name = Release;
+		};
+		D0AADE30221C8E6800BF71B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = FKDE872F3V;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ElCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D0AADE31221C8E6800BF71B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = FKDE872F3V;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ElCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		D0AE272B2201564F00D29E62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -209,6 +640,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2K3SEY8GPL;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -270,6 +702,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2K3SEY8GPL;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -293,7 +726,9 @@
 		D0AE272E2201564F00D29E62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = Elevators/Info.plist;
@@ -303,7 +738,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.Elevators;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -311,7 +747,9 @@
 		D0AE272F2201564F00D29E62 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = Elevators/Info.plist;
@@ -321,7 +759,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.Elevators;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -329,6 +768,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D02262EE222449E4009D15E7 /* Build configuration list for PBXNativeTarget "ElevatorsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D02262EC222449E4009D15E7 /* Debug */,
+				D02262ED222449E4009D15E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0AADE2F221C8E6800BF71B3 /* Build configuration list for PBXNativeTarget "ElCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0AADE30221C8E6800BF71B3 /* Debug */,
+				D0AADE31221C8E6800BF71B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D0AE27102201564D00D29E62 /* Build configuration list for PBXProject "Elevators" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

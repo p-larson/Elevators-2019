@@ -10,41 +10,41 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
-
-    override func viewDidLoad() {
+public class GameViewController: UIViewController {
+    
+    @IBOutlet public weak var gameview: SKView!
+    @IBOutlet public weak var scoreboard: UILabel!
+    
+    public lazy var game: GameScene = {
+        let scene = GameScene()
+        scene.scaleMode = .aspectFill
+        scene.size = view.frame.size
+        scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        scene.backgroundColor = UIColor.clear
+        scene.scoreboardLabel = self.scoreboard
+        return scene
+    }()
+    
+    override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
+        gameview.allowsTransparency = true
+        gameview.presentScene(game)
+        scoreboard.textColor = .white
     }
-
-    override var shouldAutorotate: Bool {
-        return true
+    
+    override public var shouldAutorotate: Bool {
+        return false
     }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
         } else {
             return .all
         }
     }
-
-    override var prefersStatusBarHidden: Bool {
+    
+    override public var prefersStatusBarHidden: Bool {
         return true
     }
 }
