@@ -11,6 +11,10 @@ import SpriteKit
 
 public class Floor: SKNode {
     
+    // 0-10 opening 11-20 closing
+    
+    static let baseZPosition: CGFloat = 4.0
+    
     public static func == (lhs: Floor, rhs: Floor) -> Bool {
         return lhs.number == rhs.number
     }
@@ -19,7 +23,7 @@ public class Floor: SKNode {
     public let number: Int
     public let type: Classification
     public let floorSize: CGSize
-    public weak var manager: FloorManager? = nil
+    public weak var manager: FloorManager!
     
     public var baseSize: CGSize {
         return CGSize(width: floorSize.width, height: floorSize.height / 24)
@@ -48,7 +52,7 @@ public class Floor: SKNode {
         let node = SKSpriteNode(texture: texture, color: .clear, size: baseSize)
         node.colorBlendFactor = 1
         node.color = GameColors.floor
-        node.zPosition = 1
+        node.zPosition = Floor.baseZPosition
 
         return node
     }()
@@ -145,19 +149,21 @@ public class Floor: SKNode {
         return elevatorSize.height / 2 + baseSize.height / 2
     }
     
+    
+    
     func addTrap(to: Floor) {
-        let elevator = Elevator(type: .trap, base: self, destination: to, size: elevatorSize)
+        let elevator = Elevator(type: .trap, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
         addChild(elevator)
         to.connectedElevators.append(elevator)
     }
     
     func addBroken() {
-        let elevator = Elevator(type: .broken, base: self, destination: self, size: elevatorSize)
+        let elevator = Elevator(type: .broken, base: self, destination: self, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
         addChild(elevator)
     }
     
     func addConnector(to: Floor) {
-        let elevator = Elevator(type: .connector, base: self, destination: to, size: elevatorSize)
+        let elevator = Elevator(type: .connector, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
         addChild(elevator)
         to.connectedElevators.append(elevator)
     }

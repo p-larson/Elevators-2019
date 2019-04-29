@@ -61,10 +61,13 @@ public class MovementManager: ElevatorsGameSceneDependent {
         
         self.cycling = true
         
-        let totalDistance: CGFloat = scene.floorManager.floorSize.height * CGFloat(count)
+        let waveOffset: CGFloat = scene.cameraManager.position.y - scene.cameraManager.basePosition.y
+        let elevatorDistance: CGFloat = scene.floorManager.floorSize.height * CGFloat(count)
         let totalDuration: TimeInterval = scene.elevatorSpeed * Double(count)
         // Move the camera count floors up minus the move it's already
-        let move = scene.cameraManager.movement(dx: 0, dy: totalDistance, duration: totalDuration)
+        let cameraMove = scene.cameraManager.movement(dx: 0, dy: elevatorDistance - waveOffset, duration: totalDuration)
+        
+        let elevatorMove = scene.cameraManager.movement(dx: 0, dy: elevatorDistance, duration: totalDuration)
         
         let scoreboardUpdate = SKAction.sequence([
             SKAction.wait(forDuration: scene.elevatorSpeed),
@@ -76,7 +79,7 @@ public class MovementManager: ElevatorsGameSceneDependent {
         // Update scoreboard, by incrementing it every time the elevator passes a floor.
         self.scene.run(SKAction.repeat(scoreboardUpdate, count: count))
         
-        self.scene.cameraManager.move(move, completion: {
+        self.scene.cameraManager.move(cameraMove, completion: {
             larsondebug("Moved")
             // Jostle the floors.
             self.scene.floorManager.jostle(count: count)
@@ -102,8 +105,8 @@ public class MovementManager: ElevatorsGameSceneDependent {
         // Move the Boarded Elevator to the Scene's child tree.
         self.scene.playerManager.elevator?.move(toParent: scene)
         // Apply same action to the Elevator and Player.
-        self.scene.playerManager.player.run(move)
-        self.scene.playerManager.elevator?.run(move)
+        self.scene.playerManager.player.run(elevatorMove)
+        self.scene.playerManager.elevator?.run(elevatorMove)
         
     }
     
@@ -127,17 +130,28 @@ public class MovementManager: ElevatorsGameSceneDependent {
 
 extension MovementManager {
     func exitElevator() {
-        larsondebug("exiting elevator")
         if let elevator = scene.playerManager.elevator {
+            larsondebug("exiting elevator \(elevator)")
             self.stopMovement()
-            scene.playerManager.status = .Leaving
+            scene.playerManager.status = .Elevator_Leaving
             scene.playerManager.player.run(
                 SKAction.sequence(
                     [SKAction.group(
                         [SKAction.move(to: scene.playerManager.playerBase(elevator: elevator), duration: scene.boardingSpeed),
                          SKAction.scale(to: 1, duration: scene.boardingSpeed)]
                         ), SKAction.run {
-                            self.scene.playerManager.status = .Standing; self.scene.playerManager.elevator = nil
+                            larsondebug("exit elevator \(self.scene.playerManager.player.parent as? Floor)")
+                            self.scene.playerManager.status = .Standing;
+                            // Move Elevator to current floor and disable it.
+                            self.scene.playerManager.elevator?.move(toParent: self.scene.playerManager.floor)
+                            self.scene.playerManager.elevator?.position.y = self.scene.playerManager.floor.elevatorY
+                            self.scene.playerManager.elevator?.isEnabled = false
+                            self.scene.playerManager.elevator = nil
+                            // Update player parent
+                            print(self.scene.playerManager.floor)
+                            self.scene.playerManager.player.move(toParent: self.scene.playerManager.floor)
+                            self.scene.playerManager.player.position.y = self.scene.playerManager.playerBase.y
+                            
                             // Push haptics to inform the player they left an elevator.
                             self.haptics.impactOccurred()
                             self.scene.waveManager.start()
@@ -157,13 +171,18 @@ extension MovementManager {
         )
     }
     
-    func enterElevator() {
+    func enterElevator() {// Set up debug
+        larsonenter(#function)
+        // Prepare for deinit of function.
+        defer {
+            larsonexit()
+        }
         if let target = scene.playerManager.target {
             larsondebug("player entered elevator on floor \(scene.playerManager.floor.number) to floor \(target.destination.number)")
             larsondebug("entered elevator: \(target)")
             self.stopMovement()
             self.scene.waveManager.stop()
-            scene.playerManager.status = .Entering
+            scene.playerManager.status = .Elevator_Entering
             scene.playerManager.elevator = target
             scene.playerManager.player.run(
                 SKAction.sequence(
@@ -173,7 +192,8 @@ extension MovementManager {
                         ), SKAction.run {
                             self.elevatorMove()
                             // Push haptics to inform the player they entered an elevator.
-                            self.haptics.impactOccurred()
+                            // self.haptics.impactOccurred()
+                            // Removed 
                         }]
                 ), withKey: MovementManager.up_key_move
             )
@@ -222,13 +242,13 @@ extension MovementManager: JoystickDelegate {
     }
     
     public func moveUp(_ view: JoystickView) {
-        if ![PlayerManager.Status.Leaving, PlayerManager.Status.Entering, PlayerManager.Status.Elevator_Moving].contains(scene.playerManager.status) {
+        if ![PlayerManager.Status.Elevator_Leaving, PlayerManager.Status.Elevator_Entering, PlayerManager.Status.Elevator_Moving].contains(scene.playerManager.status) {
             self.enterElevator()
         }
     }
     
     public func moveDown(_ view: JoystickView) {
-        if [PlayerManager.Status.Elevator_Idle, PlayerManager.Status.Entering].contains(scene.playerManager.status) {
+        if [PlayerManager.Status.Elevator_Idle, PlayerManager.Status.Elevator_Entering].contains(scene.playerManager.status) {
             self.exitElevator()
         }
     }

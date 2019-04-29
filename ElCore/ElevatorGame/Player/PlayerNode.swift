@@ -10,6 +10,13 @@ import SpriteKit
 
 public class PlayerNode: SKSpriteNode {
     
+    static let insideZPosition: CGFloat = 6.0
+    static let outsideZPosition: CGFloat = 8.0
+    
+    public var floor: Floor? {
+        return parent as? Floor
+    }
+    
     public init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         self.updateGraphics()

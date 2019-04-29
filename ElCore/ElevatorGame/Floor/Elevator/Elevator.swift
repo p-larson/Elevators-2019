@@ -10,10 +10,19 @@ import SpriteKit
 
 public class Elevator: SKSpriteNode {
     
+    static let backgroundZPosition: CGFloat = 5.0
+    static let doorZPosition: CGFloat = 7.0
+    static let ropeZPosition: CGFloat = 3.0
+    
     public var isEnabled = true
     public let type: Classification
+    public let skin: Skin
     private(set) public weak var destination: Floor!
     private(set) public weak var base: Floor!
+    
+    public var floor: Floor? {
+        return parent as? Floor
+    }
     
     public var hasRope: Bool {
         return rope.parent != nil
@@ -35,7 +44,6 @@ public class Elevator: SKSpriteNode {
     
     public func drawRope() {
         base.addChild(rope)
-        larsondebug("drawed rope")
     }
     
     lazy var rope: SKSpriteNode = {
@@ -49,17 +57,44 @@ public class Elevator: SKSpriteNode {
         })
         node.position.x = position.x
         node.position.y = height / 2
-        node.zPosition = zPosition - 1
+        node.zPosition = Elevator.ropeZPosition
         return node
     }()
     
-    init(type: Classification, base: Floor, destination: Floor, size: CGSize) {
+    lazy var doors: SKSpriteNode = {
+        let node = SKSpriteNode()
+        node.size = self.size
+        node.texture = skin.frames.first
+        node.position = CGPoint.zero
+        node.zPosition = Elevator.doorZPosition
+        return node
+    }()
+    
+    public static let doors_open_move = "doors_open_move"
+    public static let doors_close_move = "doors_close_move"
+    
+    public enum Status {
+        case Opening
+        case Open
+        case Closing
+        case Closed
+    }
+    
+    public var openingAction: SKAction {
+        return SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 24.0)
+    }
+    
+    init(type: Classification, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
         self.type = type
         self.base = base
         self.destination = destination
-        super.init(texture: nil, color: .clear, size: size)
-        self.updateGraphics()
+        self.skin = skin
+        super.init(texture: skin.base, color: .clear, size: size)
+        self.zPosition = Elevator.backgroundZPosition
         self.isUserInteractionEnabled = true
+        self.addChild(doors)
+        
+        print(size, doors.size)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -81,7 +116,7 @@ public class Elevator: SKSpriteNode {
     }
     
     public override var description: String {
-        return "\(type) \(base.number) -> \(destination.number)"
+        return "\(type) @ \(floor?.number ?? -1) \(base.number) -> \(destination.number)"
     }
     
 }

@@ -27,6 +27,8 @@ public class GameScene: ElevatorsGameScene {
     public let joystickRollover: TimeInterval = 1.0 / 20.0
     public let joystickThreshhold: CGFloat = 1.0
     
+    public let saves = UserDefaults()
+    
     public var scoreboardLabel: UILabel? = nil
     
     public var gameFrame: CGRect {
@@ -70,6 +72,14 @@ public class GameScene: ElevatorsGameScene {
     public lazy var waveManager: WaveManager = {
         return WaveManager(scene: self)
     }()
+    
+    public lazy var shopManager: ShopManager = {
+        return ShopManager(scene: self)
+    }()
+    
+    public lazy var preferencesManager: PreferencesManager = {
+        return PreferencesManager(scene: self)
+    }()
 }
 
 // MARK:    viewDidLoad
@@ -99,9 +109,7 @@ extension GameScene {
         self.movementManager.setupJoystick()
         self.scoreboardManager.setupScoreboard()
         
-//        if Larson.debugging {
-//            self.showGameFrame()
-//        }
+        
     }
 }
 

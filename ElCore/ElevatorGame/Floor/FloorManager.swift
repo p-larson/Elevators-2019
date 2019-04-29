@@ -1,5 +1,5 @@
 //
-//  FloorManager.swift
+//  Floor.swift
 //  ElCore
 //
 //  Created by Peter Larson on 2/19/19.

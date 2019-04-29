@@ -22,14 +22,14 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     public enum Status {
         case Moving
         case Standing
-        case Entering
-        case Leaving
+        case Elevator_Entering
+        case Elevator_Leaving
         case Elevator_Moving
         case Elevator_Idle
     }
     
     public var playerBase: CGPoint {
-        return floor.position.add(0, floor.baseSize.height / 2 + player.size.height / 2)
+        return CGPoint.zero.add(0, floor.baseSize.height / 2 + player.size.height / 2)
     }
     
     public func playerBase(elevator: Elevator) -> CGPoint {
@@ -40,7 +40,20 @@ public class PlayerManager: ElevatorsGameSceneDependent {
         return CGPoint(x: elevator.position.x, y: playerBase.y)
     }
     
-    public var status: Status = .Standing
+    public var status: Status = .Standing {
+        didSet {
+            switch self.status {
+            case .Moving, .Standing:
+                player.zPosition = PlayerNode.outsideZPosition
+                break
+            default:
+                player.zPosition = PlayerNode.insideZPosition
+                break
+            }
+            
+            larsondebug("updated player zposition to \(self.player.zPosition)")
+        }
+    }
     
     /// The target elevator.
     ///
@@ -72,19 +85,18 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     public func setupPlayer() {
         // Set up debug
         larsonenter(#function)
+        
         // Prepare for deinit of function.
         defer {
             larsonexit()
         }
+        
         player.position = self.playerBase
         player.size = PlayerManager.playerSize(from: floor)
         
-        scene.addChild(player)
-        
+        floor.addChild(player)
         
         larsondebug("finished player setup. \(player.debugDescription)")
-        
-
     }
     
     public init(scene: ElevatorsGameScene) {

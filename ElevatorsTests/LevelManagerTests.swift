@@ -27,6 +27,12 @@ class LevelManagerTests: XCTestCase {
         return
     }
     
+    func testElevatorFrames() {
+        let skin = self.gamescene.shopManager.defaultElevator
+        
+        print(skin.textures)
+    }
+    
     func testFloorGeneration() {
         self.gamescene.floorManager.debugPrint()
     }
@@ -34,6 +40,4 @@ class LevelManagerTests: XCTestCase {
     func testJostle() {
         self.gamescene.floorManager.jostle(count: Int.random(in: 1 ... 5))
     }
-    
-    
 }

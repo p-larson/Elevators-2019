@@ -41,7 +41,9 @@ public class WaveManager: ElevatorsGameSceneDependent {
     
     public var action: SKAction {
         
-        let destination = scene.cameraManager.basePosition.add(0, scene.floorManager.floorSize.height)
+        let distance = scene.frame.height - scene.gameFrame.height
+        
+        let destination = scene.cameraManager.basePosition.add(0, distance)
         
         let move = SKAction.move(to: destination, duration: scene.waveSpeed)
         
