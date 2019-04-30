@@ -15,10 +15,6 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     public var elevator: Elevator? = nil
     public let scene: ElevatorsGameScene
     
-    public var floor: Floor {
-        return scene.floorManager.bottomFloor!
-    }
-    
     public enum Status {
         case Moving
         case Standing
@@ -29,7 +25,7 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public var playerBase: CGPoint {
-        return CGPoint.zero.add(0, floor.baseSize.height / 2 + player.size.height / 2)
+        return CGPoint.zero.add(0, scene.floorManager.bottomFloor.baseSize.height / 2 + player.size.height / 2)
     }
     
     public func playerBase(elevator: Elevator) -> CGPoint {
@@ -50,8 +46,6 @@ public class PlayerManager: ElevatorsGameSceneDependent {
                 player.zPosition = PlayerNode.insideZPosition
                 break
             }
-            
-            larsondebug("updated player zposition to \(self.player.zPosition)")
         }
     }
     
@@ -59,7 +53,7 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     ///
     /// The closest elevator on the floor in range of the player's frame.
     public var target: Elevator? {
-        return floor.baseElevators.filter ({ elevator in
+        return scene.floorManager.bottomFloor.baseElevators.filter ({ elevator in
             let whitelist =  (player.position.x - player.size.width)...(player.position.x + player.size.width)
             return whitelist.contains(elevator.position.x) && elevator.isEnabled
         }).sorted { (e1, e2) -> Bool in
@@ -71,13 +65,16 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public static func playerSize(from floor: Floor) -> CGSize {
-        return CGSize(width: floor.elevatorSize.width / 2, height: floor.elevatorSize.height / 2)
+        return CGSize(
+            width: floor.elevatorSize.width / 2,
+            height: floor.elevatorSize.height / 2
+        )
     }
     
     public func distance(in time: TimeInterval) -> CGFloat {
         // (12 inch / 1 foot) * 2 feet = 24 inches
         return
-            (floor.baseSize.width * CGFloat(time))
+            (scene.floorManager.bottomFloor.baseSize.width * CGFloat(time))
             /
             CGFloat(scene.playerSpeed)
     }
@@ -92,9 +89,9 @@ public class PlayerManager: ElevatorsGameSceneDependent {
         }
         
         player.position = self.playerBase
-        player.size = PlayerManager.playerSize(from: floor)
+        player.size = PlayerManager.playerSize(from: scene.floorManager.bottomFloor)
         
-        floor.addChild(player)
+        scene.floorManager.bottomFloor.addChild(player)
         
         larsondebug("finished player setup. \(player.debugDescription)")
     }

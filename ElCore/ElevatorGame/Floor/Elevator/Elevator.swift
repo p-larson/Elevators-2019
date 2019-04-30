@@ -10,9 +10,9 @@ import SpriteKit
 
 public class Elevator: SKSpriteNode {
     
-    static let backgroundZPosition: CGFloat = 5.0
-    static let doorZPosition: CGFloat = 7.0
-    static let ropeZPosition: CGFloat = 3.0
+    static let backgroundZPosition: CGFloat = 1.0
+    static let doorZPosition: CGFloat = 2.0
+    static let ropeZPosition: CGFloat = -1.0
     
     public var isEnabled = true
     public let type: Classification
@@ -61,17 +61,17 @@ public class Elevator: SKSpriteNode {
         return node
     }()
     
-    lazy var doors: SKSpriteNode = {
+    public lazy var doors: SKSpriteNode = {
         let node = SKSpriteNode()
         node.size = self.size
-        node.texture = skin.frames.first
+        node.texture = skin.frames1.first
         node.position = CGPoint.zero
         node.zPosition = Elevator.doorZPosition
         return node
     }()
     
-    public static let doors_open_move = "doors_open_move"
-    public static let doors_close_move = "doors_close_move"
+    public static let doors_opening_move = "doors_open_move"
+    public static let doors_closing_move = "doors_close_move"
     
     public enum Status {
         case Opening
@@ -80,9 +80,69 @@ public class Elevator: SKSpriteNode {
         case Closed
     }
     
-    public var openingAction: SKAction {
-        return SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 24.0)
+    public private(set) var status: Status = .Closed
+    
+    public var isClosing: Bool {
+        return doors.action(forKey: Elevator.doors_closing_move) != nil
     }
+    
+    public var isOpening: Bool {
+        return doors.action(forKey: Elevator.doors_opening_move) != nil
+    }
+    
+    private func closingAction(completion: @escaping Block = {}) -> SKAction {
+        return SKAction.sequence(
+            [
+                SKAction.run {
+                    self.status = .Closing
+                },
+                SKAction.animate(with: Array<SKTexture>(skin.frames1), timePerFrame: 1.0 / 24.0),
+                SKAction.run {
+                    self.status = .Closed
+                    completion()
+                }
+            ]
+        )
+    }
+    
+    private func openingAction(completion: @escaping Block = {}) -> SKAction {
+        return SKAction.sequence(
+            [
+                SKAction.run {
+                    self.status = .Opening
+                },
+                SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 24.0),
+                SKAction.run {
+                    self.status = .Open
+                    completion()
+                }
+            ]
+        )
+    }
+    
+    public func stopStatusChange() {
+        doors.removeAction(forKey: Elevator.doors_closing_move)
+        doors.removeAction(forKey: Elevator.doors_opening_move)
+    }
+    
+    public func close(completion: @escaping Block = {}) {
+        guard ![Status.Closed, Status.Closing].contains(status) else {
+            return
+        }
+        
+        doors.run(closingAction(completion: completion), withKey: Elevator.doors_closing_move)
+    }
+    
+    public func open(completion: @escaping Block = {}) {
+        guard ![Status.Open, Status.Opening].contains(status) else {
+            return
+        }
+        
+        doors.run(openingAction(completion: completion), withKey: Elevator.doors_opening_move)
+    }
+    
+    
+    
     
     init(type: Classification, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
         self.type = type

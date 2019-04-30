@@ -20,3 +20,14 @@ public extension SKAction {
     }
 }
 
+public extension SKNode {
+    var globalZPosition: CGFloat {
+        var z = zPosition
+        var p = parent
+        while let node = p {
+            z+=node.zPosition
+            p = node.parent
+        }
+        return z
+    }
+}

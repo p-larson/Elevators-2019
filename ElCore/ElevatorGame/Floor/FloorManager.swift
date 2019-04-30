@@ -147,12 +147,12 @@ public class FloorManager: ElevatorsGameSceneDependent {
         }
     }
     
-    var bottomFloor: Floor? {
-        return floors.first
+    public var bottomFloor: Floor! {
+        return floors.first!
     }
     
-    var topFloor: Floor? {
-        return floors.last
+    public var topFloor: Floor! {
+        return floors.last!
     }
     /// Number of the last Floor
     public var lastNumber: Int {

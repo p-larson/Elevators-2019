@@ -13,6 +13,22 @@ public class Floor: SKNode {
     
     // 0-10 opening 11-20 closing
     
+    public func open(elevator: Elevator) {
+        
+    }
+    
+    public func openElevators() {
+        
+    }
+    
+    public func close(elevator: Elevator) {
+        
+    }
+    
+    public func closeElevators() {
+        
+    }
+    
     static let baseZPosition: CGFloat = 4.0
     
     public static func == (lhs: Floor, rhs: Floor) -> Bool {

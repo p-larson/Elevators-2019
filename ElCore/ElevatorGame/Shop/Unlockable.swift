@@ -50,12 +50,12 @@ public class Skin: Unlockable {
     
     public var frames1: ArraySlice<SKTexture> {
         let f = frames
-        return f[f.startIndex ... f.endIndex - f.count / 2]
+        return f[f.startIndex ..< f.endIndex - f.count / 2]
     }
     
     public var frames2: ArraySlice<SKTexture> {
         let f = frames
-        return f[f.endIndex - f.count / 2 ... f.endIndex]
+        return f[f.endIndex - f.count / 2 ..< f.endIndex]
     }
     
     

@@ -80,17 +80,17 @@ public class MovementManager: ElevatorsGameSceneDependent {
         self.scene.run(SKAction.repeat(scoreboardUpdate, count: count))
         
         self.scene.cameraManager.move(cameraMove, completion: {
-            larsondebug("Moved")
             // Jostle the floors.
             self.scene.floorManager.jostle(count: count)
             // Reset camera position.
             self.scene.cameraManager.set(self.scene.cameraManager.basePosition)
-            // Replace the Boarded Elevator in the floor's child tree.
-            self.scene.playerManager.elevator?.move(toParent: self.scene.playerManager.floor)
+            // Move the player to the floor's child hierarchy.
+            self.scene.playerManager.player.move(toParent: self.scene.floorManager.bottomFloor)
+            self.scene.playerManager.elevator?.move(toParent: self.scene.floorManager.bottomFloor)
             // After the move, reset the player's and elevator's y position
             self.scene.playerManager.player.position.y = self.scene.playerManager.playerBase.y
-            self.scene.playerManager.elevator?.position.y = self.scene.playerManager.floor.elevatorY
-            // Set the elevator as disabled
+            self.scene.playerManager.elevator?.position.y = self.scene.floorManager.bottomFloor.elevatorY
+            // Move Elevator to current floor and disable it.
             self.scene.playerManager.elevator?.isEnabled = false
             // Leave elevator
             self.exitElevator() 
@@ -102,8 +102,8 @@ public class MovementManager: ElevatorsGameSceneDependent {
             larsondebug("Moved back. Done with cycle.")
         })
         
-        // Move the Boarded Elevator to the Scene's child tree.
-        self.scene.playerManager.elevator?.move(toParent: scene)
+//        // Move the Boarded Elevator to the Scene's child tree.
+//        self.scene.playerManager.elevator?.move(toParent: scene)
         // Apply same action to the Elevator and Player.
         self.scene.playerManager.player.run(elevatorMove)
         self.scene.playerManager.elevator?.run(elevatorMove)
@@ -140,19 +140,9 @@ extension MovementManager {
                         [SKAction.move(to: scene.playerManager.playerBase(elevator: elevator), duration: scene.boardingSpeed),
                          SKAction.scale(to: 1, duration: scene.boardingSpeed)]
                         ), SKAction.run {
-                            larsondebug("exit elevator \(self.scene.playerManager.player.parent as? Floor)")
                             self.scene.playerManager.status = .Standing;
-                            // Move Elevator to current floor and disable it.
-                            self.scene.playerManager.elevator?.move(toParent: self.scene.playerManager.floor)
-                            self.scene.playerManager.elevator?.position.y = self.scene.playerManager.floor.elevatorY
-                            self.scene.playerManager.elevator?.isEnabled = false
-                            self.scene.playerManager.elevator = nil
-                            // Update player parent
-                            print(self.scene.playerManager.floor)
-                            self.scene.playerManager.player.move(toParent: self.scene.playerManager.floor)
-                            self.scene.playerManager.player.position.y = self.scene.playerManager.playerBase.y
-                            
                             // Push haptics to inform the player they left an elevator.
+                            self.scene.playerManager.elevator = nil
                             self.haptics.impactOccurred()
                             self.scene.waveManager.start()
                         }]
@@ -178,7 +168,7 @@ extension MovementManager {
             larsonexit()
         }
         if let target = scene.playerManager.target {
-            larsondebug("player entered elevator on floor \(scene.playerManager.floor.number) to floor \(target.destination.number)")
+            larsondebug("player entered elevator on floor \(target.base.number) to floor \(target.destination.number)")
             larsondebug("entered elevator: \(target)")
             self.stopMovement()
             self.scene.waveManager.stop()
@@ -219,7 +209,7 @@ extension MovementManager: JoystickDelegate {
     public func moveLeft(_ view: JoystickView) {
         let distance = scene.playerManager.distance(in: scene.joystickRollover)
         
-        if scene.playerManager.player.position.x - distance < -scene.playerManager.floor.baseSize.width / 2 {
+        if scene.playerManager.player.position.x - distance < -scene.floorManager.bottomFloor.baseSize.width / 2 {
             return
         }
         
@@ -232,7 +222,7 @@ extension MovementManager: JoystickDelegate {
         
         let distance = scene.playerManager.distance(in: scene.joystickRollover)
         
-        if scene.playerManager.player.position.x + distance > scene.playerManager.floor.baseSize.width / 2 {
+        if scene.playerManager.player.position.x + distance > scene.floorManager.bottomFloor.baseSize.width / 2 {
             return
         }
         

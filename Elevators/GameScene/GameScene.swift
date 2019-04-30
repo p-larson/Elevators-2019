@@ -11,7 +11,6 @@ import GameplayKit
 import ElCore
 
 public class GameScene: ElevatorsGameScene {
-    
     // ElevatorGame Constants
     public let maxElevatorRange = 3
     public let maxElevatorsPerFloor = 3
@@ -22,7 +21,7 @@ public class GameScene: ElevatorsGameScene {
     public let maxGenerateElevatorFails = 100
     public let elevatorSpeed: TimeInterval = 0.5
     public let playerSpeed: TimeInterval = 1.0
-    public let waveSpeed: TimeInterval = 2.0
+    public let waveSpeed: TimeInterval = 5.0
     public let boardingSpeed: TimeInterval = 0.3
     public let joystickRollover: TimeInterval = 1.0 / 20.0
     public let joystickThreshhold: CGFloat = 1.0
@@ -108,7 +107,6 @@ extension GameScene {
         self.cameraManager.setupCamera()
         self.movementManager.setupJoystick()
         self.scoreboardManager.setupScoreboard()
-        
         
     }
 }

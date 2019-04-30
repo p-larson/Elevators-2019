@@ -10,8 +10,8 @@ import SpriteKit
 
 public class PlayerNode: SKSpriteNode {
     
-    static let insideZPosition: CGFloat = 6.0
-    static let outsideZPosition: CGFloat = 8.0
+    static let insideZPosition: CGFloat = 2.0
+    static let outsideZPosition: CGFloat = 4.0
     
     public var floor: Floor? {
         return parent as? Floor
@@ -22,7 +22,6 @@ public class PlayerNode: SKSpriteNode {
         self.updateGraphics()
     }
     
-    // TODO
     public required init?(coder aDecoder: NSCoder) {
         return nil
     }

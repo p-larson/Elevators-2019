@@ -45,7 +45,6 @@ public class GameViewController: UIViewController, ControllerIdentifiable {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        gameview.ignoresSiblingOrder = true
         gameview.allowsTransparency = true
         gameview.presentScene(game)
         scoreboard.textColor = .white
