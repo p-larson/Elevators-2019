@@ -105,16 +105,27 @@
                                     <constraint firstItem="xDQ-ou-RRi" firstAttribute="centerX" secondItem="cIx-1Q-HTd" secondAttribute="centerX" id="sQW-68-rfS"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lq-Mi-xBh">
+                                <rect key="frame" x="186" y="442.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="3Lq-Mi-xBh" firstAttribute="centerY" secondItem="cIx-1Q-HTd" secondAttribute="centerY" id="LWH-WF-v92"/>
                             <constraint firstItem="cIx-1Q-HTd" firstAttribute="height" secondItem="IdH-ef-0lu" secondAttribute="width" multiplier="4:5" id="P9y-BI-uuN"/>
                             <constraint firstItem="cIx-1Q-HTd" firstAttribute="centerY" secondItem="gvu-1r-Co9" secondAttribute="centerY" id="QUp-3c-MOd"/>
                             <constraint firstItem="cIx-1Q-HTd" firstAttribute="width" secondItem="IdH-ef-0lu" secondAttribute="width" multiplier="3:4" id="e6T-Pv-MVI"/>
+                            <constraint firstItem="3Lq-Mi-xBh" firstAttribute="centerX" secondItem="cIx-1Q-HTd" secondAttribute="centerX" id="kpu-cl-Wov"/>
                             <constraint firstItem="cIx-1Q-HTd" firstAttribute="centerX" secondItem="gvu-1r-Co9" secondAttribute="centerX" id="oiE-yC-N6s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gvu-1r-Co9"/>
                     </view>
+                    <connections>
+                        <outlet property="scoreboard" destination="3Lq-Mi-xBh" id="jMG-b0-n7f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="twz-wR-bHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

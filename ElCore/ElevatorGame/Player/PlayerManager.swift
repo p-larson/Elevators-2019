@@ -55,7 +55,7 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     public var target: Elevator? {
         return scene.floorManager.bottomFloor.baseElevators.filter ({ elevator in
             let whitelist =  (player.position.x - player.size.width)...(player.position.x + player.size.width)
-            return whitelist.contains(elevator.position.x) && elevator.isEnabled
+            return whitelist.contains(elevator.position.x) && elevator.isEnabled && elevator.status == .Open
         }).sorted { (e1, e2) -> Bool in
             func difference(_ elevator: Elevator) -> CGFloat {
                 return abs(elevator.position.x - player.position.x)
@@ -90,6 +90,7 @@ public class PlayerManager: ElevatorsGameSceneDependent {
         
         player.position = self.playerBase
         player.size = PlayerManager.playerSize(from: scene.floorManager.bottomFloor)
+        player.zPosition = PlayerNode.outsideZPosition
         
         scene.floorManager.bottomFloor.addChild(player)
         

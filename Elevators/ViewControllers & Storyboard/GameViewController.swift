@@ -9,8 +9,23 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import ElCore
 
-public class GameViewController: UIViewController, ControllerIdentifiable {
+public class GameViewController: UIViewController, ControllerIdentifiable, EndGameDelegate {
+    
+    public func onEnd(score: Int) {
+        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: HomeViewController.id) as? HomeViewController else {
+            return
+        }
+        
+        controller.score = score
+        controller.gameview = self
+        
+        present(controller, animated: true) {
+            print("presented")
+        }
+    }
+    
     
     static let id: String = "GameViewController"
     
@@ -19,16 +34,21 @@ public class GameViewController: UIViewController, ControllerIdentifiable {
     @IBOutlet public private(set) weak var backgroundImageView: UIImageView!
     
     public lazy var game: GameScene = {
+        return self.newGameScene()
+    }()
+    
+    public func newGameScene() -> GameScene {
         let scene = GameScene()
         scene.scaleMode = .aspectFill
         scene.size = view.frame.size
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scene.backgroundColor = UIColor.clear
         scene.scoreboardLabel = self.scoreboard
+        scene.endGameDelegate = self
         return scene
-    }()
+    }
     
-    func setupScoreboardLabel() {
+    private func setupScoreboardLabel() {
         scoreboard.clipsToBounds = true
         scoreboard.layer.cornerRadius = scoreboard.layer.frame.height / 5
         scoreboard.layer.shadowOffset = CGSize(width: 0, height: scoreboard.layer.frame.height / 20)
@@ -39,7 +59,7 @@ public class GameViewController: UIViewController, ControllerIdentifiable {
         scoreboard.font = scoreboard.font.withSize(scoreboard.frame.height / 2)
     }
     
-    func loadBackground() {
+    private func loadBackground() {
         backgroundImageView.image = Assets.Background.GameView
     }
     
@@ -66,17 +86,5 @@ public class GameViewController: UIViewController, ControllerIdentifiable {
     
     override public var prefersStatusBarHidden: Bool {
         return true
-    }
-    
-    func presentHomeView() {
-        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: HomeViewController.id) as? HomeViewController else {
-            return
-        }
-        
-        controller.score = 0
-        
-        present(controller, animated: true) {
-            print("presented")
-        }
     }
 }

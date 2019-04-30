@@ -90,13 +90,13 @@ public class Elevator: SKSpriteNode {
         return doors.action(forKey: Elevator.doors_opening_move) != nil
     }
     
-    private func closingAction(completion: @escaping Block = {}) -> SKAction {
+    private func closingAction(completion: @escaping Block) -> SKAction {
         return SKAction.sequence(
             [
                 SKAction.run {
                     self.status = .Closing
                 },
-                SKAction.animate(with: Array<SKTexture>(skin.frames1), timePerFrame: 1.0 / 24.0),
+                SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 24.0),
                 SKAction.run {
                     self.status = .Closed
                     completion()
@@ -105,13 +105,13 @@ public class Elevator: SKSpriteNode {
         )
     }
     
-    private func openingAction(completion: @escaping Block = {}) -> SKAction {
+    private func openingAction(completion: @escaping Block) -> SKAction {
         return SKAction.sequence(
             [
                 SKAction.run {
                     self.status = .Opening
                 },
-                SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 24.0),
+                SKAction.animate(with: Array<SKTexture>(skin.frames1), timePerFrame: 1.0 / 24.0),
                 SKAction.run {
                     self.status = .Open
                     completion()
@@ -126,7 +126,8 @@ public class Elevator: SKSpriteNode {
     }
     
     public func close(completion: @escaping Block = {}) {
-        guard ![Status.Closed, Status.Closing].contains(status) else {
+        guard [Status.Closed, Status.Closing].contains(status) == false else {
+            print("## close")
             return
         }
         
@@ -134,7 +135,8 @@ public class Elevator: SKSpriteNode {
     }
     
     public func open(completion: @escaping Block = {}) {
-        guard ![Status.Open, Status.Opening].contains(status) else {
+        guard [Status.Open, Status.Opening].contains(status) == false else {
+            print("### open")
             return
         }
         

@@ -108,6 +108,8 @@ public class FloorManager: ElevatorsGameSceneDependent {
         larsondebug("updating floors.")
         // Update floors
         self.update()
+        // Open first floor
+        self.bottomFloor.openElevators()
         
         larsondebug("finished generating floors.")
         

@@ -26,6 +26,8 @@ public class GameScene: ElevatorsGameScene {
     public let joystickRollover: TimeInterval = 1.0 / 20.0
     public let joystickThreshhold: CGFloat = 1.0
     
+    public var endGameDelegate: EndGameDelegate? = nil
+    
     public let saves = UserDefaults()
     
     public var scoreboardLabel: UILabel? = nil

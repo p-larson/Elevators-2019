@@ -14,19 +14,23 @@ public class Floor: SKNode {
     // 0-10 opening 11-20 closing
     
     public func open(elevator: Elevator) {
-        
+        elevator.open()
     }
     
     public func openElevators() {
-        
+        baseElevators.forEach { (elevator) in
+            open(elevator: elevator)
+        }
     }
     
     public func close(elevator: Elevator) {
-        
+        elevator.close()
     }
     
     public func closeElevators() {
-        
+        baseElevators.forEach { (elevator) in
+            close(elevator: elevator)
+        }
     }
     
     static let baseZPosition: CGFloat = 4.0

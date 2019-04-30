@@ -36,7 +36,11 @@ public class WaveManager: ElevatorsGameSceneDependent {
             return
         }
         
-        scene.cameraManager.run(action: action, key: WaveManager.wave_move)
+        scene.cameraManager.run(action: .sequence([action, .run(end)]), key: WaveManager.wave_move)
+    }
+    
+    public func end() {
+        scene.endGameDelegate?.onEnd(score: scene.floorManager.currentFloorNumber)
     }
     
     public var action: SKAction {

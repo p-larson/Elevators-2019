@@ -43,7 +43,7 @@ public class MovementManager: ElevatorsGameSceneDependent {
         return cycling
     }
 
-    public func cycle(_ count: Int = 1, completion: (() -> ())? = nil) {
+    public func cycle(_ count: Int = 1, completion: @escaping Block = {}) {
         // Set up debug
         larsonenter(#function)
         // Prepare for deinit of function.
@@ -80,6 +80,10 @@ public class MovementManager: ElevatorsGameSceneDependent {
         self.scene.run(SKAction.repeat(scoreboardUpdate, count: count))
         
         self.scene.cameraManager.move(cameraMove, completion: {
+            guard let elevator = self.scene.playerManager.elevator else {
+                larsondebug("Could not finish elevator move: elevator does not exist")
+                return
+            }
             // Jostle the floors.
             self.scene.floorManager.jostle(count: count)
             // Reset camera position.
@@ -92,14 +96,18 @@ public class MovementManager: ElevatorsGameSceneDependent {
             self.scene.playerManager.elevator?.position.y = self.scene.floorManager.bottomFloor.elevatorY
             // Move Elevator to current floor and disable it.
             self.scene.playerManager.elevator?.isEnabled = false
-            // Leave elevator
-            self.exitElevator() 
-            // Completion
-            if let completionHandler = completion {
-                completionHandler()
-            }
-            // Debug
-            larsondebug("Moved back. Done with cycle.")
+            // Open Floor
+            self.scene.floorManager.bottomFloor.openElevators()
+            // Open Elevator
+            elevator.open(completion: {
+                // Leave elevator
+                self.exitElevator()
+                // Call Completion Handler
+                completion()
+                // Debug
+                larsondebug("Moved back. Done with cycle.")
+                
+            })
         })
         
 //        // Move the Boarded Elevator to the Scene's child tree.
@@ -142,6 +150,7 @@ extension MovementManager {
                         ), SKAction.run {
                             self.scene.playerManager.status = .Standing;
                             // Push haptics to inform the player they left an elevator.
+                            elevator.close()
                             self.scene.playerManager.elevator = nil
                             self.haptics.impactOccurred()
                             self.scene.waveManager.start()
@@ -174,19 +183,21 @@ extension MovementManager {
             self.scene.waveManager.stop()
             scene.playerManager.status = .Elevator_Entering
             scene.playerManager.elevator = target
-            scene.playerManager.player.run(
-                SKAction.sequence(
-                    [SKAction.group(
-                        [SKAction.move(to: scene.playerManager.onboard(elevator: target), duration: scene.boardingSpeed),
-                         SKAction.scale(to: 0.8, duration: scene.boardingSpeed)]
-                        ), SKAction.run {
-                            self.elevatorMove()
-                            // Push haptics to inform the player they entered an elevator.
-                            // self.haptics.impactOccurred()
-                            // Removed 
-                        }]
-                ), withKey: MovementManager.up_key_move
-            )
+            target.close {
+                self.scene.playerManager.player.run(
+                    SKAction.sequence(
+                        [SKAction.group(
+                            [SKAction.move(to: self.scene.playerManager.onboard(elevator: target), duration: self.scene.boardingSpeed),
+                             SKAction.scale(to: 0.8, duration: self.scene.boardingSpeed)]
+                            ), SKAction.run {
+                                self.elevatorMove()
+                                // Push haptics to inform the player they entered an elevator.
+                                // self.haptics.impactOccurred()
+                                // Removed
+                            }]
+                    ), withKey: MovementManager.up_key_move
+                )
+            }
         }
     }
 }

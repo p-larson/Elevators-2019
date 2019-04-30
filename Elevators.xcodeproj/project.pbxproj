@@ -19,6 +19,7 @@
 		D041434F22726D6B00DFB26B /* ControllerIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D041434E22726D6B00DFB26B /* ControllerIdentifiable.swift */; };
 		D043B4AE224BE7A4005210CB /* CoreGraphics+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043B4AD224BE7A4005210CB /* CoreGraphics+.swift */; };
 		D04DAE662214A63200ADA7F0 /* extensions-CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DAE652214A63200ADA7F0 /* extensions-CGPoint.swift */; };
+		D051F5CF2277EB4100EF5A61 /* EndGameDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F5CE2277EB4100EF5A61 /* EndGameDelegate.swift */; };
 		D06FC7302273B9F800C1478D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06FC72F2273B9F800C1478D /* Assets.swift */; };
 		D06FC7332274DF6C00C1478D /* Unlockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06FC7322274DF6C00C1478D /* Unlockable.swift */; };
 		D06FC7352274DF7400C1478D /* ShopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06FC7342274DF7400C1478D /* ShopManager.swift */; };
@@ -93,6 +94,7 @@
 		D041434E22726D6B00DFB26B /* ControllerIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerIdentifiable.swift; sourceTree = "<group>"; };
 		D043B4AD224BE7A4005210CB /* CoreGraphics+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+.swift"; sourceTree = "<group>"; };
 		D04DAE652214A63200ADA7F0 /* extensions-CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "extensions-CGPoint.swift"; sourceTree = "<group>"; };
+		D051F5CE2277EB4100EF5A61 /* EndGameDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameDelegate.swift; sourceTree = "<group>"; };
 		D06FC72F2273B9F800C1478D /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		D06FC7322274DF6C00C1478D /* Unlockable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unlockable.swift; sourceTree = "<group>"; };
 		D06FC7342274DF7400C1478D /* ShopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopManager.swift; sourceTree = "<group>"; };
@@ -156,11 +158,12 @@
 			path = Scoreboard;
 			sourceTree = "<group>";
 		};
-		D00C5D5A226FC04F00CA355C /* Game */ = {
+		D00C5D5A226FC04F00CA355C /* EndGame */ = {
 			isa = PBXGroup;
 			children = (
+				D051F5CE2277EB4100EF5A61 /* EndGameDelegate.swift */,
 			);
-			path = Game;
+			path = EndGame;
 			sourceTree = "<group>";
 		};
 		D02262E0222376EF009D15E7 /* Camera */ = {
@@ -194,7 +197,7 @@
 			children = (
 				D06FC73E22750E7E00C1478D /* Preferences */,
 				D06FC7312274DF4D00C1478D /* Shop */,
-				D00C5D5A226FC04F00CA355C /* Game */,
+				D00C5D5A226FC04F00CA355C /* EndGame */,
 				D0A1B23F226E61DB003F53E7 /* Wave */,
 				D003FAE9226D1E2600C86CB0 /* Scoreboard */,
 				D0F0D6C5224854F20040E595 /* Movement */,
@@ -518,6 +521,7 @@
 				D0AADE33221C8E7900BF71B3 /* Floor.swift in Sources */,
 				D043B4AE224BE7A4005210CB /* CoreGraphics+.swift in Sources */,
 				D096F8B6225E93B5002CC444 /* JoystickView.swift in Sources */,
+				D051F5CF2277EB4100EF5A61 /* EndGameDelegate.swift in Sources */,
 				D0AADE32221C8E7900BF71B3 /* Elevator.swift in Sources */,
 				D0305FDE22235AC400C76819 /* PlayerManager.swift in Sources */,
 				D06FC74022750E8D00C1478D /* PreferencesManager.swift in Sources */,

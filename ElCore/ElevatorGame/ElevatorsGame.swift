@@ -34,4 +34,5 @@ public protocol ElevatorsGame: ElevatorDelegate {
     var joystickFrame: CGRect { get }
     var scoreboardLabel: UILabel? { get }
     var saves: UserDefaults { get }
+    var endGameDelegate: EndGameDelegate? { get }
 }
