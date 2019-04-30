@@ -15,6 +15,8 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     public var elevator: Elevator? = nil
     public let scene: ElevatorsGameScene
     
+    public var target: Elevator? = nil
+    
     public enum Status {
         case Moving
         case Standing
@@ -49,19 +51,30 @@ public class PlayerManager: ElevatorsGameSceneDependent {
         }
     }
     
-    /// The target elevator.
-    ///
-    /// The closest elevator on the floor in range of the player's frame.
-    public var target: Elevator? {
-        return scene.floorManager.bottomFloor.baseElevators.filter ({ elevator in
-            let whitelist =  (player.position.x - player.size.width)...(player.position.x + player.size.width)
-            return whitelist.contains(elevator.position.x) && elevator.isEnabled && elevator.status == .Open
-        }).sorted { (e1, e2) -> Bool in
-            func difference(_ elevator: Elevator) -> CGFloat {
-                return abs(elevator.position.x - player.position.x)
-            }
+    public func move(to elevator: Elevator) -> SKAction {
+        let time = TimeInterval(difference(elevator) / scene.floorManager.bottomFloor.floorSize.width) * (scene.playerSpeed)
+        return SKAction.moveTo(x: elevator.position.x, duration: time)
+    }
+    
+    public func difference(_ elevator: Elevator) -> CGFloat {
+        return abs(elevator.position.x - player.position.x)
+    }
+    
+    public var rightTarget: Elevator? {
+        return scene.floorManager.bottomFloor.baseElevators.filter({ (elevator) -> Bool in
+            return elevator.position.x > player.position.x && elevator.isEnabled && elevator != target
+        }).sorted(by: { (e1, e2) -> Bool in
             return difference(e1) < difference(e2)
-        }.first
+        }).first
+    }
+    
+    public var leftTarget: Elevator? {
+        print(scene.floorManager.bottomFloor.baseElevators.count)
+        return scene.floorManager.bottomFloor.baseElevators.filter({ (elevator) -> Bool in
+            return elevator.position.x < player.position.x && elevator.isEnabled && elevator != target
+        }).sorted(by: { (e1, e2) -> Bool in
+            return difference(e1) < difference(e2)
+        }).first
     }
     
     public static func playerSize(from floor: Floor) -> CGSize {

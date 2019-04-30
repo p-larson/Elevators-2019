@@ -23,8 +23,6 @@ public class GameScene: ElevatorsGameScene {
     public let playerSpeed: TimeInterval = 1.0
     public let waveSpeed: TimeInterval = 5.0
     public let boardingSpeed: TimeInterval = 0.3
-    public let joystickRollover: TimeInterval = 1.0 / 20.0
-    public let joystickThreshhold: CGFloat = 1.0
     
     public var endGameDelegate: EndGameDelegate? = nil
     
@@ -38,15 +36,6 @@ public class GameScene: ElevatorsGameScene {
             y: frame.minY + frame.height * 0.2,
             width: frame.width * 0.9,
             height: frame.height * 0.8
-        )
-    }
-    
-    public var joystickFrame: CGRect {
-        return CGRect(
-            x: frame.midX + frame.width * 0.05,
-            y: frame.height - frame.height / 3,
-            width: frame.width * 0.9,
-            height: frame.height / 4
         )
     }
     
@@ -107,7 +96,6 @@ extension GameScene {
         self.floorManager.setupGame()
         self.playerManager.setupPlayer()
         self.cameraManager.setupCamera()
-        self.movementManager.setupJoystick()
         self.scoreboardManager.setupScoreboard()
         
     }

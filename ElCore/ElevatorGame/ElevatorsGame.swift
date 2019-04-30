@@ -20,8 +20,6 @@ public protocol ElevatorsGame: ElevatorDelegate {
     var playerSpeed: TimeInterval { get }
     var boardingSpeed: TimeInterval { get }
     var waveSpeed: TimeInterval { get }
-    var joystickRollover: TimeInterval { get }
-    var joystickThreshhold: CGFloat { get }
     var floorManager: FloorManager { get }
     var playerManager: PlayerManager { get }
     var cameraManager: CameraManager { get }
@@ -31,7 +29,6 @@ public protocol ElevatorsGame: ElevatorDelegate {
     var preferencesManager: PreferencesManager { get }
     var shopManager: ShopManager { get }
     var gameFrame: CGRect { get }
-    var joystickFrame: CGRect { get }
     var scoreboardLabel: UILabel? { get }
     var saves: UserDefaults { get }
     var endGameDelegate: EndGameDelegate? { get }
