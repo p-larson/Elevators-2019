@@ -21,7 +21,7 @@ public class GameScene: ElevatorsGameScene {
     public let maxGenerateElevatorFails = 100
     public let elevatorSpeed: TimeInterval = 0.5
     public let playerSpeed: TimeInterval = 1.0
-    public let waveSpeed: TimeInterval = 5.0
+    public let waveSpeed: TimeInterval = 3.0
     public let boardingSpeed: TimeInterval = 0.3
     
     public var endGameDelegate: EndGameDelegate? = nil

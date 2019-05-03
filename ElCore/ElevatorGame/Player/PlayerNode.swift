@@ -33,7 +33,7 @@ extension PlayerNode: TextureGraphable {
     static func texture(_ this: PlayerNode) -> SKTexture {
         return Graphics.texture(of: this.size, block: { (context) in
             context.addRect(CGRect.init(origin: .zero, size: this.size))
-            UIColor.purple.setFill()
+            UIColor.red.setFill()
             context.fillPath()
         })
     }

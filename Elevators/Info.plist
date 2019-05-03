@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Say Hi to nearby iOS Devices to give each other in-game Coins!</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gilroy-ExtraBold.otf</string>
