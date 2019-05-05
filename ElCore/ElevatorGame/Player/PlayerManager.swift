@@ -62,16 +62,15 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     
     public var rightTarget: Elevator? {
         return scene.floorManager.bottomFloor.baseElevators.filter({ (elevator) -> Bool in
-            return elevator.position.x > player.position.x && elevator.isEnabled && elevator != target
+            return elevator.position.x > player.position.x && elevator != target
         }).sorted(by: { (e1, e2) -> Bool in
             return difference(e1) < difference(e2)
         }).first
     }
     
     public var leftTarget: Elevator? {
-        print(scene.floorManager.bottomFloor.baseElevators.count)
         return scene.floorManager.bottomFloor.baseElevators.filter({ (elevator) -> Bool in
-            return elevator.position.x < player.position.x && elevator.isEnabled && elevator != target
+            return elevator.position.x < player.position.x && elevator != target
         }).sorted(by: { (e1, e2) -> Bool in
             return difference(e1) < difference(e2)
         }).first
@@ -104,6 +103,11 @@ public class PlayerManager: ElevatorsGameSceneDependent {
         player.position = self.playerBase
         player.size = PlayerManager.playerSize(from: scene.floorManager.bottomFloor)
         player.zPosition = PlayerNode.outsideZPosition
+        
+        if let target = Bool.random() ? (rightTarget ?? leftTarget) : (leftTarget ?? rightTarget) {
+            self.target = target
+            self.player.position.x = target.position.x
+        }
         
         scene.floorManager.bottomFloor.addChild(player)
         

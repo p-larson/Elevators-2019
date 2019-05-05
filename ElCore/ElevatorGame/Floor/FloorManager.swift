@@ -44,6 +44,14 @@ public class FloorManager: ElevatorsGameSceneDependent {
         self.scene = scene
     }
     
+    public func passovers(on: Floor) -> [Elevator] {
+        return floors.map { (floor) -> [Elevator] in
+            return floor.baseElevators
+        }.joined().filter { (elevator) -> Bool in
+            return elevator.base.number < on.number && elevator.destination.number > on.number
+        }
+    }
+    
     public func updatePositions() {
         // Set up debug
         larsonenter(#function)

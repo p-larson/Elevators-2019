@@ -16,17 +16,36 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
     public weak var gameview: GameViewController? = nil
     
     @IBOutlet weak var scoreboard: UILabel!
+    @IBOutlet weak var playAgain: UIButton!
     
     public override func viewDidLoad() {
         scoreboard.text = "Score: \(score)"
+        self.transitioningDelegate = self
     }
     
     @IBAction func onPlayAgainPress(_ sender: UIButton) {
         if let gameview = gameview {
             gameview.game = gameview.newGameScene()
             gameview.viewDidLoad()
+            self.dismiss(animated: true)
         }
-        self.dismiss(animated: true, completion: nil)
+        
+        print("play again")
     }
     
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        print("@home 1")
+        return GameoverTransition(start: playAgain)
+    }
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        print("@home 2")
+        
+        return GameoverTransition(start: playAgain)
+        
+    }
 }

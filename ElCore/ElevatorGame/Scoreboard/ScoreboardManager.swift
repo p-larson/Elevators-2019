@@ -33,7 +33,7 @@ public class ScoreboardManager: ElevatorsGameSceneDependent {
                     return
                 }
                 
-                self.scene.movementManager.haptics.impactOccurred()
+                self.scene.movementManager.lightHaptics.impactOccurred()
                 
                 UIView.animate(
                     withDuration: 0.1,

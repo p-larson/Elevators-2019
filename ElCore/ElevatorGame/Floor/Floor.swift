@@ -97,7 +97,7 @@ public class Floor: SKNode {
         self.floorSize = floorSize
         super.init()
         self.addChild(base)
-        self.addChild(label)
+        // self.addChild(label)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,10 +122,14 @@ public class Floor: SKNode {
         baseElevators.forEach {
             elevator in
             // Width each Elevator reserves of space.
-            let delta = (elevatorSize.width) / 2
-            larsondebug("blacklisting \((connectedElevators + done).count) elevator positions")
+            let delta = (elevatorSize.width) / 2 + (elevatorSize.width / 32)
+            
+            let blacklisted: [Elevator] = (connectedElevators + done + manager.passovers(on: self))
+            
+            larsondebug("blacklisting \(blacklisted.count) elevator positions")
+
             // Range where elevators cannot be due to the floor's connecting Elevators and any other base Elevator that has been positioned.
-            let blacklist: [ClosedRange<CGFloat>] = (connectedElevators + done).map { ($0.position.x - delta) ... ($0.position.x + delta) }
+            let blacklist: [ClosedRange<CGFloat>] = blacklisted.map { ($0.position.x - delta) ... ($0.position.x + delta) }
             // Range where Elevators can be placed in.
             let whitelist: ClosedRange<CGFloat> = (-floorSize.width / 2 + delta) ... (floorSize.width / 2 - delta)
             // Utility to calculate distance from range.

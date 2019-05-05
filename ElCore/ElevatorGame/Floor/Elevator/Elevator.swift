@@ -96,7 +96,7 @@ public class Elevator: SKSpriteNode {
                 SKAction.run {
                     self.status = .Closing
                 },
-                SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 24.0),
+                SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 72.0),
                 SKAction.run {
                     self.status = .Closed
                     completion()
@@ -111,7 +111,7 @@ public class Elevator: SKSpriteNode {
                 SKAction.run {
                     self.status = .Opening
                 },
-                SKAction.animate(with: Array<SKTexture>(skin.frames1), timePerFrame: 1.0 / 24.0),
+                SKAction.animate(with: Array<SKTexture>(skin.frames1), timePerFrame: 1.0 / 72.0),
                 SKAction.run {
                     self.status = .Open
                     completion()
@@ -142,9 +142,6 @@ public class Elevator: SKSpriteNode {
         
         doors.run(openingAction(completion: completion), withKey: Elevator.doors_opening_move)
     }
-    
-    
-    
     
     init(type: Classification, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
         self.type = type

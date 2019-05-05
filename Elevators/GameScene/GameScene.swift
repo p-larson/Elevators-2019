@@ -19,8 +19,8 @@ public class GameScene: ElevatorsGameScene {
     public let maxFloorsShown = 5
     public let maxOffhandFloors = 5
     public let maxGenerateElevatorFails = 100
-    public let elevatorSpeed: TimeInterval = 0.5
-    public let playerSpeed: TimeInterval = 1.0
+    public let elevatorSpeed: TimeInterval = 0.25
+    public let playerSpeed: TimeInterval = 0.75
     public let waveSpeed: TimeInterval = 3.0
     public let boardingSpeed: TimeInterval = 0.3
     
@@ -77,7 +77,7 @@ extension GameScene {
     
     public override func didMove(to view: SKView) {
         
-        Larson.debugging = true
+        Larson.debugging = false
         
         larsonenter("settings")
         

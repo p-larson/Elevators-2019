@@ -26,6 +26,7 @@
 		D06FC7332274DF6C00C1478D /* Unlockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06FC7322274DF6C00C1478D /* Unlockable.swift */; };
 		D06FC7352274DF7400C1478D /* ShopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06FC7342274DF7400C1478D /* ShopManager.swift */; };
 		D06FC74022750E8D00C1478D /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06FC73F22750E8D00C1478D /* PreferencesManager.swift */; };
+		D074F9E6227F50870005C90F /* GameoverTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D074F9E5227F50870005C90F /* GameoverTransition.swift */; };
 		D096F8B6225E93B5002CC444 /* JoystickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D096F8B5225E93B5002CC444 /* JoystickView.swift */; };
 		D09A06DB223839C000A9CAB1 /* Larson.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09A06DA223839C000A9CAB1 /* Larson.swift */; };
 		D0A1B241226E61E9003F53E7 /* WaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B240226E61E9003F53E7 /* WaveManager.swift */; };
@@ -120,6 +121,7 @@
 		D06FC7322274DF6C00C1478D /* Unlockable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unlockable.swift; sourceTree = "<group>"; };
 		D06FC7342274DF7400C1478D /* ShopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopManager.swift; sourceTree = "<group>"; };
 		D06FC73F22750E8D00C1478D /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
+		D074F9E5227F50870005C90F /* GameoverTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameoverTransition.swift; sourceTree = "<group>"; };
 		D096F8B5225E93B5002CC444 /* JoystickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickView.swift; sourceTree = "<group>"; };
 		D09A06DA223839C000A9CAB1 /* Larson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Larson.swift; sourceTree = "<group>"; };
 		D0A1B240226E61E9003F53E7 /* WaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveManager.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				D0AE27202201564D00D29E62 /* GameViewController.swift */,
 				D0ADF7C0227A3B3600614910 /* NearbyFriendsViewController.swift */,
 				D00C5D5B226FC9AC00CA355C /* HomeViewController.swift */,
+				D074F9E5227F50870005C90F /* GameoverTransition.swift */,
 			);
 			path = "ViewControllers & Storyboard";
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				D0AE271F2201564D00D29E62 /* GameScene.swift in Sources */,
 				D041434F22726D6B00DFB26B /* ControllerIdentifiable.swift in Sources */,
 				D0AE27212201564D00D29E62 /* GameViewController.swift in Sources */,
+				D074F9E6227F50870005C90F /* GameoverTransition.swift in Sources */,
 				D00C5D5C226FC9AC00CA355C /* HomeViewController.swift in Sources */,
 				D06FC7302273B9F800C1478D /* Assets.swift in Sources */,
 				D0ADF7C1227A3B3600614910 /* NearbyFriendsViewController.swift in Sources */,

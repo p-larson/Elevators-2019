@@ -13,7 +13,8 @@ import SpriteKit
 public class MovementManager: ElevatorsGameSceneDependent {
 
     public let scene: ElevatorsGameScene
-    public let haptics: UIImpactFeedbackGenerator
+    public let lightHaptics: UIImpactFeedbackGenerator
+    public let mediumHaptics: UIImpactFeedbackGenerator
     
     public lazy var leftSwipe: UISwipeGestureRecognizer = {
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(moveLeft))
@@ -30,12 +31,7 @@ public class MovementManager: ElevatorsGameSceneDependent {
         swipe.direction = UISwipeGestureRecognizer.Direction.up
         return swipe
     }()
-//    public lazy var downSwipe: UISwipeGestureRecognizer = {
-//        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(exitElevator))
-//        swipe.direction = UISwipeGestureRecognizer.Direction.down
-//        return swipe
-//    }()
-//
+
     private var cycling: Bool = false
     
     public var isCycling: Bool {
@@ -116,7 +112,8 @@ public class MovementManager: ElevatorsGameSceneDependent {
     
     public init(scene: ElevatorsGameScene) {
         self.scene = scene
-        self.haptics = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.light)
+        self.lightHaptics = UIImpactFeedbackGenerator(style: .light)
+        self.mediumHaptics = UIImpactFeedbackGenerator(style: .medium)
         
         [leftSwipe, rightSwipe, upSwipe].forEach {
             swipe in self.scene.view?.addGestureRecognizer(swipe)
@@ -175,7 +172,7 @@ extension MovementManager {
         scene.playerManager.player.run(
             SKAction.sequence(
                 [scene.playerManager.move(to: target),
-                 SKAction.run { self.scene.playerManager.status = .Standing; print("finiushed") }]
+                 SKAction.run { self.scene.playerManager.status = .Standing; }]
             ), withKey: MovementManager.right_key_move
         )
     }
@@ -195,15 +192,12 @@ extension MovementManager {
         }
         
         scene.playerManager.target = target
-        
-        larsondebug("## target \(target)")
-        
         scene.playerManager.status = .Moving
-        larsondebug("RUNNING")
+        
         scene.playerManager.player.run(
             SKAction.sequence(
                 [scene.playerManager.move(to: target),
-                 SKAction.run { self.scene.playerManager.status = .Standing; print("finiushed") }]
+                 SKAction.run { self.scene.playerManager.status = .Standing; }]
             ), withKey: MovementManager.left_key_move
         )
     }
@@ -221,32 +215,45 @@ extension MovementManager {
         }
         
         if let target = scene.playerManager.target {
+            
+            guard target.isEnabled && target.status == .Open else {
+                larsondebug("elevator is disabled or not open, cannot enter.")
+                return
+            }
+            
+            guard abs(target.position.x - scene.playerManager.player.position.x) < target.size.width / 2 else {
+                larsondebug("player is too far away from the elevator to enter.")
+                return
+            }
+            
             larsondebug("player entered elevator on floor \(target.base.number) to floor \(target.destination.number)")
             larsondebug("entered elevator: \(target)")
+            
             self.stopMovement()
             self.scene.waveManager.stop()
+            
             scene.playerManager.status = .Elevator_Entering
             scene.playerManager.elevator = target
-            target.close {
-                self.scene.playerManager.player.run(
-                    SKAction.sequence(
-                        [SKAction.group(
-                            [SKAction.move(to: self.scene.playerManager.onboard(elevator: target), duration: self.scene.boardingSpeed),
-                             SKAction.scale(to: 0.8, duration: self.scene.boardingSpeed)]
-                            ), SKAction.run {
-                                self.elevatorMove()
-                                // Push haptics to inform the player they entered an elevator.
-                                // self.haptics.impactOccurred()
-                                // Removed
-                            }]
-                    ), withKey: MovementManager.up_key_move
-                )
-            }
+            
+            target.close()
+            
+            self.scene.playerManager.player.run(
+                SKAction.sequence(
+                    [SKAction.group(
+                        [SKAction.move(to: self.scene.playerManager.onboard(elevator: target), duration: self.scene.boardingSpeed),
+                         SKAction.scale(to: 0.8, duration: self.scene.boardingSpeed)]
+                        ), SKAction.run {
+//                            self.elevatorMove()
+                        }]
+                ), withKey: MovementManager.up_key_move
+            )
+            
+            self.elevatorMove()
         }
     }
     
     @objc func exitElevator() {
-        
+
         if let elevator = scene.playerManager.elevator {
             larsondebug("exiting elevator \(elevator)")
             self.stopMovement()
@@ -258,9 +265,11 @@ extension MovementManager {
                          SKAction.scale(to: 1, duration: scene.boardingSpeed)]
                         ), SKAction.run {
                             self.scene.playerManager.status = .Standing;
+                            // Close elevator
+                            self.scene.playerManager.target?.close()
                             // Push haptics to inform the player they left an elevator.
                             self.scene.playerManager.elevator = nil
-                            self.haptics.impactOccurred()
+                            self.mediumHaptics.impactOccurred()
                             self.scene.waveManager.start()
                         }]
                 ), withKey: MovementManager.down_key_move

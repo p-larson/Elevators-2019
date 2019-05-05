@@ -20,12 +20,13 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         
         controller.score = score
         controller.gameview = self
+        controller.modalPresentationStyle = .custom
+        controller.transitioningDelegate = self
         
         present(controller, animated: true) {
-            print("presented")
+            larsondebug("game end")
         }
     }
-    
     
     static let id: String = "GameViewController"
     
@@ -65,6 +66,7 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.transitioningDelegate = self
         gameview.allowsTransparency = true
         gameview.presentScene(game)
         scoreboard.textColor = .white
@@ -86,5 +88,22 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
     
     override public var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+// Handle Transition from GameViewController to HomeViewController
+
+extension GameViewController: UIViewControllerTransitioningDelegate {
+    
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        print("grabbing presenting animation")
+        return GameoverTransition(start: self.scoreboard)
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        print("custom transition")
+        return GameoverTransition(start: self.scoreboard)
     }
 }
