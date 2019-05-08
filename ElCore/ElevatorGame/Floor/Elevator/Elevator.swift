@@ -127,7 +127,6 @@ public class Elevator: SKSpriteNode {
     
     public func close(completion: @escaping Block = {}) {
         guard [Status.Closed, Status.Closing].contains(status) == false else {
-            print("## close")
             return
         }
         
@@ -136,7 +135,6 @@ public class Elevator: SKSpriteNode {
     
     public func open(completion: @escaping Block = {}) {
         guard [Status.Open, Status.Opening].contains(status) == false else {
-            print("### open")
             return
         }
         
@@ -152,8 +150,6 @@ public class Elevator: SKSpriteNode {
         self.zPosition = Elevator.backgroundZPosition
         self.isUserInteractionEnabled = true
         self.addChild(doors)
-        
-        print(size, doors.size)
     }
     
     required init?(coder aDecoder: NSCoder) {

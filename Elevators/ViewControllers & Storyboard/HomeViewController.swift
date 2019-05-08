@@ -21,6 +21,7 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
     public override func viewDidLoad() {
         scoreboard.text = "Score: \(score)"
         self.transitioningDelegate = self
+        self.definesPresentationContext = true
     }
     
     @IBAction func onPlayAgainPress(_ sender: UIButton) {

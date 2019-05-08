@@ -74,6 +74,9 @@ public class MovementManager: ElevatorsGameSceneDependent {
         // Update scoreboard, by incrementing it every time the elevator passes a floor.
         self.scene.run(SKAction.repeat(scoreboardUpdate, count: count))
         
+        // Hide Player
+        self.scene.playerManager.player.isHidden = true
+        
         self.scene.cameraManager.move(cameraMove, completion: {
             guard let elevator = self.scene.playerManager.elevator else {
                 larsondebug("Could not finish elevator move: elevator does not exist")
@@ -95,6 +98,8 @@ public class MovementManager: ElevatorsGameSceneDependent {
             self.scene.floorManager.bottomFloor.openElevators()
             // Open Elevator
             elevator.open(completion: {
+                // Unhide player
+                self.scene.playerManager.player.isHidden = false
                 // Leave elevator
                 self.exitElevator()
                 // Call Completion Handler
@@ -242,18 +247,14 @@ extension MovementManager {
                     [SKAction.group(
                         [SKAction.move(to: self.scene.playerManager.onboard(elevator: target), duration: self.scene.boardingSpeed),
                          SKAction.scale(to: 0.8, duration: self.scene.boardingSpeed)]
-                        ), SKAction.run {
-//                            self.elevatorMove()
-                        }]
+                        )]
                 ), withKey: MovementManager.up_key_move
             )
-            
             self.elevatorMove()
         }
     }
     
     @objc func exitElevator() {
-
         if let elevator = scene.playerManager.elevator {
             larsondebug("exiting elevator \(elevator)")
             self.stopMovement()
