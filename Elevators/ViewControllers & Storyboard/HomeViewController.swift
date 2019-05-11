@@ -22,6 +22,7 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
         scoreboard.text = "Score: \(score)"
         self.transitioningDelegate = self
         self.definesPresentationContext = true
+        self.modalPresentationStyle = .custom
     }
     
     @IBAction func onPlayAgainPress(_ sender: UIButton) {
@@ -39,14 +40,21 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         print("@home 1")
-        return GameoverTransition(start: playAgain)
+        
+        guard let gameview = self.gameview else {
+            return nil
+        }
+        
+        let transition = BubbleTransition(start: gameview.scoreboard)
+        
+        transition.mode = .dismiss
+        
+        return transition
     }
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        print("@home 2")
-        
-        return GameoverTransition(start: playAgain)
+        return nil
         
     }
 }

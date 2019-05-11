@@ -28,6 +28,10 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         }
     }
     
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        onEnd(score: 0)
+    }
+    
     static let id: String = "GameViewController"
     
     @IBOutlet public private(set) weak var gameview: SKView!
@@ -98,12 +102,16 @@ extension GameViewController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        print("grabbing presenting animation")
-        return GameoverTransition(start: self.scoreboard)
+        let transition = BubbleTransition(start: scoreboard)
+        
+        print("%2")
+        
+        transition.mode = .present
+        // 12 
+        return transition
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        print("custom transition")
-        return GameoverTransition(start: self.scoreboard)
+        return nil
     }
 }

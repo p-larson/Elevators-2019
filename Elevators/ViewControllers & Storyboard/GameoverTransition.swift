@@ -10,99 +10,216 @@ import Foundation
 import UIKit
 import CoreGraphics
 
-public class GameoverTransition: NSObject, UIViewControllerAnimatedTransitioning {
+public class BubbleTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
-    public weak var start: UIView?
-    public var context: UIViewControllerContextTransitioning? = nil
+    open var startView: UIView
+    open var duration = 2.5
+    open var mode: Mode = .present
+    fileprivate var context: UIViewControllerContextTransitioning? = nil
     
     public init(start: UIView) {
-        self.start = start
-        super.init()
+        self.startView = start
     }
     
+    public enum Mode {
+        case present, dismiss, pop
+    }
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5
+        return duration
     }
-    
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
-        guard
-            let from = transitionContext.view(forKey: .from),
-            let to = transitionContext.viewController(forKey: .to),
-            let snapshot = from.snapshotView(afterScreenUpdates: false)
-        else {
-            print("*** 1")
-            transitionContext.completeTransition(false)
-            return
-        }
-        
-        
-        self.context = transitionContext
-        
-        print(context)
         
         let container = transitionContext.containerView
         
-        // Replace from view with snapshot
-        container.insertSubview(snapshot, aboveSubview: from)
-        from.removeFromSuperview()
+        let fromVC = transitionContext.viewController(forKey: .from), toVC = transitionContext.viewController(forKey: .to)
         
-//        // Animate snapshot off screen
-//        UIView.animate(withDuration: self.transitionDuration(using: context), delay: 0, options: [.curveEaseIn], animations: {
-//            snapshot.center = snapshot.center.add(x: 0, y: snapshot.frame.height)
-//        }, completion: { success in
-//            snapshot.removeFromSuperview()
-//        })
         
-        // Animate mask
-        container.addSubview(to.view)
-        animateMask(to: to.view)
-    }
-    
-    func animateMask(to view: UIView) {
+        fromVC?.beginAppearanceTransition(false, animated: true)
         
-        guard let start: UIView = start else {
-            return
+        if toVC?.modalPresentationStyle == .custom {
+            toVC?.beginAppearanceTransition(true, animated: true)
         }
         
-        let startPath = UIBezierPath(
-            ovalIn: CGRect.init(origin: start.frame.origin, size: start.frame.size)
-        )
+        if self.mode == .present {
+            
+            guard let to = transitionContext.view(forKey: .to) else {
+                return
+            }
+            
+            container.addSubview(to)
+            
+            let animation: CABasicAnimation = {
+                let a = CABasicAnimation(keyPath: "path")
+                
+                let radius = sqrt(pow(startView.center.y - to.frame.height, 2) + pow(startView.center.y - to.frame.height, 2))
+                
+                a.toValue = UIBezierPath(ovalIn: startView.frame.insetBy(dx: -radius, dy: -radius)).cgPath
+                a.fromValue = UIBezierPath(ovalIn: startView.frame).cgPath
+                a.duration = self.duration
+                a.delegate = self
+                
+                return a
+            }()
+            
+            to.layer.add(animation, forKey: "path")
+        } else {
+            
+            guard let view = (mode == .pop) ? transitionContext.view(forKey: .to) : transitionContext.view(forKey: .from) else {
+                return
+            }
+            
+            container.addSubview(view)
+            
+            let animation: CABasicAnimation = {
+                let a = CABasicAnimation(keyPath: "path")
+                
+                let radius = sqrt(pow(startView.center.y - view.frame.height, 2) + pow(startView.center.y - view.frame.height, 2))
+                
+                a.toValue = UIBezierPath(ovalIn: startView.frame.insetBy(dx: -radius, dy: -radius)).cgPath
+                a.fromValue = UIBezierPath(ovalIn: startView.frame).cgPath
+                a.duration = self.duration
+                a.delegate = self
+                
+                return a
+            }()
+            
+            view.layer.add(animation, forKey: "path")
+        }
         
-        let radius: CGFloat = (view.frame.width + view.frame.height)
         
-        let endPath = UIBezierPath(ovalIn: start.frame.insetBy(dx: -radius, dy: -radius))
-        
-        let mask = CAShapeLayer()
-        mask.path = endPath.cgPath
-        view.layer.mask = mask
-        
-        let animation = CABasicAnimation(keyPath: "path")
-        animation.fromValue = startPath.cgPath
-        animation.toValue = endPath.cgPath
-        animation.delegate = self
-        animation.duration = self.transitionDuration(using: context)
-        
-        mask.add(animation, forKey: "path")
-    }
-    
-    func flush() {
-        self.context = nil
+        //        let containerView = transitionContext.containerView
+        //
+        //        let fromViewController = transitionContext.viewController(forKey: .from)
+        //        let toViewController = transitionContext.viewController(forKey: .to)
+        //
+        //
+        //        if transitionMode == .present {
+        //            fromViewController?.beginAppearanceTransition(false, animated: true)
+        //            if toViewController?.modalPresentationStyle == .custom {
+        //                toViewController?.beginAppearanceTransition(true, animated: true)
+        //            }
+        //
+        //            let presentedControllerView = transitionContext.view(forKey: .to)!
+        //            let originalCenter = presentedControllerView.center
+        //            let originalSize = presentedControllerView.frame.size
+        //
+        //            bubble = UIView()
+        //
+        //            bubble.frame = frameForBubble(originalCenter, size: originalSize, start: startingPoint)
+        //            bubble.layer.cornerRadius = bubble.frame.size.height / 2
+        //            bubble.center = startingPoint
+        //            bubble.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+        //            bubble.backgroundColor = bubbleColor
+        //            containerView.addSubview(bubble)
+        //
+        //            presentedControllerView.center = startingPoint
+        //            presentedControllerView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+        //            presentedControllerView.alpha = 0
+        //            containerView.addSubview(presentedControllerView)
+        //
+        //            UIView.animate(withDuration: duration, animations: {
+        //                self.bubble.transform = CGAffineTransform.identity
+        //                presentedControllerView.transform = CGAffineTransform.identity
+        //                presentedControllerView.alpha = 1
+        //                presentedControllerView.center = originalCenter
+        //            }, completion: { (_) in
+        //                transitionContext.completeTransition(true)
+        //                self.bubble.isHidden = true
+        //                if toViewController?.modalPresentationStyle == .custom {
+        //                    toViewController?.endAppearanceTransition()
+        //                }
+        //                fromViewController?.endAppearanceTransition()
+        //            })
+        //        } else {
+        //            // dismiss
+        //
+        //            if fromViewController?.modalPresentationStyle == .custom {
+        //                fromViewController?.beginAppearanceTransition(false, animated: true)
+        //            }
+        //            toViewController?.beginAppearanceTransition(true, animated: true)
+        //
+        //            guard let returningControllerView = (transitionMode == .pop) ? toViewController?.view : fromViewController?.view else {
+        //                return
+        //            }
+        //            let originalCenter = returningControllerView.center
+        //            let originalSize = returningControllerView.frame.size
+        //
+        //            bubble.frame = frameForBubble(originalCenter, size: originalSize, start: startingPoint)
+        //            bubble.layer.cornerRadius = bubble.frame.size.height / 2
+        //            bubble.backgroundColor = bubbleColor
+        //            bubble.center = startingPoint
+        //            bubble.isHidden = false
+        //
+        //            let animation = CABasicAnimation(keyPath: "path")
+        //
+        //            UIBezierPath(ovalIn: )
+        //
+        //            /*
+        //             // 1
+        //             let fullHeight = toView.bounds.height
+        //             let extremePoint = CGPoint(x: triggerButton.center.x,
+        //             y: triggerButton.center.y - fullHeight)
+        //             // 2
+        //             let radius = sqrt((extremePoint.x*extremePoint.x) +
+        //             (extremePoint.y*extremePoint.y))
+        //             // 3
+        //             let circleMaskPathFinal = UIBezierPath(ovalIn: triggerButton.frame.insetBy(dx: -radius,
+        //             dy: -radius))
+        //
+        //             */
+        //
+        //            UIView.animate(withDuration: duration, animations: {
+        //                self.bubble.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+        //                returningControllerView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+        //                returningControllerView.center = self.startingPoint
+        //                returningControllerView.alpha = 0
+        //
+        //                if self.transitionMode == .pop {
+        //                    containerView.insertSubview(returningControllerView, belowSubview: returningControllerView)
+        //                    containerView.insertSubview(self.bubble, belowSubview: returningControllerView)
+        //                }
+        //            }, completion: { (completed) in
+        //                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        //
+        //                if !transitionContext.transitionWasCancelled {
+        //                    returningControllerView.center = originalCenter
+        //                    returningControllerView.removeFromSuperview()
+        //                    self.bubble.removeFromSuperview()
+        //
+        //                    if fromViewController?.modalPresentationStyle == .custom {
+        //                        fromViewController?.endAppearanceTransition()
+        //                    }
+        //                    toViewController?.endAppearanceTransition()
+        //                }
+        //            })
+        // }
     }
 }
 
-extension GameoverTransition: CAAnimationDelegate {
-    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        context?.completeTransition(true)
+extension BubbleTransition: CAAnimationDelegate {
+    public func animationEnded(_ transitionCompleted: Bool) {
+        print("animation ended")
+        context?.completeTransition(!(context?.transitionWasCancelled ?? false))
         
-        guard let from = context?.viewController(forKey: .from), let to = context?.viewController(forKey: .to) else {
-            print("*** error: corrupt context \(context)")
-            return
+        //        if context?.transitionWasCancelled {
+        //            returningControllerView.center = originalCenter
+        //            returningControllerView.removeFromSuperview()
+        //            self.bubble.removeFromSuperview()
+        
+        if context?.viewController(forKey: .from)?.modalPresentationStyle == .custom {
+            context?.viewController(forKey: .from)?.endAppearanceTransition()
         }
+        context?.viewController(forKey: .to)?.endAppearanceTransition()
+    }
+}
+
+private extension BubbleTransition {
+    func frameForBubble(_ originalCenter: CGPoint, size originalSize: CGSize, start: CGPoint) -> CGRect {
+        let lengthX = fmax(start.x, originalSize.width - start.x)
+        let lengthY = fmax(start.y, originalSize.height - start.y)
+        let offset = sqrt(lengthX * lengthX + lengthY * lengthY) * 2
+        let size = CGSize(width: offset, height: offset)
         
-        print(to)
-        
-        print("flushing")
-        self.flush()
+        return CGRect(origin: CGPoint.zero, size: size)
     }
 }
