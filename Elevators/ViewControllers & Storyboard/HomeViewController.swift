@@ -13,16 +13,63 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
     static let id: String = "HomeViewController"
     
     public var score: Int = 0
+    
+    public func update(label: UILabel!, one: String, two: String) {
+        let attributed = NSMutableAttributedString()
+        
+        attributed.append(NSAttributedString(string: one, attributes: [
+            NSAttributedString.Key.font:label.font.withSize(label.frame.height / 5)]
+        ))
+        
+        attributed.append(NSAttributedString(string: "\n"))
+        
+        attributed.append(NSAttributedString(string: two, attributes:
+            [NSAttributedString.Key.font:label.font.withSize(label.frame.height / 3)]
+        ))
+        
+        let style = NSMutableParagraphStyle()
+        
+        style.alignment = .justified
+        
+        if let range = NSRange(attributed.string) {
+            attributed.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: range)
+        }
+        
+        label.numberOfLines = 0
+        
+        label.attributedText = attributed
+    }
+    
+    public func adjust(_ view: UIView!) {
+        view.layer.cornerRadius = view.frame.width / 25
+        
+        view.clipsToBounds = true
+    }
+    
     public weak var gameview: GameViewController? = nil
     
+    @IBOutlet weak var recordboard: UILabel!
     @IBOutlet weak var scoreboard: UILabel!
     @IBOutlet weak var playAgain: UIButton!
     
+    @IBOutlet weak var elevators: UILabel!
+    @IBOutlet weak var skins: UILabel!
+    @IBOutlet weak var dailyprize: UILabel!
+    
+    
+    
     public override func viewDidLoad() {
-        scoreboard.text = "Score: \(score)"
         self.transitioningDelegate = self
         self.definesPresentationContext = true
         self.modalPresentationStyle = .custom
+        self.update(label: scoreboard, one: "Score", two: String(self.score))
+        self.update(label: recordboard, one: "Record", two: "159")
+        
+        [view, playAgain, scoreboard, recordboard, elevators, skins, dailyprize].forEach { (view) in
+            if let view = view {
+                self.adjust(view)
+            }
+        }
     }
     
     @IBAction func onPlayAgainPress(_ sender: UIButton) {
@@ -39,7 +86,7 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        print("@home 1")
+        print("1 dismissed \(dismissed)")
         
         guard let gameview = self.gameview else {
             return nil
@@ -48,12 +95,13 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
         let transition = BubbleTransition(start: gameview.scoreboard)
         
         transition.mode = .dismiss
+        transition.reversed = true
         
-        return transition
+        return nil
     }
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
+        print("1 presented \(presented) presenting \(presenting)")
         return nil
         
     }

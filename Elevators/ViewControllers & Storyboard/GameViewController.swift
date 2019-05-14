@@ -14,6 +14,7 @@ import ElCore
 public class GameViewController: UIViewController, ControllerIdentifiable, EndGameDelegate {
     
     public func onEnd(score: Int) {
+        
         guard let controller = self.storyboard?.instantiateViewController(withIdentifier: HomeViewController.id) as? HomeViewController else {
             return
         }
@@ -24,12 +25,8 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         controller.transitioningDelegate = self
         
         present(controller, animated: true) {
-            larsondebug("game end")
+            print("game end")
         }
-    }
-    
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        onEnd(score: 0)
     }
     
     static let id: String = "GameViewController"
@@ -62,6 +59,7 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         scoreboard.layer.shadowColor = UIColor.red.cgColor
         scoreboard.adjustsFontSizeToFitWidth = true
         scoreboard.font = scoreboard.font.withSize(scoreboard.frame.height / 2)
+
     }
     
     private func loadBackground() {
@@ -76,6 +74,10 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         scoreboard.textColor = .white
         self.setupScoreboardLabel()
         self.loadBackground()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        self.onEnd(score: Int.random(in: 1...159))
     }
     
     override public var shouldAutorotate: Bool {
@@ -104,14 +106,17 @@ extension GameViewController: UIViewControllerTransitioningDelegate {
         
         let transition = BubbleTransition(start: scoreboard)
         
-        print("%2")
+        print("2 presented \(presented) presenting \(presenting)")
         
         transition.mode = .present
         // 12 
-        return transition
+        return nil
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        print("2 dismissed \(dismissed)")
+        
         return nil
     }
 }

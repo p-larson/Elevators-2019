@@ -34,6 +34,7 @@ class LevelManagerTests: XCTestCase {
     }
     
     func testFloorGeneration() {
+        print("123456543gr3456ygfd")
         self.gamescene.floorManager.debugPrint()
     }
     
