@@ -156,12 +156,6 @@ public class Elevator: SKSpriteNode {
         return nil
     }
     
-    public enum Classification {
-        case connector
-        case trap
-        case broken
-    }
-    
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         (scene as? ElevatorsGameScene)?.touched(elevator: self)
     }
@@ -182,7 +176,7 @@ extension Elevator: TextureGraphable {
         // TODO: have actual graphics, lol.
         return Graphics.texture(of: this.size, block: { (context) in
             context.addRect(CGRect.init(origin: .zero, size: this.size))
-        
+            
             switch this.type {
             case .broken:
                 UIColor.gray.setFill()
@@ -204,4 +198,11 @@ extension Elevator: TextureGraphable {
     func updateGraphics() {
         self.texture = Elevator.texture(self)
     }
+    
+    public enum Classification: Int {
+        case connector
+        case trap
+        case broken
+    }
+
 }

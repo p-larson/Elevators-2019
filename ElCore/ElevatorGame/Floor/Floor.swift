@@ -10,48 +10,40 @@ import CoreGraphics
 import SpriteKit
 
 public class Floor: SKNode {
-    
-    // 0-10 opening 11-20 closing
-    
-    public func open(elevator: Elevator) {
-        elevator.open()
-    }
-    
-    public func openElevators() {
-        baseElevators.forEach { (elevator) in
-            open(elevator: elevator)
-        }
-    }
-    
-    public func close(elevator: Elevator) {
-        elevator.close()
-    }
-    
-    public func closeElevators() {
-        baseElevators.forEach { (elevator) in
-            close(elevator: elevator)
-        }
-    }
-    
-    static let baseZPosition: CGFloat = 4.0
-    
-    public static func == (lhs: Floor, rhs: Floor) -> Bool {
-        return lhs.number == rhs.number
-    }
-    
     public let elevatorSize: CGSize
     public let number: Int
     public let type: Classification
     public let floorSize: CGSize
     public weak var manager: FloorManager!
+    public var connectedElevators = [Elevator]()
+    private var positioned: Bool = false
+    public static let baseZPosition: CGFloat = 4.0
+    public lazy var label: SKLabelNode = _label()
+    public lazy var base: SKSpriteNode = _base()
     
-    public var baseSize: CGSize {
-        return CGSize(width: floorSize.width, height: floorSize.height / 24)
+    public init(number: Int, type: Classification, elevatorSize: CGSize, floorSize: CGSize) {
+        self.number = number
+        self.type = type
+        self.elevatorSize = elevatorSize
+        self.floorSize = floorSize
+        super.init()
+        self.addChild(base)
+        // self.addChild(label)
     }
     
-    private var positioned: Bool = false
-    
-    public lazy var label: SKLabelNode = {
+    public required init?(coder aDecoder: NSCoder) {
+        return nil
+    }
+}
+
+public extension Floor {
+    static func == (lhs: Floor, rhs: Floor) -> Bool {
+        return lhs.number == rhs.number
+    }
+}
+
+fileprivate extension Floor {
+    func _label() -> SKLabelNode {
         let node = SKLabelNode()
         node.verticalAlignmentMode = .center
         node.fontSize = 16
@@ -60,9 +52,9 @@ public class Floor: SKNode {
         node.text = "\(number) \(type)"
         node.fontColor = GameColors.floor
         return node
-    }()
+    }
     
-    public lazy var base: SKSpriteNode = {
+    func _base() -> SKSpriteNode {
         let texture = Graphics.texture(of: baseSize, block: { (context: CGContext) in
             let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: self.baseSize), cornerRadius: self.baseSize.height / CGFloat(2))
             context.addPath(path.cgPath)
@@ -73,36 +65,81 @@ public class Floor: SKNode {
         node.colorBlendFactor = 1
         node.color = GameColors.floor
         node.zPosition = Floor.baseZPosition
-
+        
         return node
-    }()
+    }
+}
+
+public extension Floor {
     
-    public var baseElevators: [Elevator] {
+    var baseSize: CGSize {
+        return CGSize(width: floorSize.width, height: floorSize.height / 24)
+    }
+    
+    var baseElevators: [Elevator] {
         return children.compactMap { child in return
             child as? Elevator
         }
     }
-    public var connectedElevators = [Elevator]()
     
+    var elevatorY: CGFloat {
+        return elevatorSize.height / 2 + baseSize.height / 2
+    }
+}
+
+extension Floor {
     public enum Classification {
         case normal
         case trap_1
         case trap_2
+        case level
+    }
+}
+
+
+public extension Floor {
+    func open(elevator: Elevator) {
+        elevator.open()
     }
     
-    init(number: Int, type: Classification, elevatorSize: CGSize, floorSize: CGSize) {
-        self.number = number
-        self.type = type
-        self.elevatorSize = elevatorSize
-        self.floorSize = floorSize
-        super.init()
-        self.addChild(base)
-        // self.addChild(label)
+    func openElevators() {
+        baseElevators.forEach { (elevator) in
+            open(elevator: elevator)
+        }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        return nil
+    func close(elevator: Elevator) {
+        elevator.close()
     }
+    
+    func closeElevators() {
+        baseElevators.forEach { (elevator) in
+            close(elevator: elevator)
+        }
+    }
+    
+}
+
+public extension Floor {
+    func addTrap(to: Floor) {
+        let elevator = Elevator(type: .trap, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        addChild(elevator)
+        to.connectedElevators.append(elevator)
+    }
+    
+    func addBroken() {
+        let elevator = Elevator(type: .broken, base: self, destination: self, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        addChild(elevator)
+    }
+    
+    func addConnector(to: Floor) {
+        let elevator = Elevator(type: .connector, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        addChild(elevator)
+        to.connectedElevators.append(elevator)
+    }
+}
+
+public extension Floor {
     
     func updateElevatorPositions() {
         // Set up debug
@@ -168,31 +205,10 @@ public class Floor: SKNode {
         // Flag that this floor is done positioning.
         positioned = true
     }
-    
-    var elevatorY: CGFloat {
-        return elevatorSize.height / 2 + baseSize.height / 2
-    }
-    
-    
-    
-    func addTrap(to: Floor) {
-        let elevator = Elevator(type: .trap, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
-        addChild(elevator)
-        to.connectedElevators.append(elevator)
-    }
-    
-    func addBroken() {
-        let elevator = Elevator(type: .broken, base: self, destination: self, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
-        addChild(elevator)
-    }
-    
-    func addConnector(to: Floor) {
-        let elevator = Elevator(type: .connector, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
-        addChild(elevator)
-        to.connectedElevators.append(elevator)
-    }
-    
-    override public var description: String {
+}
+
+public extension Floor {
+    override var description: String {
         let tabs = String(repeating: " ", count: (10 - String(number).count))
         let tabs2 = String(repeating: " ", count: (10 - baseElevators.count))
         
@@ -221,3 +237,8 @@ public class Floor: SKNode {
     }
 }
 
+public extension Floor {
+    convenience init(_ model: LevelModel.FloorModel, elevatorSize: CGSize, floorSize: CGSize) {
+        self.init(number: model.number, type: .level, elevatorSize: elevatorSize, floorSize: floorSize)
+    }
+}

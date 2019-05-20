@@ -29,8 +29,6 @@ public class ShopManager {
     }
     
     public private(set) lazy var unlockables: [Unlockable] = {
-        return [
-            Skin(name: "default", cost: 0, atlasName: "salmon elevator", kind: .Elevator)
-        ]
+        return Array(repeating: Skin(name: "default", cost: 0, atlasName: "salmon elevator", kind: .Elevator), count: 25)
     }()
 }

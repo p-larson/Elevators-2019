@@ -96,6 +96,43 @@
             </objects>
             <point key="canvasLocation" x="1272" y="161"/>
         </scene>
+        <!--Shop View Controller-->
+        <scene sceneID="tIY-EJ-33x">
+            <objects>
+                <viewController storyboardIdentifier="ShopViewController" id="kCz-wM-gQn" customClass="ShopViewController" customModule="Elevators" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4If-gl-1bP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EDc-cq-54L" userLabel="ShopView">
+                                <rect key="frame" x="41.5" y="246" width="331" height="414"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Lw7-3A-wBZ">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="EDc-cq-54L" firstAttribute="centerX" secondItem="HoL-Dl-mud" secondAttribute="centerX" id="IuF-bO-4om"/>
+                            <constraint firstItem="EDc-cq-54L" firstAttribute="centerY" secondItem="HoL-Dl-mud" secondAttribute="centerY" id="PKr-1n-5ND"/>
+                            <constraint firstItem="EDc-cq-54L" firstAttribute="width" secondItem="4If-gl-1bP" secondAttribute="width" multiplier="4:5" id="aCj-c7-9h4"/>
+                            <constraint firstItem="EDc-cq-54L" firstAttribute="height" secondItem="4If-gl-1bP" secondAttribute="width" id="mrE-fv-OuU"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HoL-Dl-mud"/>
+                    </view>
+                    <connections>
+                        <outlet property="shopView" destination="EDc-cq-54L" id="5pL-3x-MXX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fwn-C3-C82" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2228.985507246377" y="157.36607142857142"/>
+        </scene>
         <!--Home View Controller-->
         <scene sceneID="T6Y-FE-Qwx">
             <objects>

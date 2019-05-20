@@ -59,7 +59,6 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
     
     
     public override func viewDidLoad() {
-        self.transitioningDelegate = self
         self.definesPresentationContext = true
         self.modalPresentationStyle = .custom
         self.update(label: scoreboard, one: "Score", two: String(self.score))
@@ -82,27 +81,4 @@ public class HomeViewController: UIViewController, ControllerIdentifiable {
         print("play again")
     }
     
-}
-
-extension HomeViewController: UIViewControllerTransitioningDelegate {
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        print("1 dismissed \(dismissed)")
-        
-        guard let gameview = self.gameview else {
-            return nil
-        }
-        
-        let transition = BubbleTransition(start: gameview.scoreboard)
-        
-        transition.mode = .dismiss
-        transition.reversed = true
-        
-        return nil
-    }
-    
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        print("1 presented \(presented) presenting \(presenting)")
-        return nil
-        
-    }
 }

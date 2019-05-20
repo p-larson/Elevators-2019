@@ -11,7 +11,7 @@ import SpriteKit
 
 /// A class to manage floors that intended on always be inside a SKScene
 public class FloorManager: ElevatorsGameSceneDependent {
-    
+    public var model: LevelModel? = nil
     public let holder = SKNode()
     public let scene: ElevatorsGameScene
     
@@ -44,21 +44,58 @@ public class FloorManager: ElevatorsGameSceneDependent {
         self.scene = scene
     }
     
-    public func passovers(on: Floor) -> [Elevator] {
-        return floors.map { (floor) -> [Elevator] in
-            return floor.baseElevators
-        }.joined().filter { (elevator) -> Bool in
-            return elevator.base.number < on.number && elevator.destination.number > on.number
+}
+
+public extension FloorManager {
+    /// # of total baseElevators in all floors
+    var baseElevatorCount: Int {
+        return floors.reduce(0) { (x, y) -> Int in
+            return x + y.baseElevators.count
+        }
+    }
+    /// # of total connectedElevators in all floors
+    var connectorElevatorCount: Int {
+        return floors.reduce(0) { (x, y) -> Int in
+            return x + y.connectedElevators.count
         }
     }
     
-    public func updatePositions() {
+    var bottomFloor: Floor! {
+        return floors.first!
+    }
+    
+    var topFloor: Floor! {
+        return floors.last!
+    }
+    
+    var topNumber: Int {
+        return floors.last?.number ?? -1
+    }
+}
+
+public extension FloorManager {
+    
+    func passovers(on: Floor) -> [Elevator] {
+        return floors.map { (floor) -> [Elevator] in
+            return floor.baseElevators
+            }.joined().filter { (elevator) -> Bool in
+                return elevator.base.number < on.number && elevator.destination.number > on.number
+        }
+    }
+    
+    func updatePositions() {
         // Set up debug
         larsonenter(#function)
         // Prepare for deinit of function.
         defer {
             larsonexit()
         }
+        
+        guard model == nil else {
+            larsondebug("Not Updating Position, Manager currently is modeled.")
+            return
+        }
+        
         floors.enumerated().forEach { (index, floor) in
             position(floor: floor, for: index, offhand: false)
             larsondebug("calculating position for floor \(floor.number) of index \(index), \(floor.position.y)")
@@ -68,21 +105,23 @@ public class FloorManager: ElevatorsGameSceneDependent {
             larsondebug("calculating offhand position for floor \(floor.number) of index \(index), \(floor.position.y)")
         }
     }
-    private func position(floor: Floor, for index: Int, offhand: Bool) {
+    func position(floor: Floor, for index: Int, offhand: Bool) {
         floor.position = offhand ? offhandPosition(for: index) : position(for: index)
     }
     
-    public func position(for index: Int) -> CGPoint {
+    func position(for index: Int) -> CGPoint {
         let h = CGFloat(index) * scene.floorManager.floorSize.height
         return CGPoint(x: scene.gameFrame.midX, y: scene.gameFrame.minY + h)
     }
     
-    public func offhandPosition(for index: Int) -> CGPoint {
+    func offhandPosition(for index: Int) -> CGPoint {
         let h = CGFloat(index) * scene.floorManager.floorSize.height
         return self.position(for: -offhandFloors.count).add(0, h)
     }
-    
-    public func setupGame() {
+}
+
+public extension FloorManager {
+    func setupGame() {
         // Set up debug
         larsonenter(#function)
         // Prepare for deinit of function.
@@ -124,7 +163,10 @@ public class FloorManager: ElevatorsGameSceneDependent {
         larsonexit()
     }
     
-    public func update() {
+}
+
+public extension FloorManager {
+    func update() {
         // Set up debug
         larsonenter(#function)
         // Prepare for deinit of function.
@@ -143,30 +185,6 @@ public class FloorManager: ElevatorsGameSceneDependent {
         f.reversed().forEach { level in
             Swift.print(level.description)
         }
-    }
-    /// # of total baseElevators in all floors
-    public var baseElevatorCount: Int {
-        return floors.reduce(0) { (x, y) -> Int in
-            return x + y.baseElevators.count
-        }
-    }
-    /// # of total connectedElevators in all floors
-    public var connectorElevatorCount: Int {
-        return floors.reduce(0) { (x, y) -> Int in
-            return x + y.connectedElevators.count
-        }
-    }
-    
-    public var bottomFloor: Floor! {
-        return floors.first!
-    }
-    
-    public var topFloor: Floor! {
-        return floors.last!
-    }
-    /// Number of the last Floor
-    public var lastNumber: Int {
-        return floors.last?.number ?? 0
     }
     /// Get the last count elements from the offset
     ///
@@ -227,10 +245,12 @@ public class FloorManager: ElevatorsGameSceneDependent {
             return Bool.random() ? .trap_2 : .normal
         case .trap_2:
             return .normal
+        case .level:
+            return .normal
         }
     }
     
-    public func jostle(count: Int) {
+    func jostle(count: Int) {
         // Set up debug
         larsonenter(#function)
         // Prepare for deinit of function.
@@ -262,14 +282,20 @@ public class FloorManager: ElevatorsGameSceneDependent {
     @discardableResult
     /// Generate the Next floor based on the current sequence.
     ///
-    /// - Returns: generates a new floor based on the current sequence
+    /// - Returns: generates a new floor based on the current sequence if there is a model, it
     private func next() -> Floor {
         
-        let floor = Floor(number: lastNumber.advanced(by: 1), type: generateNextType(), elevatorSize: scene.floorManager.elevatorSize, floorSize: scene.floorManager.floorSize)
+        let number = topNumber.advanced(by: 1)
         
-        floor.manager = self
+        guard let model = model else {
+            let floor = Floor(number: topNumber.advanced(by: 1), type: generateNextType(), elevatorSize: elevatorSize, floorSize: floorSize)
+            
+            floor.manager = self
+            
+            return floor
+        }
         
-        return floor
+        return Floor.init(number: 0, type: .level, elevatorSize: .zero, floorSize: .zero)
     }
     
     /// Populate the scene of all the current floors
@@ -308,7 +334,7 @@ public class FloorManager: ElevatorsGameSceneDependent {
                 larsondebug("finding definite nearby normal")
                 let target = nearbyFloors.first {
                     level in level.type == .normal && level != floor
-                }!
+                    }!
                 larsondebug("connecting to \(target.number)")
                 // Add elevator to targeted normal floor and connected to target
                 floor.addConnector(to: target)
@@ -391,6 +417,8 @@ public class FloorManager: ElevatorsGameSceneDependent {
                 
                 larsonexit()
                 
+                break
+            case .level:
                 break
             }
             larsonexit()

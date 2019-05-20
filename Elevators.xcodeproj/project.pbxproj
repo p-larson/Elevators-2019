@@ -11,6 +11,18 @@
 		D00C5D5C226FC9AC00CA355C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C5D5B226FC9AC00CA355C /* HomeViewController.swift */; };
 		D016F915223AB84C0007AC6D /* ElevatorTouchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */; };
 		D02262DF222376E9009D15E7 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02262DE222376E9009D15E7 /* CameraManager.swift */; };
+		D026E1B3228B4BC6008AD3F6 /* ElCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D026E1B2228B4BC6008AD3F6 /* ElCoreTests.swift */; };
+		D026E1B5228B4BC6008AD3F6 /* ElCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0ADF86A227A4B2B00614910 /* ElCore.framework */; };
+		D026E1BE228B6195008AD3F6 /* GameBuilderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D026E1BD228B6195008AD3F6 /* GameBuilderViewController.swift */; };
+		D026E1C5228B666B008AD3F6 /* ShopViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D026E1C3228B666B008AD3F6 /* ShopViewCell.swift */; };
+		D026E1C6228B666B008AD3F6 /* ShopViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D026E1C4228B666B008AD3F6 /* ShopViewCell.xib */; };
+		D0298369228B45A200174222 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = D0298368228B45A200174222 /* 1.json */; };
+		D029836A228B45A200174222 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = D0298368228B45A200174222 /* 1.json */; };
+		D029836C228B45DD00174222 /* LevelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0298356228B417A00174222 /* LevelModel.swift */; };
+		D029836D228B45DD00174222 /* LevelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0298356228B417A00174222 /* LevelModel.swift */; };
+		D029836E228B45E300174222 /* FloorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AADE37221C8F2600BF71B3 /* FloorManager.swift */; };
+		D029836F228B45E600174222 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E593AB220686B30082B293 /* Floor.swift */; };
+		D0298370228B45EA00174222 /* ElevatorTouchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */; };
 		D0305FDE22235AC400C76819 /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FDD22235AC400C76819 /* PlayerManager.swift */; };
 		D0305FE022235AEC00C76819 /* ElevatorsGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FDF22235AEC00C76819 /* ElevatorsGame.swift */; };
 		D0305FE222235B5300C76819 /* ElevatorsGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0305FE122235B5300C76819 /* ElevatorsGameScene.swift */; };
@@ -53,11 +65,21 @@
 		D0AE27242201564D00D29E62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0AE27222201564D00D29E62 /* Main.storyboard */; };
 		D0AE27262201564F00D29E62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0AE27252201564F00D29E62 /* Assets.xcassets */; };
 		D0AE27292201564F00D29E62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0AE27272201564F00D29E62 /* LaunchScreen.storyboard */; };
+		D0D3A01C228B095E009FE1DC /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3A01B228B095E009FE1DC /* ShopViewController.swift */; };
+		D0D3A021228B24B1009FE1DC /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3A01F228B23C9009FE1DC /* Skin.swift */; };
+		D0D3A022228B24B2009FE1DC /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3A01F228B23C9009FE1DC /* Skin.swift */; };
 		D0DB7D052267BD9400D775B6 /* SpriteKit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB7D042267BD9400D775B6 /* SpriteKit+.swift */; };
 		D0F0D6C7224855030040E595 /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0D6C6224855030040E595 /* MovementManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D026E1BB228B4BCF008AD3F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0AE270D2201564D00D29E62 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0AADE25221C8E6800BF71B3;
+			remoteInfo = "ElCore-iOS";
+		};
 		D0AADE2B221C8E6800BF71B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D0AE270D2201564D00D29E62 /* Project object */;
@@ -104,7 +126,14 @@
 		D00C5D5B226FC9AC00CA355C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorTouchHandler.swift; sourceTree = "<group>"; };
 		D02262DE222376E9009D15E7 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
-		D02262E9222449E4009D15E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D026E1B0228B4BC6008AD3F6 /* ElCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ElCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D026E1B2228B4BC6008AD3F6 /* ElCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElCoreTests.swift; sourceTree = "<group>"; };
+		D026E1B4228B4BC6008AD3F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D026E1BD228B6195008AD3F6 /* GameBuilderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBuilderViewController.swift; sourceTree = "<group>"; };
+		D026E1C3228B666B008AD3F6 /* ShopViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewCell.swift; sourceTree = "<group>"; };
+		D026E1C4228B666B008AD3F6 /* ShopViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopViewCell.xib; sourceTree = "<group>"; };
+		D0298356228B417A00174222 /* LevelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelModel.swift; sourceTree = "<group>"; };
+		D0298368228B45A200174222 /* 1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = 1.json; sourceTree = "<group>"; };
 		D0305FDD22235AC400C76819 /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
 		D0305FDF22235AEC00C76819 /* ElevatorsGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorsGame.swift; sourceTree = "<group>"; };
 		D0305FE122235B5300C76819 /* ElevatorsGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorsGameScene.swift; sourceTree = "<group>"; };
@@ -149,7 +178,8 @@
 		D0AE27252201564F00D29E62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0AE27282201564F00D29E62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0AE272A2201564F00D29E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D0D80C4122246FF300CF25A8 /* LevelManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelManagerTests.swift; sourceTree = "<group>"; };
+		D0D3A01B228B095E009FE1DC /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		D0D3A01F228B23C9009FE1DC /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
 		D0D8523F220693BB00ED606C /* ElevatorsGameColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorsGameColors.swift; sourceTree = "<group>"; };
 		D0D8524122069CF800ED606C /* Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphics.swift; sourceTree = "<group>"; };
 		D0DB7D042267BD9400D775B6 /* SpriteKit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpriteKit+.swift"; sourceTree = "<group>"; };
@@ -159,6 +189,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D026E1AD228B4BC6008AD3F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D026E1B5228B4BC6008AD3F6 /* ElCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0AADE23221C8E6800BF71B3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,13 +255,21 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
-		D02262E6222449E4009D15E7 /* ElevatorsTests */ = {
+		D026E1B1228B4BC6008AD3F6 /* ElCoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				D0D80C4122246FF300CF25A8 /* LevelManagerTests.swift */,
-				D02262E9222449E4009D15E7 /* Info.plist */,
+				D026E1B2228B4BC6008AD3F6 /* ElCoreTests.swift */,
+				D026E1B4228B4BC6008AD3F6 /* Info.plist */,
 			);
-			path = ElevatorsTests;
+			path = ElCoreTests;
+			sourceTree = "<group>";
+		};
+		D0298367228B44D500174222 /* Levels */ = {
+			isa = PBXGroup;
+			children = (
+				D0298368228B45A200174222 /* 1.json */,
+			);
+			path = Levels;
 			sourceTree = "<group>";
 		};
 		D0305FE722235C7200C76819 /* Player */ = {
@@ -253,6 +299,7 @@
 				D0305FE122235B5300C76819 /* ElevatorsGameScene.swift */,
 				D0305FEA22235CCE00C76819 /* ElevatorsGameSceneDependable.swift */,
 				D0ADF85B227A418D00614910 /* NearbyFriendsManager.swift */,
+				D0298367228B44D500174222 /* Levels */,
 			);
 			path = ElevatorGame;
 			sourceTree = "<group>";
@@ -273,6 +320,8 @@
 				D041434E22726D6B00DFB26B /* ControllerIdentifiable.swift */,
 				D0ADF7C0227A3B3600614910 /* NearbyFriendsViewController.swift */,
 				D0AE27202201564D00D29E62 /* GameViewController.swift */,
+				D026E1BD228B6195008AD3F6 /* GameBuilderViewController.swift */,
+				D0D3A023228B27FE009FE1DC /* Shop */,
 				D00C5D5B226FC9AC00CA355C /* HomeViewController.swift */,
 				D074F9E5227F50870005C90F /* GameoverTransition.swift */,
 			);
@@ -284,6 +333,7 @@
 			children = (
 				D06FC7322274DF6C00C1478D /* Unlockable.swift */,
 				D06FC7342274DF7400C1478D /* ShopManager.swift */,
+				D0D3A01F228B23C9009FE1DC /* Skin.swift */,
 				D06FC7362274E29700C1478D /* Textures */,
 			);
 			path = Shop;
@@ -330,6 +380,7 @@
 				D0305FED22235DE000C76819 /* Elevator */,
 				D0E593AB220686B30082B293 /* Floor.swift */,
 				D0AADE37221C8F2600BF71B3 /* FloorManager.swift */,
+				D0298356228B417A00174222 /* LevelModel.swift */,
 			);
 			path = Floor;
 			sourceTree = "<group>";
@@ -371,8 +422,8 @@
 				D0638388227B9EBF00C44441 /* ElevatorsNearbyFriendsTester-macOS.entitlements */,
 				D0AE27172201564D00D29E62 /* Elevators */,
 				D0AADE27221C8E6800BF71B3 /* ElCore */,
-				D02262E6222449E4009D15E7 /* ElevatorsTests */,
 				D0ADF84C227A412F00614910 /* ElevatorsTesting-macOS */,
+				D026E1B1228B4BC6008AD3F6 /* ElCoreTests */,
 				D0AE27162201564D00D29E62 /* Products */,
 				D0ADF7BC227A399B00614910 /* Frameworks */,
 			);
@@ -385,6 +436,7 @@
 				D0AADE26221C8E6800BF71B3 /* ElCore.framework */,
 				D0ADF84B227A412F00614910 /* ElevatorsNearbyFriendsTester-macOS.app */,
 				D0ADF86A227A4B2B00614910 /* ElCore.framework */,
+				D026E1B0228B4BC6008AD3F6 /* ElCoreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -404,6 +456,16 @@
 				D0AE272A2201564F00D29E62 /* Info.plist */,
 			);
 			path = Elevators;
+			sourceTree = "<group>";
+		};
+		D0D3A023228B27FE009FE1DC /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				D0D3A01B228B095E009FE1DC /* ShopViewController.swift */,
+				D026E1C3228B666B008AD3F6 /* ShopViewCell.swift */,
+				D026E1C4228B666B008AD3F6 /* ShopViewCell.xib */,
+			);
+			path = Shop;
 			sourceTree = "<group>";
 		};
 		D0D8523A2206917500ED606C /* GameScene */ = {
@@ -444,6 +506,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		D026E1AF228B4BC6008AD3F6 /* ElCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D026E1B8228B4BC6008AD3F6 /* Build configuration list for PBXNativeTarget "ElCoreTests" */;
+			buildPhases = (
+				D026E1AC228B4BC6008AD3F6 /* Sources */,
+				D026E1AD228B4BC6008AD3F6 /* Frameworks */,
+				D026E1AE228B4BC6008AD3F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D026E1BC228B4BCF008AD3F6 /* PBXTargetDependency */,
+			);
+			name = ElCoreTests;
+			productName = ElCoreTests;
+			productReference = D026E1B0228B4BC6008AD3F6 /* ElCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D0AADE25221C8E6800BF71B3 /* ElCore-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0AADE2F221C8E6800BF71B3 /* Build configuration list for PBXNativeTarget "ElCore-iOS" */;
@@ -531,6 +611,9 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Peter Larson";
 				TargetAttributes = {
+					D026E1AF228B4BC6008AD3F6 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
 					D0AADE25221C8E6800BF71B3 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -574,15 +657,24 @@
 				D0AADE25221C8E6800BF71B3 /* ElCore-iOS */,
 				D0ADF869227A4B2B00614910 /* ElCore-macOS */,
 				D0ADF84A227A412F00614910 /* ElevatorsNearbyFriendsTester-macOS */,
+				D026E1AF228B4BC6008AD3F6 /* ElCoreTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D026E1AE228B4BC6008AD3F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0AADE24221C8E6800BF71B3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0298369228B45A200174222 /* 1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +691,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D029836A228B45A200174222 /* 1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +702,7 @@
 				D0AE27242201564D00D29E62 /* Main.storyboard in Resources */,
 				D0AE27262201564F00D29E62 /* Assets.xcassets in Resources */,
 				D0AE27292201564F00D29E62 /* LaunchScreen.storyboard in Resources */,
+				D026E1C6228B666B008AD3F6 /* ShopViewCell.xib in Resources */,
 				D0A42AC622753031002245BD /* Gilroy-ExtraBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -616,10 +710,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D026E1AC228B4BC6008AD3F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D026E1B3228B4BC6008AD3F6 /* ElCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0AADE22221C8E6800BF71B3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D029836C228B45DD00174222 /* LevelModel.swift in Sources */,
 				D0F0D6C7224855030040E595 /* MovementManager.swift in Sources */,
 				D003FAEB226D1E3600C86CB0 /* ScoreboardManager.swift in Sources */,
 				D0305FE222235B5300C76819 /* ElevatorsGameScene.swift in Sources */,
@@ -629,6 +732,7 @@
 				D09A06DB223839C000A9CAB1 /* Larson.swift in Sources */,
 				D06FC7352274DF7400C1478D /* ShopManager.swift in Sources */,
 				D0305FEB22235CCE00C76819 /* ElevatorsGameSceneDependable.swift in Sources */,
+				D0D3A021228B24B1009FE1DC /* Skin.swift in Sources */,
 				D0305FE922235C7E00C76819 /* PlayerNode.swift in Sources */,
 				D0AADE33221C8E7900BF71B3 /* Floor.swift in Sources */,
 				D043B4AE224BE7A4005210CB /* CoreGraphics+.swift in Sources */,
@@ -660,6 +764,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0298370228B45EA00174222 /* ElevatorTouchHandler.swift in Sources */,
+				D029836D228B45DD00174222 /* LevelModel.swift in Sources */,
+				D0D3A022228B24B2009FE1DC /* Skin.swift in Sources */,
+				D029836F228B45E600174222 /* Floor.swift in Sources */,
+				D029836E228B45E300174222 /* FloorManager.swift in Sources */,
 				D0638385227B924E00C44441 /* NearbyFriendsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -670,12 +779,15 @@
 			files = (
 				D0AE271F2201564D00D29E62 /* GameScene.swift in Sources */,
 				D041434F22726D6B00DFB26B /* ControllerIdentifiable.swift in Sources */,
+				D0D3A01C228B095E009FE1DC /* ShopViewController.swift in Sources */,
 				D0AE27212201564D00D29E62 /* GameViewController.swift in Sources */,
 				D074F9E6227F50870005C90F /* GameoverTransition.swift in Sources */,
 				D00C5D5C226FC9AC00CA355C /* HomeViewController.swift in Sources */,
 				D06FC7302273B9F800C1478D /* Assets.swift in Sources */,
 				D0ADF7C1227A3B3600614910 /* NearbyFriendsViewController.swift in Sources */,
 				D04DAE662214A63200ADA7F0 /* extensions-CGPoint.swift in Sources */,
+				D026E1BE228B6195008AD3F6 /* GameBuilderViewController.swift in Sources */,
+				D026E1C5228B666B008AD3F6 /* ShopViewCell.swift in Sources */,
 				D0AE27192201564D00D29E62 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -683,6 +795,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D026E1BC228B4BCF008AD3F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0AADE25221C8E6800BF71B3 /* ElCore-iOS */;
+			targetProxy = D026E1BB228B4BCF008AD3F6 /* PBXContainerItemProxy */;
+		};
 		D0AADE2C221C8E6800BF71B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D0AADE25221C8E6800BF71B3 /* ElCore-iOS */;
@@ -723,6 +840,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D026E1B9228B4BC6008AD3F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = FKDE872F3V;
+				INFOPLIST_FILE = ElCoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D026E1BA228B4BC6008AD3F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = FKDE872F3V;
+				INFOPLIST_FILE = ElCoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		D0AADE30221C8E6800BF71B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -736,7 +895,11 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ElCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCore;
 				PRODUCT_NAME = ElCore;
 				SKIP_INSTALL = YES;
@@ -760,7 +923,11 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ElCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCore;
 				PRODUCT_NAME = ElCore;
 				SKIP_INSTALL = YES;
@@ -782,7 +949,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = "ElevatorsTesting-macOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.larson.ElevatorsTesting-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -802,7 +972,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = "ElevatorsTesting-macOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.larson.ElevatorsTesting-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -826,7 +999,11 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ElCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.larson.ElCore-macOS";
 				PRODUCT_NAME = ElCore;
@@ -853,7 +1030,11 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ElCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.larson.ElCore-macOS";
 				PRODUCT_NAME = ElCore;
@@ -993,7 +1174,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = Elevators/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.Elevators;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1012,7 +1196,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = Elevators/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.Elevators;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1024,6 +1211,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D026E1B8228B4BC6008AD3F6 /* Build configuration list for PBXNativeTarget "ElCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D026E1B9228B4BC6008AD3F6 /* Debug */,
+				D026E1BA228B4BC6008AD3F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D0AADE2F221C8E6800BF71B3 /* Build configuration list for PBXNativeTarget "ElCore-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

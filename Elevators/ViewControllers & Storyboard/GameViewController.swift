@@ -22,7 +22,6 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         controller.score = score
         controller.gameview = self
         controller.modalPresentationStyle = .custom
-        controller.transitioningDelegate = self
         
         present(controller, animated: true) {
             print("game end")
@@ -68,7 +67,6 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.transitioningDelegate = self
         gameview.allowsTransparency = true
         gameview.presentScene(game)
         scoreboard.textColor = .white
@@ -77,7 +75,15 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
     }
     
     public override func viewDidAppear(_ animated: Bool) {
-        self.onEnd(score: Int.random(in: 1...159))
+//        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: ShopViewController.id) as? ShopViewController else {
+//            return
+//        }
+//
+//        controller.game = game
+//
+//        present(controller, animated: true) {
+//            print("shop")
+//        }
     }
     
     override public var shouldAutorotate: Bool {
@@ -94,29 +100,5 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
     
     override public var prefersStatusBarHidden: Bool {
         return true
-    }
-}
-
-// Handle Transition from GameViewController to HomeViewController
-
-extension GameViewController: UIViewControllerTransitioningDelegate {
-    
-    
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        let transition = BubbleTransition(start: scoreboard)
-        
-        print("2 presented \(presented) presenting \(presenting)")
-        
-        transition.mode = .present
-        // 12 
-        return nil
-    }
-    
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        print("2 dismissed \(dismissed)")
-        
-        return nil
     }
 }
