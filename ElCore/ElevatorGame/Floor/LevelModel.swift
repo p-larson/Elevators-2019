@@ -12,6 +12,7 @@ public struct LevelModel: Encodable & Decodable {
     public var number: Int
     public var name: String
     public var floors: [LevelModel.FloorModel]
+    public var state: State
     
     public struct FloorModel: Encodable & Decodable {
         public var number: Int
@@ -23,5 +24,16 @@ public struct LevelModel: Encodable & Decodable {
             public var destination: Int
             public var type: Int
         }
+    }
+    
+    public enum State: Int, Encodable & Decodable {
+        case locked, unlocked
+    }
+    
+    public init?(number: Int, name: String, state: State) {
+        self.number = number
+        self.name = name
+        self.state = state
+        self.floors = []
     }
 }

@@ -20,7 +20,6 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         }
         
         controller.score = score
-        controller.gameview = self
         controller.modalPresentationStyle = .custom
         
         present(controller, animated: true) {
@@ -75,15 +74,7 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
     }
     
     public override func viewDidAppear(_ animated: Bool) {
-//        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: ShopViewController.id) as? ShopViewController else {
-//            return
-//        }
-//
-//        controller.game = game
-//
-//        present(controller, animated: true) {
-//            print("shop")
-//        }
+        
     }
     
     override public var shouldAutorotate: Bool {
@@ -100,5 +91,9 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
     
     override public var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }

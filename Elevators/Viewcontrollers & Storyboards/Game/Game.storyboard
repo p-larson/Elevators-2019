@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Game View Controller-->
+        <scene sceneID="6F2-Pc-SEk">
+            <objects>
+                <viewController storyboardIdentifier="GameViewController" id="gVD-jC-aSO" customClass="GameViewController" customModule="Elevators" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="SLH-8J-uZf" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oTd-ba-vFz" userLabel="BackgroundImageView">
+                                <rect key="frame" x="0.0" y="5" width="414" height="896"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUY-2u-RNT" userLabel="Spritekit View" customClass="SKView">
+                                <rect key="frame" x="0.0" y="5" width="414" height="896"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PqT-3T-8th" userLabel="HomeViewController">
+                                <rect key="frame" x="165.5" y="52" width="83" height="54.5"/>
+                            </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F4Y-fd-wtQ" userLabel="Scoreboard">
+                                <rect key="frame" x="165.5" y="52" width="83" height="54.5"/>
+                                <color key="backgroundColor" red="0.1215686275" green="0.1215686275" blue="0.50588235290000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="0">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="48" name="Futura-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="-8"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="oTd-ba-vFz" firstAttribute="width" secondItem="SLH-8J-uZf" secondAttribute="width" id="8wB-mC-n8I"/>
+                            <constraint firstItem="F4Y-fd-wtQ" firstAttribute="height" secondItem="PqT-3T-8th" secondAttribute="height" id="BWd-kR-agb"/>
+                            <constraint firstItem="hUY-2u-RNT" firstAttribute="width" secondItem="SLH-8J-uZf" secondAttribute="width" id="FR1-3z-c1E"/>
+                            <constraint firstItem="oTd-ba-vFz" firstAttribute="height" secondItem="SLH-8J-uZf" secondAttribute="height" id="IGL-XE-iAM"/>
+                            <constraint firstItem="hUY-2u-RNT" firstAttribute="centerY" secondItem="oAM-ll-vPq" secondAttribute="centerY" id="Jn1-Lv-lj8"/>
+                            <constraint firstItem="oTd-ba-vFz" firstAttribute="centerX" secondItem="oAM-ll-vPq" secondAttribute="centerX" id="MiD-sU-duU"/>
+                            <constraint firstItem="F4Y-fd-wtQ" firstAttribute="centerX" secondItem="oAM-ll-vPq" secondAttribute="centerX" id="OcF-nn-ApW"/>
+                            <constraint firstItem="F4Y-fd-wtQ" firstAttribute="width" secondItem="PqT-3T-8th" secondAttribute="width" id="U0x-AP-QCI"/>
+                            <constraint firstItem="oTd-ba-vFz" firstAttribute="centerY" secondItem="oAM-ll-vPq" secondAttribute="centerY" id="Umi-Oz-DAs"/>
+                            <constraint firstItem="F4Y-fd-wtQ" firstAttribute="height" secondItem="oAM-ll-vPq" secondAttribute="height" multiplier="1:15" id="VgY-1K-jcX"/>
+                            <constraint firstItem="hUY-2u-RNT" firstAttribute="height" secondItem="SLH-8J-uZf" secondAttribute="height" id="Yvy-gW-GML"/>
+                            <constraint firstItem="F4Y-fd-wtQ" firstAttribute="width" secondItem="oAM-ll-vPq" secondAttribute="width" multiplier="1:5" id="Zb1-rw-MeS"/>
+                            <constraint firstItem="F4Y-fd-wtQ" firstAttribute="top" secondItem="oAM-ll-vPq" secondAttribute="top" constant="8" id="ZgE-mm-WUi"/>
+                            <constraint firstItem="PqT-3T-8th" firstAttribute="top" secondItem="F4Y-fd-wtQ" secondAttribute="top" id="ehh-SQ-H2r"/>
+                            <constraint firstItem="hUY-2u-RNT" firstAttribute="centerX" secondItem="oAM-ll-vPq" secondAttribute="centerX" id="lC9-oR-0Wh"/>
+                            <constraint firstItem="PqT-3T-8th" firstAttribute="centerX" secondItem="oAM-ll-vPq" secondAttribute="centerX" id="shw-dA-iQ7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oAM-ll-vPq"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3Wc-ZB-eoy"/>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="oTd-ba-vFz" id="ghn-Nj-WUX"/>
+                        <outlet property="gameview" destination="hUY-2u-RNT" id="QTc-1j-IcO"/>
+                        <outlet property="scoreboard" destination="F4Y-fd-wtQ" id="Z7W-WY-Owb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6m1-sx-Ekn" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-843" y="161"/>
+        </scene>
+    </scenes>
+</document>

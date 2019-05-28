@@ -180,7 +180,7 @@ public extension FloorManager {
     }
     
     /// Debug Print
-    public func debugPrint(_ floors: [Floor]? = nil) {
+    func debugPrint(_ floors: [Floor]? = nil) {
         let f = floors ?? self.floors
         f.reversed().forEach { level in
             Swift.print(level.description)

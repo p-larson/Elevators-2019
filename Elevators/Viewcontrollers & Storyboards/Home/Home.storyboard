@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="P5z-FM-L1m">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Gilroy-ExtraBold.otf">
+            <string>Gilroy-ExtraBold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="T6Y-FE-Qwx">
+            <objects>
+                <viewController storyboardIdentifier="HomeViewController" id="P5z-FM-L1m" customClass="HomeViewController" customModule="Elevators" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Y3U-1m-O5M">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Elevator Up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-Cm-0vM">
+                                <rect key="frame" x="0.0" y="56" width="414" height="89.5"/>
+                                <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="45"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wgC-Fa-Vkb" userLabel="Shop Points">
+                                <rect key="frame" x="41.5" y="163" width="331" height="89.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SAD-Q7-afl">
+                                        <rect key="frame" x="0.0" y="0.0" width="76.5" height="89.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqA-JH-SSb">
+                                        <rect key="frame" x="84.5" y="0.0" width="77" height="89.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYM-3p-Wqm">
+                                        <rect key="frame" x="169.5" y="0.0" width="77" height="89.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bBV-ZA-dBv">
+                                        <rect key="frame" x="254.5" y="0.0" width="76.5" height="89.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="M3k-sQ-mdM" userLabel="Scores">
+                                <rect key="frame" x="20.5" y="264.5" width="373" height="164"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JdM-d9-atN">
+                                        <rect key="frame" x="0.0" y="0.0" width="180.5" height="164"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.74509803919999995" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="0">
+                                                <attributes>
+                                                    <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <font key="NSFont" size="32" name="Gilroy-ExtraBold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLB-U6-ZFy">
+                                        <rect key="frame" x="192.5" y="0.0" width="180.5" height="164"/>
+                                        <color key="backgroundColor" name="systemPinkColor" catalog="System" colorSpace="catalog"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                        <state key="normal" title="0">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="5a6-TL-hQa" kind="presentation" identifier="levelsSegue" id="wdp-5U-Aif"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2N8-ps-8TM" userLabel="Shops">
+                                <rect key="frame" x="20.5" y="440.5" width="373" height="90.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWZ-9O-cQm">
+                                        <rect key="frame" x="0.0" y="0.0" width="116.5" height="90.5"/>
+                                        <color key="backgroundColor" red="0.40784313725490196" green="0.69411764705882351" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <state key="normal" title="Elevators">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rcH-7J-ZdQ">
+                                        <rect key="frame" x="128.5" y="0.0" width="116" height="90.5"/>
+                                        <color key="backgroundColor" red="0.50980392156862742" green="0.82352941176470584" blue="0.76862745098039209" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <state key="normal" title="Characters">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sew-10-cae">
+                                        <rect key="frame" x="256.5" y="0.0" width="116.5" height="90.5"/>
+                                        <color key="backgroundColor" red="0.83921568627450982" green="0.29411764705882354" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <state key="normal" title="Daily Prize">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1QA-6S-Ak7" userLabel="Gamemode">
+                                <rect key="frame" x="20.5" y="543" width="373" height="68.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NRG-jy-p1e">
+                                        <rect key="frame" x="0.0" y="0.0" width="180.5" height="68.5"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.74509803919999995" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                        <state key="normal" title="Free Play">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="freeplaySelected:" destination="P5z-FM-L1m" eventType="touchUpInside" id="Dc6-rn-gsN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R54-QV-S11">
+                                        <rect key="frame" x="192.5" y="0.0" width="180.5" height="68.5"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.74509803919999995" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                        <state key="normal" title="Levels">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="levelsSelected:" destination="P5z-FM-L1m" eventType="touchUpInside" id="ZLz-8r-nSX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rf-Sx-g8Y">
+                                <rect key="frame" x="20.5" y="635.5" width="373" height="102"/>
+                                <color key="backgroundColor" red="0.46274509803921571" green="0.43529411764705883" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="32"/>
+                                <state key="normal" title="Play Again">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onPlayAgainPress:" destination="P5z-FM-L1m" eventType="touchUpInside" id="Gl1-43-x6Q"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20784313725490194" green="0.078431372549019607" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="2N8-ps-8TM" firstAttribute="width" secondItem="M3k-sQ-mdM" secondAttribute="width" id="3qY-zP-kOB"/>
+                            <constraint firstItem="1QA-6S-Ak7" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="6bm-Jo-DcK"/>
+                            <constraint firstItem="RHs-Cm-0vM" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="7Yo-Bu-S3l"/>
+                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="width" secondItem="RHs-Cm-0vM" secondAttribute="width" multiplier="4:5" id="9w9-Pn-rw0"/>
+                            <constraint firstItem="2N8-ps-8TM" firstAttribute="height" secondItem="BgD-hh-U6V" secondAttribute="height" multiplier="1:9" id="AI7-in-FQD"/>
+                            <constraint firstItem="1QA-6S-Ak7" firstAttribute="height" secondItem="2N8-ps-8TM" secondAttribute="height" multiplier="3:4" id="Ddf-it-FcD"/>
+                            <constraint firstItem="M3k-sQ-mdM" firstAttribute="height" secondItem="BgD-hh-U6V" secondAttribute="height" multiplier="1:5" id="EbE-fc-gJX"/>
+                            <constraint firstItem="1QA-6S-Ak7" firstAttribute="width" secondItem="2N8-ps-8TM" secondAttribute="width" id="J3s-od-M5s"/>
+                            <constraint firstItem="M3k-sQ-mdM" firstAttribute="top" secondItem="bBV-ZA-dBv" secondAttribute="bottom" constant="12" id="J4N-66-uM2"/>
+                            <constraint firstItem="7rf-Sx-g8Y" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="OI6-NI-f0z"/>
+                            <constraint firstItem="RHs-Cm-0vM" firstAttribute="width" secondItem="Y3U-1m-O5M" secondAttribute="width" id="UQC-zc-e2W"/>
+                            <constraint firstItem="7rf-Sx-g8Y" firstAttribute="top" secondItem="1QA-6S-Ak7" secondAttribute="bottom" constant="24" id="Wjq-Is-rzu"/>
+                            <constraint firstItem="M3k-sQ-mdM" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="afj-zT-UzY"/>
+                            <constraint firstItem="2N8-ps-8TM" firstAttribute="top" secondItem="M3k-sQ-mdM" secondAttribute="bottom" constant="12" id="b6q-yw-QO5"/>
+                            <constraint firstItem="1QA-6S-Ak7" firstAttribute="top" secondItem="2N8-ps-8TM" secondAttribute="bottom" constant="12" id="fEe-ol-R5e"/>
+                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="guQ-BA-w2c"/>
+                            <constraint firstItem="RHs-Cm-0vM" firstAttribute="top" secondItem="BgD-hh-U6V" secondAttribute="top" constant="12" id="n7M-It-he2"/>
+                            <constraint firstItem="RHs-Cm-0vM" firstAttribute="height" secondItem="Y3U-1m-O5M" secondAttribute="height" multiplier="1:10" id="n9S-Kh-Agz"/>
+                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="height" secondItem="RHs-Cm-0vM" secondAttribute="height" id="nL3-Kc-w2S"/>
+                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="top" secondItem="RHs-Cm-0vM" secondAttribute="bottom" constant="17.5" id="nbE-xU-j0s"/>
+                            <constraint firstItem="7rf-Sx-g8Y" firstAttribute="width" secondItem="1QA-6S-Ak7" secondAttribute="width" id="qhQ-NH-fum"/>
+                            <constraint firstItem="M3k-sQ-mdM" firstAttribute="width" secondItem="BgD-hh-U6V" secondAttribute="width" multiplier="9:10" id="s1W-n7-ave"/>
+                            <constraint firstItem="7rf-Sx-g8Y" firstAttribute="height" secondItem="1QA-6S-Ak7" secondAttribute="height" multiplier="3:2" id="wQi-IB-OF5"/>
+                            <constraint firstItem="2N8-ps-8TM" firstAttribute="centerX" secondItem="M3k-sQ-mdM" secondAttribute="centerX" id="zoT-Ln-CDR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BgD-hh-U6V"/>
+                    </view>
+                    <connections>
+                        <outlet property="characters" destination="rcH-7J-ZdQ" id="ucI-f4-wM5"/>
+                        <outlet property="dailyprize" destination="Sew-10-cae" id="qXa-jN-lW0"/>
+                        <outlet property="elevators" destination="CWZ-9O-cQm" id="D9T-LC-7K6"/>
+                        <outlet property="freeplayButton" destination="NRG-jy-p1e" id="auK-nP-u3U"/>
+                        <outlet property="gamemodeStackView" destination="1QA-6S-Ak7" id="jb7-T1-tPA"/>
+                        <outlet property="levelsButton" destination="R54-QV-S11" id="qol-Sr-4Tc"/>
+                        <outlet property="playAgain" destination="7rf-Sx-g8Y" id="PTP-oq-bqw"/>
+                        <outlet property="recordboard" destination="LLB-U6-ZFy" id="9ef-0P-UMq"/>
+                        <outlet property="scoreboard" destination="JdM-d9-atN" id="UC2-WW-kkR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tra-Zk-lE9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="150.72463768115944" y="160.71428571428569"/>
+        </scene>
+        <!--Levels-->
+        <scene sceneID="WLG-GC-wuT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Levels" id="5a6-TL-hQa" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t7A-Mn-0B8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="917" y="161"/>
+        </scene>
+    </scenes>
+</document>
