@@ -21,8 +21,12 @@ public class HomeViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var recordboard: UIButton!
+    var tieConstraint: NSLayoutConstraint!, lengthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var scoresView: UIView!
+    @IBOutlet weak var recordboard: UILabel!
     @IBOutlet weak var scoreboard: UILabel!
+    
     @IBOutlet weak var playAgain: UIButton!
     
     @IBOutlet weak var elevators: UIButton!
@@ -94,11 +98,12 @@ extension HomeViewController {
         
         style.alignment = .justified
         
-        if let range = NSRange(attributed.string) {
-            attributed.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: range)
-            attributed.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
-        }
+        let range = NSRangeFromString(attributed.string)
         
+        attributed.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: range)
+        attributed.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
+        
+        print("do do do")
         
         return attributed
     }
@@ -108,16 +113,16 @@ extension HomeViewController {
     public override func viewDidLoad() {
         self.definesPresentationContext = true
         self.modalPresentationStyle = .custom
-        self.recordboard.setTitle(String(), for: .normal)
         
         scoreboard.attributedText = self.attributes(frame: scoreboard.frame, font: scoreboard.font, one: "Score", two: String(score))
         
-        recordboard.setAttributedTitle(attributes(frame: recordboard.frame, font: scoreboard.font, one: "Record", two: "159"), for: .normal)
-    
+        recordboard.attributedText = self.attributes(frame: recordboard.frame, font: recordboard.font, one: "Record", two: "159")
         
         [view, playAgain, scoreboard, recordboard, elevators, characters, dailyprize, freeplayButton, levelsButton].forEach { (view) in
             view?.adjust()
         }
+        
+        print(freeplayButton.translatesAutoresizingMaskIntoConstraints)
         
         self.setupButtons()
         self.setupGamemode()
@@ -144,9 +149,8 @@ extension HomeViewController {
                 return
             }
             
-            let set = abs(button.frame.width - button.frame.height)
-            
-            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: set, bottom: 0, right: set)
+            button.titleLabel?.numberOfLines = 0
+            button.titleLabel?.lineBreakMode = .byWordWrapping
             
             button.setTitleColor(button.backgroundColor?.darker(by: 15), for: .normal)
             button.setTitleColor(button.backgroundColor?.darker(by: 30), for: .highlighted)
@@ -162,35 +166,64 @@ extension HomeViewController {
 
 extension HomeViewController {
     
+    var lengthConstraintConstant: CGFloat {
+        return gamemode == .levels ? 0 : scoresView.frame.width / 4
+    }
+    
     func updateGamemode() {
         
         print(gamemode)
         
-        let duration = 0.3
+        let duration = 3.0
+        
+        self.lengthConstraint.constant = lengthConstraintConstant
         
         UIView.animate(withDuration: duration) {
-            let gm = self.gamemode
-            let z = CGFloat(95.0 / 100.0)
-            
-            self.freeplayButton.transform = gm == .freeplay ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
-            self.freeplayButton.alpha = gm == .freeplay ? 1.0 : z
-            
-            self.levelsButton.transform = gm == .levels ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
-            self.levelsButton.alpha = gm == .levels ? 1.0 : z
+//            let gm = self.gamemode
+//            let z = CGFloat(95.0 / 100.0)
+//
+//            self.freeplayButton.transform = gm == .freeplay ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
+//            self.freeplayButton.alpha = gm == .freeplay ? 1.0 : z
+//
+//            self.levelsButton.transform = gm == .levels ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
+//            self.levelsButton.alpha = gm == .levels ? 1.0 : z
+//
+            self.scoresView.layoutIfNeeded()
         }
         
         let animation1 = self.freeplayButton.highlightAnimation(duration: duration, reversed: gamemode != .freeplay)
-
-        self.freeplayButton.layer.add(animation1, forKey: "switch")
-
-        let animation2 = self.levelsButton.highlightAnimation(duration: duration, reversed: gamemode != .levels)
-
-        self.levelsButton.layer.add(animation2, forKey: "switch")
         
-        self.setupGamemode()
+        self.freeplayButton.layer.add(animation1, forKey: "switch")
+        
+        let animation2 = self.levelsButton.highlightAnimation(duration: duration, reversed: gamemode != .levels)
+        
+        self.levelsButton.layer.add(animation2, forKey: "switch")
     }
     
     func setupGamemode() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        print(view?.translatesAutoresizingMaskIntoConstraints, scoresView.translatesAutoresizingMaskIntoConstraints)
+        
+        scoreboard.translatesAutoresizingMaskIntoConstraints = false
+        recordboard.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: scoreboard as Any, attribute: .leading, relatedBy: .equal, toItem: scoresView, attribute: .leading, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: scoreboard as Any, attribute: .bottom, relatedBy: .equal, toItem: scoresView, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: scoreboard as Any, attribute: .top, relatedBy: .equal, toItem: scoresView, attribute: .top, multiplier: 1, constant: 0)
+            ])
+        
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: recordboard as Any, attribute: .trailing, relatedBy: .equal, toItem: scoresView, attribute: .trailing, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: recordboard as Any, attribute: .bottom, relatedBy: .equal, toItem: scoresView, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: recordboard as Any, attribute: .top, relatedBy: .equal, toItem: scoresView, attribute: .top, multiplier: 1, constant: 0)
+            ])
+        
+        tieConstraint = NSLayoutConstraint(item: scoreboard as Any, attribute: .trailing, relatedBy: .equal, toItem: recordboard, attribute: .leading, multiplier: 1, constant: -12)
+        
+        lengthConstraint = NSLayoutConstraint(item: recordboard as Any, attribute: .width, relatedBy: .equal, toItem: scoresView, attribute: .width, multiplier: 0.5, constant: 0)
+        
+        NSLayoutConstraint.activate([tieConstraint, lengthConstraint])
         
         let z = CGFloat(95.0 / 100.0)
         
