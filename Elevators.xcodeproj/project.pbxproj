@@ -27,9 +27,9 @@
 		D043B4AE224BE7A4005210CB /* CoreGraphics+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043B4AD224BE7A4005210CB /* CoreGraphics+.swift */; };
 		D04DAE662214A63200ADA7F0 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DAE652214A63200ADA7F0 /* CGPoint.swift */; };
 		D051F5CF2277EB4100EF5A61 /* EndGameDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F5CE2277EB4100EF5A61 /* EndGameDelegate.swift */; };
+		D05EB3C8229F01CA00F84FFF /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05EB3C7229F01CA00F84FFF /* CounterView.swift */; };
 		D05ED161229D75CE00137DBA /* Elevators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05ED160229D75CE00137DBA /* Elevators.swift */; };
 		D05ED16C229DAECD00137DBA /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05ED16B229DAECD00137DBA /* UIView.swift */; };
-		D05ED171229DBF6500137DBA /* CounterView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05ED170229DBF6500137DBA /* CounterView2.swift */; };
 		D05ED18E229DC30000137DBA /* ShopViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05ED17E229DC2FE00137DBA /* ShopViewCell.xib */; };
 		D05ED191229DC30000137DBA /* LevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05ED181229DC2FE00137DBA /* LevelViewController.swift */; };
 		D05ED192229DC30000137DBA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05ED182229DC2FE00137DBA /* HomeViewController.swift */; };
@@ -77,6 +77,7 @@
 		D0D3A022228B24B2009FE1DC /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D3A01F228B23C9009FE1DC /* Skin.swift */; };
 		D0DB7D052267BD9400D775B6 /* SpriteKit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB7D042267BD9400D775B6 /* SpriteKit+.swift */; };
 		D0E96B94229C778A00CFD0A5 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E96B93229C778A00CFD0A5 /* UIColor.swift */; };
+		D0ECB395229EE50E00092A1F /* AttributedImageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ECB394229EE50E00092A1F /* AttributedImageTextView.swift */; };
 		D0F0D6C7224855030040E595 /* MovementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0D6C6224855030040E595 /* MovementManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -147,9 +148,9 @@
 		D043B4AD224BE7A4005210CB /* CoreGraphics+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+.swift"; sourceTree = "<group>"; };
 		D04DAE652214A63200ADA7F0 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		D051F5CE2277EB4100EF5A61 /* EndGameDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameDelegate.swift; sourceTree = "<group>"; };
+		D05EB3C7229F01CA00F84FFF /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
 		D05ED160229D75CE00137DBA /* Elevators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elevators.swift; sourceTree = "<group>"; };
 		D05ED16B229DAECD00137DBA /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
-		D05ED170229DBF6500137DBA /* CounterView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView2.swift; sourceTree = "<group>"; };
 		D05ED17E229DC2FE00137DBA /* ShopViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopViewCell.xib; sourceTree = "<group>"; };
 		D05ED181229DC2FE00137DBA /* LevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelViewController.swift; sourceTree = "<group>"; };
 		D05ED182229DC2FE00137DBA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +202,12 @@
 		D0E593AB220686B30082B293 /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 		D0E593AD220687030082B293 /* Elevator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elevator.swift; sourceTree = "<group>"; };
 		D0E96B93229C778A00CFD0A5 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		D0ECB394229EE50E00092A1F /* AttributedImageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedImageTextView.swift; sourceTree = "<group>"; };
+		D0ECB397229EEBD700092A1F /* FiraSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Medium.ttf"; sourceTree = "<group>"; };
+		D0ECB398229EEBD700092A1F /* FiraSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Regular.ttf"; sourceTree = "<group>"; };
+		D0ECB399229EEBF500092A1F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D0ECB39A229EEC6100092A1F /* FiraSans-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Heavy.ttf"; sourceTree = "<group>"; };
+		D0ECB39B229EED9B00092A1F /* FiraSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Bold.ttf"; sourceTree = "<group>"; };
 		D0F0D6C6224855030040E595 /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -333,7 +340,7 @@
 		D05ED16D229DBF0B00137DBA /* CounterView */ = {
 			isa = PBXGroup;
 			children = (
-				D05ED170229DBF6500137DBA /* CounterView2.swift */,
+				D05EB3C7229F01CA00F84FFF /* CounterView.swift */,
 			);
 			path = CounterView;
 			sourceTree = "<group>";
@@ -368,6 +375,7 @@
 				D06FC72F2273B9F800C1478D /* Assets.swift */,
 				D0AE27272201564F00D29E62 /* LaunchScreen.storyboard */,
 				D0AE272A2201564F00D29E62 /* Info.plist */,
+				D0ECB396229EEBCD00092A1F /* Fira Sans */,
 				D0AE27252201564F00D29E62 /* Assets.xcassets */,
 				D05ED1A8229DC61500137DBA /* Extensions */,
 				D05ED1AB229DC68300137DBA /* Views */,
@@ -436,6 +444,7 @@
 		D05ED1AB229DC68300137DBA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D0ECB393229EE4F300092A1F /* AttributedImageTextView */,
 				D05ED16D229DBF0B00137DBA /* CounterView */,
 			);
 			path = Views;
@@ -562,6 +571,26 @@
 				D0638388227B9EBF00C44441 /* ElevatorsNearbyFriendsTester-macOS.entitlements */,
 			);
 			path = Elevators;
+			sourceTree = "<group>";
+		};
+		D0ECB393229EE4F300092A1F /* AttributedImageTextView */ = {
+			isa = PBXGroup;
+			children = (
+				D0ECB394229EE50E00092A1F /* AttributedImageTextView.swift */,
+			);
+			path = AttributedImageTextView;
+			sourceTree = "<group>";
+		};
+		D0ECB396229EEBCD00092A1F /* Fira Sans */ = {
+			isa = PBXGroup;
+			children = (
+				D0ECB398229EEBD700092A1F /* FiraSans-Regular.ttf */,
+				D0ECB397229EEBD700092A1F /* FiraSans-Medium.ttf */,
+				D0ECB39A229EEC6100092A1F /* FiraSans-Heavy.ttf */,
+				D0ECB39B229EED9B00092A1F /* FiraSans-Bold.ttf */,
+				D0ECB399229EEBF500092A1F /* README.md */,
+			);
+			path = "Fira Sans";
 			sourceTree = "<group>";
 		};
 		D0F0D6C5224854F20040E595 /* Movement */ = {
@@ -875,13 +904,14 @@
 				D05ED196229DC30000137DBA /* LevelSelectedViewController.swift in Sources */,
 				D06FC7302273B9F800C1478D /* Assets.swift in Sources */,
 				D04DAE662214A63200ADA7F0 /* CGPoint.swift in Sources */,
+				D05EB3C8229F01CA00F84FFF /* CounterView.swift in Sources */,
 				D05ED161229D75CE00137DBA /* Elevators.swift in Sources */,
 				D05ED19C229DC30000137DBA /* GameViewController.swift in Sources */,
 				D05ED16C229DAECD00137DBA /* UIView.swift in Sources */,
 				D0AE27192201564D00D29E62 /* AppDelegate.swift in Sources */,
 				D05ED193229DC30000137DBA /* ShopViewCell.swift in Sources */,
 				D05ED194229DC30000137DBA /* Storyboard.swift in Sources */,
-				D05ED171229DBF6500137DBA /* CounterView2.swift in Sources */,
+				D0ECB395229EE50E00092A1F /* AttributedImageTextView.swift in Sources */,
 				D05ED198229DC30000137DBA /* LevelsNavigationController.swift in Sources */,
 				D05ED19B229DC30000137DBA /* GameBuilderViewController.swift in Sources */,
 				D05ED192229DC30000137DBA /* HomeViewController.swift in Sources */,

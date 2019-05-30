@@ -10,8 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Gilroy-ExtraBold.otf">
-            <string>Gilroy-ExtraBold</string>
+        <array key="FiraSans-Bold.ttf">
+            <string>FiraSans-Bold</string>
+        </array>
+        <array key="FiraSans-Medium.ttf">
+            <string>FiraSans-Medium</string>
         </array>
     </customFonts>
     <scenes>
@@ -23,111 +26,89 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Elevator Up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-Cm-0vM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ELEVATOR UP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-Cm-0vM">
                                 <rect key="frame" x="0.0" y="56" width="414" height="89.5"/>
-                                <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="45"/>
+                                <fontDescription key="fontDescription" name="FiraSans-Bold" family="Fira Sans" pointSize="45"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wgC-Fa-Vkb" userLabel="Counters">
-                                <rect key="frame" x="41.5" y="157.5" width="331" height="89.5"/>
+                                <rect key="frame" x="88.5" y="157.5" width="237" height="77"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SAD-Q7-afl">
-                                        <rect key="frame" x="0.0" y="0.0" width="76.5" height="89.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Xv-f8-10e">
+                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="77"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqA-JH-SSb">
-                                        <rect key="frame" x="84.5" y="0.0" width="77" height="89.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTg-2a-efn">
+                                        <rect key="frame" x="81.5" y="0.0" width="74" height="77"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYM-3p-Wqm">
-                                        <rect key="frame" x="169.5" y="0.0" width="77" height="89.5"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bBV-ZA-dBv">
-                                        <rect key="frame" x="254.5" y="0.0" width="76.5" height="89.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YAo-Xn-KLY">
+                                        <rect key="frame" x="163.5" y="0.0" width="73.5" height="77"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yz7-EF-b06" userLabel="Scores">
-                                <rect key="frame" x="12" y="259" width="390" height="179.5"/>
+                                <rect key="frame" x="20" y="254.5" width="374" height="179"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JdM-d9-atN">
-                                        <rect key="frame" x="0.0" y="0.0" width="183" height="179.5"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYn-iz-6nu" userLabel="Cell1" customClass="AttributedImageTextView" customModule="Elevators" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="229.5" height="179"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.74509803919999995" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Score">
-                                                <attributes>
-                                                    <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <font key="NSFont" size="24" name="Futura-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uPw-0c-f7D" userLabel="Recordboard">
-                                        <rect key="frame" x="195" y="0.0" width="195" height="179.5"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y5U-DG-Awj" userLabel="Cell2" customClass="AttributedImageTextView" customModule="Elevators" customModuleProvider="target">
+                                        <rect key="frame" x="249.5" y="0.0" width="124.5" height="179"/>
                                         <color key="backgroundColor" name="systemPinkColor" catalog="System" colorSpace="catalog"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Record">
-                                                <attributes>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="24" name="Futura-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="y5U-DG-Awj" firstAttribute="top" secondItem="yz7-EF-b06" secondAttribute="top" id="3sq-Rt-YqQ"/>
+                                    <constraint firstItem="nYn-iz-6nu" firstAttribute="leading" secondItem="yz7-EF-b06" secondAttribute="leading" id="43F-52-mLn"/>
+                                    <constraint firstAttribute="bottom" secondItem="nYn-iz-6nu" secondAttribute="bottom" id="6sE-R7-rfj"/>
+                                    <constraint firstItem="y5U-DG-Awj" firstAttribute="width" secondItem="yz7-EF-b06" secondAttribute="width" multiplier="1:3" id="NUc-SM-1L6"/>
+                                    <constraint firstAttribute="bottom" secondItem="y5U-DG-Awj" secondAttribute="bottom" id="Wkq-ns-jE5"/>
+                                    <constraint firstItem="nYn-iz-6nu" firstAttribute="top" secondItem="yz7-EF-b06" secondAttribute="top" id="beF-1L-9mK"/>
+                                    <constraint firstAttribute="trailing" secondItem="y5U-DG-Awj" secondAttribute="trailing" id="mbZ-Vj-hbj"/>
+                                    <constraint firstItem="y5U-DG-Awj" firstAttribute="leading" secondItem="nYn-iz-6nu" secondAttribute="trailing" constant="20" id="zhP-ds-cvw"/>
+                                </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2N8-ps-8TM" userLabel="Shops">
-                                <rect key="frame" x="12" y="450.5" width="390" height="91"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="2N8-ps-8TM" userLabel="Shops">
+                                <rect key="frame" x="20" y="453.5" width="374" height="91"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWZ-9O-cQm">
-                                        <rect key="frame" x="0.0" y="0.0" width="122" height="91"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="91"/>
                                         <color key="backgroundColor" red="0.40784313725490196" green="0.69411764705882351" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="FiraSans-Bold" family="Fira Sans" pointSize="18"/>
                                         <state key="normal" title="Elevators">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rcH-7J-ZdQ">
-                                        <rect key="frame" x="134" y="0.0" width="122" height="91"/>
+                                        <rect key="frame" x="131.5" y="0.0" width="111" height="91"/>
                                         <color key="backgroundColor" red="0.50980392156862742" green="0.82352941176470584" blue="0.76862745098039209" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="FiraSans-Bold" family="Fira Sans" pointSize="18"/>
                                         <state key="normal" title="Characters">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sew-10-cae">
-                                        <rect key="frame" x="268" y="0.0" width="122" height="91"/>
+                                        <rect key="frame" x="262.5" y="0.0" width="111.5" height="91"/>
                                         <color key="backgroundColor" red="0.83921568627450982" green="0.29411764705882354" blue="0.49803921568627452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="FiraSans-Bold" family="Fira Sans" pointSize="18"/>
                                         <state key="normal" title="Daily Prize">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1QA-6S-Ak7" userLabel="Gamemode">
-                                <rect key="frame" x="12" y="553.5" width="390" height="68"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1QA-6S-Ak7" userLabel="Gamemode">
+                                <rect key="frame" x="20" y="564.5" width="374" height="68"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NRG-jy-p1e">
-                                        <rect key="frame" x="0.0" y="0.0" width="189" height="68"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="177" height="68"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.74509803919999995" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                        <fontDescription key="fontDescription" name="FiraSans-Bold" family="Fira Sans" pointSize="30"/>
                                         <state key="normal" title="Free Play">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -136,9 +117,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R54-QV-S11">
-                                        <rect key="frame" x="201" y="0.0" width="189" height="68"/>
+                                        <rect key="frame" x="197" y="0.0" width="177" height="68"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.74509803919999995" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                        <fontDescription key="fontDescription" name="FiraSans-Bold" family="Fira Sans" pointSize="30"/>
                                         <state key="normal" title="Levels">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -149,10 +130,10 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rf-Sx-g8Y">
-                                <rect key="frame" x="12" y="645.5" width="390" height="102"/>
+                                <rect key="frame" x="20" y="656.5" width="374" height="102.5"/>
                                 <color key="backgroundColor" red="0.46274509803921571" green="0.43529411764705883" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="32"/>
-                                <state key="normal" title="Play Again">
+                                <fontDescription key="fontDescription" name="FiraSans-Medium" family="Fira Sans" pointSize="46"/>
+                                <state key="normal" title="PLAY AGAIN">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -165,40 +146,42 @@
                             <constraint firstItem="2N8-ps-8TM" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="2sS-SI-gJM"/>
                             <constraint firstItem="1QA-6S-Ak7" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="6bm-Jo-DcK"/>
                             <constraint firstItem="RHs-Cm-0vM" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="7Yo-Bu-S3l"/>
-                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="width" secondItem="RHs-Cm-0vM" secondAttribute="width" multiplier="4:5" id="9w9-Pn-rw0"/>
+                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="width" secondItem="RHs-Cm-0vM" secondAttribute="width" multiplier="4:7" id="9w9-Pn-rw0"/>
                             <constraint firstItem="2N8-ps-8TM" firstAttribute="height" secondItem="BgD-hh-U6V" secondAttribute="height" multiplier="1:9" id="AI7-in-FQD"/>
                             <constraint firstItem="1QA-6S-Ak7" firstAttribute="height" secondItem="2N8-ps-8TM" secondAttribute="height" multiplier="3:4" id="Ddf-it-FcD"/>
                             <constraint firstItem="1QA-6S-Ak7" firstAttribute="width" secondItem="2N8-ps-8TM" secondAttribute="width" id="J3s-od-M5s"/>
                             <constraint firstItem="7rf-Sx-g8Y" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="OI6-NI-f0z"/>
-                            <constraint firstItem="yz7-EF-b06" firstAttribute="trailing" secondItem="BgD-hh-U6V" secondAttribute="trailing" constant="-12" id="ULw-25-gUS"/>
+                            <constraint firstItem="yz7-EF-b06" firstAttribute="trailing" secondItem="BgD-hh-U6V" secondAttribute="trailing" constant="-20" id="ULw-25-gUS"/>
                             <constraint firstItem="RHs-Cm-0vM" firstAttribute="width" secondItem="Y3U-1m-O5M" secondAttribute="width" id="UQC-zc-e2W"/>
                             <constraint firstItem="yz7-EF-b06" firstAttribute="height" secondItem="Y3U-1m-O5M" secondAttribute="height" multiplier="1:5" id="VxJ-CV-1yz"/>
                             <constraint firstItem="7rf-Sx-g8Y" firstAttribute="top" secondItem="1QA-6S-Ak7" secondAttribute="bottom" constant="24" id="Wjq-Is-rzu"/>
-                            <constraint firstItem="yz7-EF-b06" firstAttribute="leading" secondItem="BgD-hh-U6V" secondAttribute="leading" constant="12" id="bRV-50-jUz"/>
-                            <constraint firstItem="2N8-ps-8TM" firstAttribute="top" secondItem="yz7-EF-b06" secondAttribute="bottom" constant="12" id="dz6-Cv-bA1"/>
-                            <constraint firstItem="1QA-6S-Ak7" firstAttribute="top" secondItem="2N8-ps-8TM" secondAttribute="bottom" constant="12" id="fEe-ol-R5e"/>
+                            <constraint firstItem="yz7-EF-b06" firstAttribute="leading" secondItem="BgD-hh-U6V" secondAttribute="leading" constant="20" id="bRV-50-jUz"/>
+                            <constraint firstItem="2N8-ps-8TM" firstAttribute="top" secondItem="yz7-EF-b06" secondAttribute="bottom" priority="999" constant="20" id="dz6-Cv-bA1"/>
+                            <constraint firstItem="1QA-6S-Ak7" firstAttribute="top" secondItem="2N8-ps-8TM" secondAttribute="bottom" constant="20" id="fEe-ol-R5e"/>
                             <constraint firstItem="wgC-Fa-Vkb" firstAttribute="centerX" secondItem="BgD-hh-U6V" secondAttribute="centerX" id="guQ-BA-w2c"/>
                             <constraint firstItem="2N8-ps-8TM" firstAttribute="width" secondItem="yz7-EF-b06" secondAttribute="width" id="lyS-Zw-DKg"/>
                             <constraint firstItem="RHs-Cm-0vM" firstAttribute="top" secondItem="BgD-hh-U6V" secondAttribute="top" constant="12" id="n7M-It-he2"/>
                             <constraint firstItem="RHs-Cm-0vM" firstAttribute="height" secondItem="Y3U-1m-O5M" secondAttribute="height" multiplier="1:10" id="n9S-Kh-Agz"/>
-                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="height" secondItem="RHs-Cm-0vM" secondAttribute="height" id="nL3-Kc-w2S"/>
+                            <constraint firstItem="wgC-Fa-Vkb" firstAttribute="height" secondItem="RHs-Cm-0vM" secondAttribute="height" multiplier="6:7" id="nL3-Kc-w2S"/>
                             <constraint firstItem="wgC-Fa-Vkb" firstAttribute="top" secondItem="RHs-Cm-0vM" secondAttribute="bottom" constant="12" id="nbE-xU-j0s"/>
-                            <constraint firstItem="yz7-EF-b06" firstAttribute="top" secondItem="wgC-Fa-Vkb" secondAttribute="bottom" constant="12" id="pQd-cr-n6G"/>
+                            <constraint firstItem="yz7-EF-b06" firstAttribute="top" secondItem="wgC-Fa-Vkb" secondAttribute="bottom" constant="20" id="pQd-cr-n6G"/>
                             <constraint firstItem="7rf-Sx-g8Y" firstAttribute="width" secondItem="1QA-6S-Ak7" secondAttribute="width" id="qhQ-NH-fum"/>
                             <constraint firstItem="7rf-Sx-g8Y" firstAttribute="height" secondItem="1QA-6S-Ak7" secondAttribute="height" multiplier="3:2" id="wQi-IB-OF5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BgD-hh-U6V"/>
                     </view>
                     <connections>
+                        <outlet property="cell1" destination="nYn-iz-6nu" id="4mv-6I-AgK"/>
+                        <outlet property="cell2" destination="y5U-DG-Awj" id="Dua-rj-vmm"/>
                         <outlet property="characters" destination="rcH-7J-ZdQ" id="ucI-f4-wM5"/>
+                        <outlet property="countersView" destination="wgC-Fa-Vkb" id="api-Gi-cik"/>
                         <outlet property="dailyprize" destination="Sew-10-cae" id="qXa-jN-lW0"/>
                         <outlet property="elevators" destination="CWZ-9O-cQm" id="D9T-LC-7K6"/>
                         <outlet property="freeplayButton" destination="NRG-jy-p1e" id="auK-nP-u3U"/>
                         <outlet property="gamemodeStackView" destination="1QA-6S-Ak7" id="jb7-T1-tPA"/>
+                        <outlet property="lengthConstraint" destination="NUc-SM-1L6" id="yuV-9I-MgS"/>
                         <outlet property="levelsButton" destination="R54-QV-S11" id="qol-Sr-4Tc"/>
                         <outlet property="playAgain" destination="7rf-Sx-g8Y" id="PTP-oq-bqw"/>
-                        <outlet property="recordboard" destination="uPw-0c-f7D" id="uRg-7W-Vpj"/>
-                        <outlet property="scoreboard" destination="JdM-d9-atN" id="UC2-WW-kkR"/>
                         <outlet property="scoresView" destination="yz7-EF-b06" id="MnY-Q8-J6k"/>
                     </connections>
                 </viewController>

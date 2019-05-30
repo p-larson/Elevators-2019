@@ -21,11 +21,13 @@ public class HomeViewController: UIViewController {
         }
     }
     
-    var tieConstraint: NSLayoutConstraint!, lengthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lengthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var countersView: UIStackView!
     
     @IBOutlet weak var scoresView: UIView!
-    @IBOutlet weak var recordboard: UILabel!
-    @IBOutlet weak var scoreboard: UILabel!
+    @IBOutlet weak var cell1: AttributedImageTextView!
+    @IBOutlet weak var cell2: AttributedImageTextView!
     
     @IBOutlet weak var playAgain: UIButton!
     
@@ -81,51 +83,17 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-    public func attributes(frame: CGRect, font: UIFont, one: String, two: String) -> NSAttributedString {
-        let attributed = NSMutableAttributedString()
-        
-        attributed.append(NSAttributedString(string: one, attributes: [
-            NSAttributedString.Key.font:font.withSize(frame.height / 5)]
-        ))
-        
-        attributed.append(NSAttributedString(string: "\n"))
-        
-        attributed.append(NSAttributedString(string: two, attributes:
-            [NSAttributedString.Key.font:font.withSize(frame.height / 3)]
-        ))
-        
-        let style = NSMutableParagraphStyle()
-        
-        style.alignment = .justified
-        
-        let range = NSRangeFromString(attributed.string)
-        
-        attributed.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: range)
-        attributed.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: range)
-        
-        print("do do do")
-        
-        return attributed
-    }
-}
-
-extension HomeViewController {
     public override func viewDidLoad() {
         self.definesPresentationContext = true
         self.modalPresentationStyle = .custom
         
-        scoreboard.attributedText = self.attributes(frame: scoreboard.frame, font: scoreboard.font, one: "Score", two: String(score))
-        
-        recordboard.attributedText = self.attributes(frame: recordboard.frame, font: recordboard.font, one: "Record", two: "159")
-        
-        [view, playAgain, scoreboard, recordboard, elevators, characters, dailyprize, freeplayButton, levelsButton].forEach { (view) in
+        [view, playAgain, cell1, cell2, elevators, characters, dailyprize, freeplayButton, levelsButton].forEach { (view) in
             view?.adjust()
         }
         
-        print(freeplayButton.translatesAutoresizingMaskIntoConstraints)
-        
         self.setupButtons()
         self.setupGamemode()
+        self.setupCounters()
     }
 }
 
@@ -174,80 +142,84 @@ extension HomeViewController {
         
         print(gamemode)
         
-        let duration = 3.0
+        let duration = 0.3
+        
+        self.updateGamemodeText()
         
         self.lengthConstraint.constant = lengthConstraintConstant
         
         UIView.animate(withDuration: duration) {
-//            let gm = self.gamemode
-//            let z = CGFloat(95.0 / 100.0)
-//
-//            self.freeplayButton.transform = gm == .freeplay ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
-//            self.freeplayButton.alpha = gm == .freeplay ? 1.0 : z
-//
-//            self.levelsButton.transform = gm == .levels ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
-//            self.levelsButton.alpha = gm == .levels ? 1.0 : z
-//
+            let gm = self.gamemode
+            let z = CGFloat(95.0 / 100.0)
+
+            self.freeplayButton.transform = gm == .freeplay ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
+            self.freeplayButton.alpha = gm == .freeplay ? 1.0 : z
+
+            self.levelsButton.transform = gm == .levels ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
+            self.levelsButton.alpha = gm == .levels ? 1.0 : z
+
             self.scoresView.layoutIfNeeded()
         }
         
-        let animation1 = self.freeplayButton.highlightAnimation(duration: duration, reversed: gamemode != .freeplay)
+        freeplayButton.highlight(duration: duration, gamemode == .freeplay)
+        levelsButton.highlight(duration: duration, gamemode == .levels)
+    }
+    
+    func updateGamemodeText() {
+        if gamemode == .freeplay {
+            cell1.set(text1: "Score", text2: String(score))
+            cell2.set(text1: "Record", text2: "159")
+        }
         
-        self.freeplayButton.layer.add(animation1, forKey: "switch")
-        
-        let animation2 = self.levelsButton.highlightAnimation(duration: duration, reversed: gamemode != .levels)
-        
-        self.levelsButton.layer.add(animation2, forKey: "switch")
+        if gamemode == .levels {
+            cell1.set(text1: "Score", text2: String(score))
+            cell2.set(text1: "Level", text2: "24")
+        }
     }
     
     func setupGamemode() {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        print(view?.translatesAutoresizingMaskIntoConstraints, scoresView.translatesAutoresizingMaskIntoConstraints)
         
-        scoreboard.translatesAutoresizingMaskIntoConstraints = false
-        recordboard.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: scoreboard as Any, attribute: .leading, relatedBy: .equal, toItem: scoresView, attribute: .leading, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: scoreboard as Any, attribute: .bottom, relatedBy: .equal, toItem: scoresView, attribute: .bottom, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: scoreboard as Any, attribute: .top, relatedBy: .equal, toItem: scoresView, attribute: .top, multiplier: 1, constant: 0)
-            ])
-        
-        NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: recordboard as Any, attribute: .trailing, relatedBy: .equal, toItem: scoresView, attribute: .trailing, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: recordboard as Any, attribute: .bottom, relatedBy: .equal, toItem: scoresView, attribute: .bottom, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: recordboard as Any, attribute: .top, relatedBy: .equal, toItem: scoresView, attribute: .top, multiplier: 1, constant: 0)
-            ])
-        
-        tieConstraint = NSLayoutConstraint(item: scoreboard as Any, attribute: .trailing, relatedBy: .equal, toItem: recordboard, attribute: .leading, multiplier: 1, constant: -12)
-        
-        lengthConstraint = NSLayoutConstraint(item: recordboard as Any, attribute: .width, relatedBy: .equal, toItem: scoresView, attribute: .width, multiplier: 0.5, constant: 0)
-        
-        NSLayoutConstraint.activate([tieConstraint, lengthConstraint])
+        self.updateGamemodeText()
         
         let z = CGFloat(95.0 / 100.0)
         
         switch gamemode {
         case .freeplay:
             freeplayButton.alpha = 1
-            freeplayButton.layer.borderWidth = freeplayButton.borderWidth
-            freeplayButton.layer.borderColor = freeplayButton.highlightedBorder.cgColor
+            freeplayButton.highlight(duration: nil, true)
             
             levelsButton.alpha = z
-            levelsButton.layer.borderWidth = 0
-            levelsButton.layer.borderColor = UIColor.clear.cgColor
+            levelsButton.highlight(duration: nil, false)
             
             break
         case .levels:
             levelsButton.alpha = 1
-            levelsButton.layer.borderWidth = levelsButton.borderWidth
-            levelsButton.layer.borderColor = levelsButton.highlightedBorder.cgColor
+            levelsButton.highlight(duration: nil, true)
             
             freeplayButton.alpha = z
-            freeplayButton.layer.borderWidth = 0
-            freeplayButton.layer.borderColor = UIColor.clear.cgColor
+            freeplayButton.highlight(duration: nil, false)
             
             break
         }
+    }
+}
+
+extension HomeViewController {
+    func setupCounters() {
+        // Clear the Placeholder views from the storyboard
+        countersView.subviews.forEach { (view) in
+            countersView.removeArrangedSubview(view)
+            view.removeFromSuperview()
+        }
+        
+        [CounterView.Kind.coin, CounterView.Kind.gem, CounterView.Kind.heart].forEach { (kind) in
+            let view = CounterView()
+            view.kind = kind
+            view.string = String(Int.random(in: 1 ... 1578))
+            self.countersView.addArrangedSubview(view)
+        }
+        
+        countersView.setNeedsLayout()
+        countersView.layoutIfNeeded()
     }
 }

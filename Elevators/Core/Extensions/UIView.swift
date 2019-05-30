@@ -9,8 +9,8 @@
 import UIKit
 
 extension UIView {
-    public func adjust() {
-        layer.cornerRadius = 12
+    public func adjust(_ radius: CGFloat? = nil) {
+        layer.cornerRadius = radius ?? 10
         clipsToBounds = true
     }
     
@@ -22,17 +22,24 @@ extension UIView {
         return 6
     }
     
-    func highlightAnimation(duration: TimeInterval, reversed: Bool = false) -> CAAnimation {
+    func highlight(duration: TimeInterval? = nil, _ on: Bool = false) {
+        
+        let fromColor = UIColor.clear.cgColor, toColor = highlightedBorder.cgColor
+        
+        layer.borderWidth = 5
+        layer.borderColor = on ? toColor : fromColor
+        
+        guard let duration = duration else {
+            return
+        }
         
         let animation = CABasicAnimation(keyPath: "borderColor")
         
-        let fromColor = backgroundColor?.cgColor ?? UIColor.clear.cgColor, toColor = highlightedBorder.cgColor
-        
-        animation.fromValue = !reversed ? fromColor : toColor
-        animation.toValue = !reversed ? toColor : fromColor
+        animation.fromValue = on ? fromColor : toColor
+        animation.toValue = on ? toColor : fromColor
         animation.duration = duration
-        animation.timingFunction = CAMediaTimingFunction.init(name: CAMediaTimingFunctionName.easeOut)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         
-        return animation
+        layer.add(animation, forKey: "borderColor")
     }
 }
