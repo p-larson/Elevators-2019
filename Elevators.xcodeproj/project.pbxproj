@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D003FAEB226D1E3600C86CB0 /* ScoreboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D003FAEA226D1E3600C86CB0 /* ScoreboardManager.swift */; };
+		D011C27922B73A5200B7F09E /* LarsonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011C27722B73A5100B7F09E /* LarsonView.swift */; };
+		D011C27A22B73A5200B7F09E /* OverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011C27822B73A5200B7F09E /* OverlayLayer.swift */; };
 		D016F915223AB84C0007AC6D /* ElevatorTouchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */; };
 		D02262DF222376E9009D15E7 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02262DE222376E9009D15E7 /* CameraManager.swift */; };
 		D026E1B3228B4BC6008AD3F6 /* ElCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D026E1B2228B4BC6008AD3F6 /* ElCoreTests.swift */; };
@@ -132,6 +134,8 @@
 
 /* Begin PBXFileReference section */
 		D003FAEA226D1E3600C86CB0 /* ScoreboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardManager.swift; sourceTree = "<group>"; };
+		D011C27722B73A5100B7F09E /* LarsonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LarsonView.swift; sourceTree = "<group>"; };
+		D011C27822B73A5200B7F09E /* OverlayLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayLayer.swift; sourceTree = "<group>"; };
 		D016F914223AB84C0007AC6D /* ElevatorTouchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorTouchHandler.swift; sourceTree = "<group>"; };
 		D02262DE222376E9009D15E7 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		D026E1B0228B4BC6008AD3F6 /* ElCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ElCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -268,6 +272,15 @@
 				D051F5CE2277EB4100EF5A61 /* EndGameDelegate.swift */,
 			);
 			path = EndGame;
+			sourceTree = "<group>";
+		};
+		D011C27622B73A4300B7F09E /* LarsonView */ = {
+			isa = PBXGroup;
+			children = (
+				D011C27722B73A5100B7F09E /* LarsonView.swift */,
+				D011C27822B73A5200B7F09E /* OverlayLayer.swift */,
+			);
+			path = LarsonView;
 			sourceTree = "<group>";
 		};
 		D02262E0222376EF009D15E7 /* Camera */ = {
@@ -444,6 +457,7 @@
 		D05ED1AB229DC68300137DBA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D011C27622B73A4300B7F09E /* LarsonView */,
 				D0ECB393229EE4F300092A1F /* AttributedImageTextView */,
 				D05ED16D229DBF0B00137DBA /* CounterView */,
 			);
@@ -903,8 +917,10 @@
 				D05ED195229DC30000137DBA /* LevelCell.swift in Sources */,
 				D05ED196229DC30000137DBA /* LevelSelectedViewController.swift in Sources */,
 				D06FC7302273B9F800C1478D /* Assets.swift in Sources */,
+				D011C27A22B73A5200B7F09E /* OverlayLayer.swift in Sources */,
 				D04DAE662214A63200ADA7F0 /* CGPoint.swift in Sources */,
 				D05EB3C8229F01CA00F84FFF /* CounterView.swift in Sources */,
+				D011C27922B73A5200B7F09E /* LarsonView.swift in Sources */,
 				D05ED161229D75CE00137DBA /* Elevators.swift in Sources */,
 				D05ED19C229DC30000137DBA /* GameViewController.swift in Sources */,
 				D05ED16C229DAECD00137DBA /* UIView.swift in Sources */,

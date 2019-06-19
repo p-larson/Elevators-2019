@@ -11,15 +11,11 @@ import ElCore
 
 public class HomeViewController: UIViewController {
     
+    fileprivate weak static var current: HomeViewController? = nil
+    
     public var score: Int = 0
     
-    public var gamemode: Elevators.Gamemode = .levels {
-        didSet {
-            if oldValue != gamemode {
-                self.updateGamemode()
-            }
-        }
-    }
+    public var gamemode: Elevators.Gamemode = .levels
     
     @IBOutlet weak var lengthConstraint: NSLayoutConstraint!
     
@@ -29,27 +25,96 @@ public class HomeViewController: UIViewController {
     @IBOutlet weak var cell1: AttributedImageTextView!
     @IBOutlet weak var cell2: AttributedImageTextView!
     
-    @IBOutlet weak var playAgain: UIButton!
+    @IBOutlet public weak var freeplay: LarsonView!
+    @IBOutlet public weak var levels: LarsonView!
     
-    @IBOutlet weak var elevators: UIButton!
-    @IBOutlet weak var characters: UIButton!
-    @IBOutlet weak var dailyprize: UIButton!
+    @IBOutlet weak var scoreView: LarsonView!
+    @IBOutlet weak var recordView: LarsonView!
     
-    @IBOutlet weak var gamemodeStackView: UIStackView!
-    @IBOutlet weak var freeplayButton: UIButton!
-    @IBOutlet weak var levelsButton: UIButton!
+    @IBOutlet weak var recordWidthConstraint: NSLayoutConstraint!
+    
+    public let recordWidthConstantLevels: CGFloat = -10
+    
+    public var recordWidthConstantFreeplay: CGFloat {
+        return recordWidthConstantLevels - view.frame.width / 8
+    }
+    
+    public var haptics: UIImpactFeedbackGenerator!
+    
+    public func updateLengthConstraint() {
+        recordWidthConstraint.constant = recordWidthConstantFreeplay
+        
+        switch gamemode {
+        case .freeplay:
+            recordWidthConstraint.constant = recordWidthConstantFreeplay
+            break
+        case .levels:
+            recordWidthConstraint.constant = recordWidthConstantLevels
+            break
+        }
+        
+        
+        UIView.animate(withDuration: 0.125, delay: 0.0, options: .curveEaseOut, animations: {
+            [self.recordView, self.scoresView].forEach({ (view) in
+                view?.subviews.forEach({ (subview) in
+                    subview.alpha = 0.0
+                })
+            })
+            
+            self.view.layoutIfNeeded()
+        }) { (success) in
+            [self.recordView, self.scoresView].forEach({ (view) in
+                UIView.animate(withDuration: 0.125, delay: 0.0, options: .curveEaseOut, animations: {
+                    view?.subviews.forEach({ (subview) in
+                        subview.alpha = 1.0
+                    })
+                }, completion: nil)
+            })
+        }
+    }
+    
+    public var switchLevels: LarsonView.LarsonInteraction = { (larsonview) in
+        
+        guard larsonview.state == .unselected else {
+            return
+        }
+        
+        // Stupid stupid stupid
+        guard let controller: HomeViewController = HomeViewController.current else {
+            return
+        }
+        
+        switch controller.gamemode {
+        case .freeplay:
+
+            controller.freeplay.setState(to: .unselected, animated: true)
+            controller.freeplay.isPressable = true
+            controller.levels.setState(to: .selected, animated: true)
+            controller.levels.isPressable = false
+            
+            controller.gamemode = .levels
+            
+            break
+        case .levels:
+
+            controller.freeplay.setState(to: .selected, animated: true)
+            controller.freeplay.isPressable = false
+            controller.levels.setState(to: .unselected, animated: true)
+            controller.levels.isPressable = true
+
+            controller.gamemode = .freeplay
+            break
+        }
+        
+        controller.updateLengthConstraint()
+    }
+    
+    
+    @IBOutlet weak var playAgain: LarsonView!
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    @IBAction func freeplaySelected(_ sender: Any) {
-        self.gamemode = .freeplay
-    }
-    
-    
-    @IBAction func levelsSelected(_ sender: Any) {
-        self.gamemode = .levels
+        
     }
 }
 
@@ -87,120 +152,34 @@ extension HomeViewController {
         self.definesPresentationContext = true
         self.modalPresentationStyle = .custom
         
-        [view, playAgain, cell1, cell2, elevators, characters, dailyprize, freeplayButton, levelsButton].forEach { (view) in
-            view?.adjust()
-        }
+        HomeViewController.current = self
         
-        self.setupButtons()
-        self.setupGamemode()
+        levels.text = "Levels"
+        freeplay.text = "Free Play"
+        playAgain.text = "Play Again"
+        recordView.attributedText = LarsonView.headedBodyAttributedText
+        recordView.header = "Record"
+        recordView.body = "159"
+        
+        self.haptics = UIImpactFeedbackGenerator.init(style: .heavy)
+        
         self.setupCounters()
+        
+        
+        [freeplay, levels].forEach { (larsonview) in
+            larsonview?.endTouch = self.switchLevels
+            larsonview?.onTouch = { _ in
+                HomeViewController.current?.haptics.prepare()
+            }
+        }
+        self.freeplay.endTouch = self.switchLevels
+        self.levels.endTouch = self.switchLevels
     }
 }
 
 extension HomeViewController {
     func setupButtons() {
-        
-        let buttons = [elevators, characters, dailyprize]
-        
-        [UIControl.State.normal, UIControl.State.highlighted].forEach { (state) in
-            elevators.setTitle("Elevators", for: state)
-            characters.setTitle("Characters", for: state)
-            dailyprize.setTitle("Daily Prize", for: state)
-        }
-        
-        elevators.setImage(#imageLiteral(resourceName: "elevator iocn"), for: .normal)
-        characters.setImage(#imageLiteral(resourceName: "blank character icon"), for: .normal)
-        dailyprize.setImage(#imageLiteral(resourceName: "present icon"), for: .normal)
-        
-        buttons.forEach { (button) in
-            guard let button = button else {
-                return
-            }
-            
-            button.titleLabel?.numberOfLines = 0
-            button.titleLabel?.lineBreakMode = .byWordWrapping
-            
-            button.setTitleColor(button.backgroundColor?.darker(by: 15), for: .normal)
-            button.setTitleColor(button.backgroundColor?.darker(by: 30), for: .highlighted)
-            
-            button.tintColor = .white
-            button.imageView?.contentMode = .scaleAspectFit
-            
-            button.setNeedsLayout()
-            button.layoutIfNeeded()
-        }
-    }
-}
-
-extension HomeViewController {
     
-    var lengthConstraintConstant: CGFloat {
-        return gamemode == .levels ? 0 : scoresView.frame.width / 4
-    }
-    
-    func updateGamemode() {
-        
-        print(gamemode)
-        
-        let duration = 0.3
-        
-        self.updateGamemodeText()
-        
-        self.lengthConstraint.constant = lengthConstraintConstant
-        
-        UIView.animate(withDuration: duration) {
-            let gm = self.gamemode
-            let z = CGFloat(95.0 / 100.0)
-
-            self.freeplayButton.transform = gm == .freeplay ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
-            self.freeplayButton.alpha = gm == .freeplay ? 1.0 : z
-
-            self.levelsButton.transform = gm == .levels ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: z, y: z)
-            self.levelsButton.alpha = gm == .levels ? 1.0 : z
-
-            self.scoresView.layoutIfNeeded()
-        }
-        
-        freeplayButton.highlight(duration: duration, gamemode == .freeplay)
-        levelsButton.highlight(duration: duration, gamemode == .levels)
-    }
-    
-    func updateGamemodeText() {
-        if gamemode == .freeplay {
-            cell1.set(text1: "Score", text2: String(score))
-            cell2.set(text1: "Record", text2: "159")
-        }
-        
-        if gamemode == .levels {
-            cell1.set(text1: "Score", text2: String(score))
-            cell2.set(text1: "Level", text2: "24")
-        }
-    }
-    
-    func setupGamemode() {
-        
-        self.updateGamemodeText()
-        
-        let z = CGFloat(95.0 / 100.0)
-        
-        switch gamemode {
-        case .freeplay:
-            freeplayButton.alpha = 1
-            freeplayButton.highlight(duration: nil, true)
-            
-            levelsButton.alpha = z
-            levelsButton.highlight(duration: nil, false)
-            
-            break
-        case .levels:
-            levelsButton.alpha = 1
-            levelsButton.highlight(duration: nil, true)
-            
-            freeplayButton.alpha = z
-            freeplayButton.highlight(duration: nil, false)
-            
-            break
-        }
     }
 }
 
