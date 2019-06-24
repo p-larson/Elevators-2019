@@ -11,6 +11,7 @@ import GameplayKit
 import ElCore
 
 public class GameScene: ElevatorsGameScene {
+    
     // ElevatorGame Constants
     public let maxElevatorRange = 3
     public let maxElevatorsPerFloor = 3
@@ -77,10 +78,11 @@ extension GameScene {
     
     public override func didMove(to view: SKView) {
         
-        Larson.debugging = false
+        Larson.debugging = true
         
         larsonenter("settings")
         
+        larsondebug("frame", frame)
         larsondebug("maxElevatorRange", maxElevatorRange)
         larsondebug("maxElevatorsPerFloor", maxElevatorsPerFloor)
         larsondebug("maxElevatorsPerTrapFloor", maxElevatorsPerTrapFloor)

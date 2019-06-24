@@ -21,7 +21,6 @@ public class HomeViewController: UIViewController {
     
     @IBOutlet weak var countersView: UIStackView!
     
-    @IBOutlet weak var scoresView: UIView!
     @IBOutlet weak var cell1: AttributedImageTextView!
     @IBOutlet weak var cell2: AttributedImageTextView!
     
@@ -30,6 +29,8 @@ public class HomeViewController: UIViewController {
     
     @IBOutlet weak var scoreView: LarsonView!
     @IBOutlet weak var recordView: LarsonView!
+    
+    @IBOutlet weak var dailyPrizeView: LarsonView!
     
     @IBOutlet weak var recordWidthConstraint: NSLayoutConstraint!
     
@@ -40,38 +41,6 @@ public class HomeViewController: UIViewController {
     }
     
     public var haptics: UIImpactFeedbackGenerator!
-    
-    public func updateLengthConstraint() {
-        recordWidthConstraint.constant = recordWidthConstantFreeplay
-        
-        switch gamemode {
-        case .freeplay:
-            recordWidthConstraint.constant = recordWidthConstantFreeplay
-            break
-        case .levels:
-            recordWidthConstraint.constant = recordWidthConstantLevels
-            break
-        }
-        
-        
-        UIView.animate(withDuration: 0.125, delay: 0.0, options: .curveEaseOut, animations: {
-            [self.recordView, self.scoresView].forEach({ (view) in
-                view?.subviews.forEach({ (subview) in
-                    subview.alpha = 0.0
-                })
-            })
-            
-            self.view.layoutIfNeeded()
-        }) { (success) in
-            [self.recordView, self.scoresView].forEach({ (view) in
-                UIView.animate(withDuration: 0.125, delay: 0.0, options: .curveEaseOut, animations: {
-                    view?.subviews.forEach({ (subview) in
-                        subview.alpha = 1.0
-                    })
-                }, completion: nil)
-            })
-        }
-    }
     
     public var switchLevels: LarsonView.LarsonInteraction = { (larsonview) in
         
@@ -106,7 +75,42 @@ public class HomeViewController: UIViewController {
             break
         }
         
-        controller.updateLengthConstraint()
+        
+        UIView.animate(withDuration: 0.125, delay: 0.0, options: .curveEaseOut, animations: {
+            [controller.recordView, controller.scoreView].forEach({ (view) in
+                view?.subviews.forEach({ (subview) in
+                    subview.alpha = 0.0
+                })
+            })
+        }) { (success) in
+            
+            controller.recordWidthConstraint.constant = controller.recordWidthConstantFreeplay
+            
+            switch controller.gamemode {
+            case .freeplay:
+                controller.recordWidthConstraint.constant = controller.recordWidthConstantFreeplay
+                break
+            case .levels:
+                controller.recordWidthConstraint.constant = controller.recordWidthConstantLevels
+                break
+            }
+            
+            controller.updateBoards()
+            
+            UIView.animate(withDuration: 0.125, delay: 0.0, options: .curveEaseOut, animations: {
+                controller.view.layoutIfNeeded()
+            }) {
+                (success) in
+                
+                [controller.recordView, controller.scoreView].forEach({ (view) in
+                    UIView.animate(withDuration: 0.125, delay: 0.0, options: .curveEaseOut, animations: {
+                        view?.subviews.forEach({ (subview) in
+                            subview.alpha = 1.0
+                        })
+                    }, completion: nil)
+                })
+            }
+        }
     }
     
     
@@ -115,6 +119,85 @@ public class HomeViewController: UIViewController {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+    }
+}
+
+extension HomeViewController {
+    public func updateBoards() {
+        switch gamemode {
+        case .freeplay:
+            
+            scoreView.header = "Score"
+            scoreView.body = "82"
+            
+            recordView.header = "Record"
+            recordView.body = "99"
+            
+            break
+        case .levels:
+            
+            scoreView.header = "Score"
+            scoreView.body = "0"
+            
+            recordView.header = "Level"
+            recordView.body = "12"
+            
+            break
+        }
+        
+        scoreView.updateText()
+        recordView.updateText()
+    }
+}
+
+extension HomeViewController {
+    public func jitterDailyPrize(continuos: Bool = true) {
+        self.dailyPrizeView.imageView?.transform = CGAffineTransform(translationX: 0, y: CGFloat.random(in: 1.0 ... 5.0))
+        
+        UIView.animate(withDuration: 0.25, delay: TimeInterval(CGFloat.random(in: 0.0 ... 5.0)), usingSpringWithDamping: 0.4, initialSpringVelocity: 1.0, options: .curveEaseInOut, animations: {
+            self.dailyPrizeView.imageView?.transform = CGAffineTransform.identity
+        }) { (success) in
+            if success {
+                self.jitterDailyPrize()
+            }
+        }
+    }
+}
+
+extension HomeViewController {
+    public func updateLengthConstraint() {
+        recordWidthConstraint.constant = recordWidthConstantFreeplay
+        
+        switch gamemode {
+        case .freeplay:
+            recordWidthConstraint.constant = recordWidthConstantFreeplay
+            break
+        case .levels:
+            recordWidthConstraint.constant = recordWidthConstantLevels
+            break
+        }
+        
+        
+        UIView.animate(withDuration: 5.0, delay: 0.0, options: .curveEaseOut, animations: {
+            [self.recordView, self.scoreView].forEach({ (view) in
+                view?.subviews.forEach({ (subview) in
+                    subview.alpha = 0.0
+                })
+            })
+            
+            self.view.layoutIfNeeded()
+        }) { (success) in
+            
+            self.updateBoards()
+            
+            [self.recordView, self.scoreView].forEach({ (view) in
+                UIView.animate(withDuration: 5.0, delay: 0.0, options: .curveEaseOut, animations: {
+                    view?.subviews.forEach({ (subview) in
+                        subview.alpha = 1.0
+                    })
+                }, completion: nil)
+            })
+        }
     }
 }
 
@@ -160,6 +243,11 @@ extension HomeViewController {
         recordView.attributedText = LarsonView.headedBodyAttributedText
         recordView.header = "Record"
         recordView.body = "159"
+        scoreView.attributedText = LarsonView.headedBodyAttributedText
+        scoreView.header = "Score"
+        scoreView.body = "0"
+        
+        self.jitterDailyPrize()
         
         self.haptics = UIImpactFeedbackGenerator.init(style: .heavy)
         
@@ -178,9 +266,7 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-    func setupButtons() {
     
-    }
 }
 
 extension HomeViewController {

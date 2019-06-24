@@ -22,8 +22,6 @@
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Say Hi to nearby iOS Devices to give each other in-game Coins!</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Home</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FiraSans-Regular.ttf</string>
@@ -33,6 +31,8 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>GameBuilder</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

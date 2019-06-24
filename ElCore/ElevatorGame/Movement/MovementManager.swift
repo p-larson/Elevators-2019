@@ -84,18 +84,23 @@ public class MovementManager: ElevatorsGameSceneDependent {
             }
             // Jostle the floors.
             self.scene.floorManager.jostle(count: count)
+            // Current Floor after being jostled
+            guard let currentFloor = self.scene.floorManager.currentFloor else {
+                larsondebug("No Current Floor")
+                return
+            }
             // Reset camera position.
             self.scene.cameraManager.set(self.scene.cameraManager.basePosition)
             // Move the player to the floor's child hierarchy.
-            self.scene.playerManager.player.move(toParent: self.scene.floorManager.bottomFloor)
-            self.scene.playerManager.elevator?.move(toParent: self.scene.floorManager.bottomFloor)
+            self.scene.playerManager.player.move(toParent: currentFloor)
+            self.scene.playerManager.elevator?.move(toParent: currentFloor)
             // After the move, reset the player's and elevator's y position
             self.scene.playerManager.player.position.y = self.scene.playerManager.playerBase.y
-            self.scene.playerManager.elevator?.position.y = self.scene.floorManager.bottomFloor.elevatorY
+            self.scene.playerManager.elevator?.position.y = currentFloor.elevatorY
             // Move Elevator to current floor and disable it.
             self.scene.playerManager.elevator?.isEnabled = false
             // Open Floor
-            self.scene.floorManager.bottomFloor.openElevators()
+            currentFloor.openElevators()
             // Open Elevator
             elevator.open(completion: {
                 // Unhide player
@@ -106,7 +111,7 @@ public class MovementManager: ElevatorsGameSceneDependent {
                 completion()
                 // Debug
                 larsondebug("Moved back. Done with cycle.")
-                
+                larsondebug(self.scene.playerManager.player.floor?.number ?? -1, elevator.floor?.number ?? -1, self.scene.floorManager.currentFloor?.number ?? -1)
             })
         })
         // Apply same action to the Elevator and Player.
@@ -146,7 +151,7 @@ extension MovementManager {
         
         scene.playerManager.status = .Elevator_Moving
         
-        self.cycle(elevator.destination.number - (scene.floorManager.bottomFloor?.number ?? 0)) {
+        self.cycle(elevator.destination.number - (scene.floorManager.currentFloor?.number ?? 0)) {
             self.scene.playerManager.status = .Elevator_Idle
         }
     }
@@ -259,6 +264,7 @@ extension MovementManager {
             larsondebug("exiting elevator \(elevator)")
             self.stopMovement()
             scene.playerManager.status = .Elevator_Leaving
+            scene.playerManager.player.position = scene.playerManager.onboard(elevator: elevator)
             scene.playerManager.player.run(
                 SKAction.sequence(
                     [SKAction.group(

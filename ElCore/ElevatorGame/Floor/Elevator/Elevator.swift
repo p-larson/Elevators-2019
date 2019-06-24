@@ -43,7 +43,9 @@ public class Elevator: SKSpriteNode {
     }
     
     public func drawRope() {
-        base.addChild(rope)
+        if destination != base {
+            floor?.addChild(rope)
+        }
     }
     
     lazy var rope: SKSpriteNode = {
@@ -141,15 +143,33 @@ public class Elevator: SKSpriteNode {
         doors.run(openingAction(completion: completion), withKey: Elevator.doors_opening_move)
     }
     
+    private func setupCommon() {
+        self.zPosition = Elevator.backgroundZPosition
+        self.isUserInteractionEnabled = true
+        self.addChild(doors)
+    }
+    
     init(type: Classification, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
         self.type = type
         self.base = base
         self.destination = destination
         self.skin = skin
         super.init(texture: skin.base, color: .clear, size: size)
-        self.zPosition = Elevator.backgroundZPosition
-        self.isUserInteractionEnabled = true
-        self.addChild(doors)
+        self.setupCommon()
+    }
+    
+    init(model: LevelModel.FloorModel.ElevatorModel, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
+       
+        guard let type = Classification(rawValue: model.type) else {
+            fatalError("Invalid Type for Model \(model)")
+        }
+        
+        self.type = type
+        self.base = base
+        self.destination = destination
+        self.skin = skin
+        super.init(texture: skin.base, color: .clear, size: size)
+        self.setupCommon()
     }
     
     required init?(coder aDecoder: NSCoder) {

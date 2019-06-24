@@ -26,7 +26,6 @@ public class CounterView: UIView {
         
         label.font = UIFont.init(name: "FiraSans-Medium", size: 10)
         label.textAlignment = .center
-        label.adjust()
         
         return label
     }()
@@ -115,7 +114,8 @@ public class CounterView: UIView {
         
         verticleSpace.constant = imageView.frame.height / 3
         label.font = label.font.withSize(label.frame.height * (2.0 / 3.0))
-        label.adjust(label.frame.width / 5)
+        label.layer.cornerRadius = label.frame.height / 4
+        label.layer.masksToBounds = true
     }
     
     private func setupViews() {

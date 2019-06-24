@@ -47,6 +47,8 @@ class LevelCell: UICollectionViewCell {
             return #colorLiteral(red: 0.9254901961, green: 0.662745098, blue: 0.1803921569, alpha: 1)
         case .locked:
             return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        case .build:
+            return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         }
     }
     

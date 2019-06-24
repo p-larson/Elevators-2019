@@ -17,6 +17,17 @@ public class PlayerNode: SKSpriteNode {
         return parent as? Floor
     }
     
+    public override var size: CGSize {
+        didSet {
+            self.updateGraphics()
+        }
+    }
+    
+    public init() {
+        super.init(texture: nil, color: .clear, size: .zero)
+        self.updateGraphics()
+    }
+    
     public init(size: CGSize) {
         super.init(texture: nil, color: .clear, size: size)
         self.updateGraphics()

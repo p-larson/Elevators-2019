@@ -22,6 +22,14 @@ final public class OverlayLayer: CALayer {
     
     @objc public var shadowHeight: CGFloat = 12.0
     
+    public var shadowBackground: CGRect {
+        return CGRect(origin: .zero, size: CGSize(width: frame.width, height: frame.height))
+    }
+    
+    public var fillBackground: CGRect {
+        return CGRect(origin: CGPoint.zero, size: CGSize(width: frame.width, height: frame.height - shadowHeight))
+    }
+    
     init(frame: CGRect, view: LarsonView) {
         super.init()
         
@@ -58,7 +66,7 @@ final public class OverlayLayer: CALayer {
     
     private func common() {
         self.drawsAsynchronously = true
-        self.masksToBounds = true
+        self.masksToBounds = false
         self.shouldRasterize = false
         self.setNeedsDisplay()
     }
@@ -106,15 +114,12 @@ final public class OverlayLayer: CALayer {
             return
         }
         
-        let shadowBackground = CGRect(origin: .zero, size: CGSize(width: frame.width, height: frame.height))
-        let fillBackground = CGRect(origin: CGPoint.zero, size: CGSize(width: frame.width, height: frame.height - shadowHeight))
-        
         ctx.setFillColor(color.darker().cgColor)
-        ctx.addPath(UIBezierPath(roundedRect: shadowBackground, cornerRadius: cornerRadius).cgPath)
+        ctx.addPath(CGPath(rect: shadowBackground, transform: nil))
         ctx.fillPath()
         ctx.setFillColor(color.cgColor)
         
-        ctx.addPath(UIBezierPath(roundedRect: fillBackground, cornerRadius: cornerRadius).cgPath)
+        ctx.addPath(UIBezierPath(roundedRect: fillBackground, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath)
         
         ctx.fillPath()
         

@@ -11,9 +11,10 @@ import SpriteKit
 
 /// A class to manage floors that intended on always be inside a SKScene
 public class FloorManager: ElevatorsGameSceneDependent {
-    public var model: LevelModel? = nil
+    public weak var model: LevelModel? = nil
     public let holder = SKNode()
     public let scene: ElevatorsGameScene
+    public weak var currentFloor: Floor? = nil
     
     public var elevatorSize: CGSize {
         return CGSize(width: floorSize.width / 9, height: floorSize.width / 6)
@@ -29,13 +30,21 @@ public class FloorManager: ElevatorsGameSceneDependent {
     
     /// Count / Score
     public var currentFloorNumber: Int {
-        return bottomFloor?.number ?? 0
+        return currentFloor?.number ?? 0
     }
     
-    /// Mutable public accessable floor list
+    public var populatedFloorRange: Range<Int> {
+        return currentFloorNumber ..< currentFloorNumber + scene.maxFloorsShown
+    }
+    
+    public var validFloorRange: ClosedRange<Int> {
+        return currentFloorNumber - scene.maxElevatorRange ... currentFloorNumber + scene.maxElevatorRange + scene.maxFloorsShown
+    }
+    
+    /// Mutable public accessable floor list. Not all floors are children of self.holder
     public var floors = [Floor]()
     /// Offhand floors where jostled floors go
-    public var offhandFloors = [Floor]()
+//    public var offhandFloors = [Floor]()
     /// Default Initializer, requires SKScene.
     ///
     /// - Parameters:
@@ -60,21 +69,26 @@ public extension FloorManager {
         }
     }
     
-    var bottomFloor: Floor! {
-        return floors.first!
+    private var bottomFloor: Floor? {
+        return floors.first
     }
     
-    var topFloor: Floor! {
-        return floors.last!
+    private var topFloor: Floor? {
+        return floors.last
     }
     
-    var topNumber: Int {
-        return floors.last?.number ?? -1
+    private var topNumber: Int {
+        return topFloor?.number ?? 0
+    }
+    
+    func floor(number: Int) -> Floor? {
+        return floors.first(where: { (floor) -> Bool in
+            return floor.number == number
+        })
     }
 }
 
 public extension FloorManager {
-    
     func passovers(on: Floor) -> [Elevator] {
         return floors.map { (floor) -> [Elevator] in
             return floor.baseElevators
@@ -91,43 +105,56 @@ public extension FloorManager {
             larsonexit()
         }
         
-        guard model == nil else {
-            larsondebug("Not Updating Position, Manager currently is modeled.")
-            return
+        larsondebug("Current Floor \(currentFloor?.number ?? -1)")
+        
+        larsondebug("Filtering Valid Floors")
+        
+        let invalidFloors = floors.filter({ (floor) -> Bool in
+            return self.validFloorRange.contains(floor.number) == false
+        })
+        
+        invalidFloors.forEach { (floor) in
+            larsondebug("Invalidating floor \(floor.number) [\(validFloorRange)]")
+            floor.removeFromParent()
+        }
+        
+        floors.removeAll { (floor) -> Bool in
+            return invalidFloors.contains(floor)
         }
         
         floors.enumerated().forEach { (index, floor) in
             position(floor: floor, for: index, offhand: false)
             larsondebug("calculating position for floor \(floor.number) of index \(index), \(floor.position.y)")
         }
-        offhandFloors.enumerated().forEach { (index, floor) in
-            position(floor: floor, for: index, offhand: true)
-            larsondebug("calculating offhand position for floor \(floor.number) of index \(index), \(floor.position.y)")
-        }
     }
     func position(floor: Floor, for index: Int, offhand: Bool) {
-        floor.position = offhand ? offhandPosition(for: index) : position(for: index)
+        
+        guard let currentFloor = self.currentFloor else {
+            larsondebug("Current floor not set!")
+            return
+        }
+        
+        let offset = CGFloat(floor.number - currentFloor.number)
+        
+        larsondebug("positioning floor \(floor.number)")
+        
+        floor.position = CGPoint(x: scene.gameFrame.midX, y: scene.gameFrame.minY + offset * scene.floorManager.floorSize.height)
+        
+        floor.move(toParent: holder)
     }
     
-    func position(for index: Int) -> CGPoint {
-        let h = CGFloat(index) * scene.floorManager.floorSize.height
-        return CGPoint(x: scene.gameFrame.midX, y: scene.gameFrame.minY + h)
-    }
-    
-    func offhandPosition(for index: Int) -> CGPoint {
-        let h = CGFloat(index) * scene.floorManager.floorSize.height
-        return self.position(for: -offhandFloors.count).add(0, h)
-    }
 }
 
 public extension FloorManager {
-    func setupGame() {
+    func setupGame(preCurrentFloorNumber: Int? = nil) {
         // Set up debug
         larsonenter(#function)
         // Prepare for deinit of function.
         defer {
             larsonexit()
         }
+        // Empty holder
+        holder.removeFromParent()
         // Add holder to scene
         scene.addChild(holder)
         larsondebug("set scene's background color")
@@ -136,33 +163,43 @@ public extension FloorManager {
         floors.forEach { floor in
             floor.removeFromParent()
         }
-        offhandFloors.forEach { floor in
-            floor.removeFromParent()
-        }
         floors = []
-        offhandFloors = []
         larsonenter("generating floors...")
         // Generate the Max Loaded Floors.
+        var modelDone = false
         repeat {
             // Generate next floor
-            let floor = self.next()
+            guard let floor = self.next() else {
+                // No Next Floor to Generate.
+                modelDone = true
+                break
+            }
+            // Set as Current Level
+            if self.currentFloor == nil {
+                self.currentFloor = floor
+            }
             // Add to array
             self.floors.append(floor)
             // Add to holder
             holder.addChild(floor)
             larsondebug("generated floor \(floor.number)")
-        } while floors.count < scene.maxFloorsLoaded
+        } while floors.count < scene.maxFloorsLoaded && modelDone == false
+        // Update current floor based on context
+        if let preCurrentFloorNumber = preCurrentFloorNumber, let preCurrentFloor = floor(number: preCurrentFloorNumber) {
+            larsondebug("has preCurrentFloorNumber", preCurrentFloor, "has preCurrentFloor", preCurrentFloor)
+            self.currentFloor = preCurrentFloor
+        }
+        larsondebug("current floor: \(currentFloor?.number)")
         larsondebug("updating floors.")
         // Update floors
         self.update()
         // Open first floor
-        self.bottomFloor.openElevators()
+        self.bottomFloor?.openElevators()
         
         larsondebug("finished generating floors.")
         
         larsonexit()
     }
-    
 }
 
 public extension FloorManager {
@@ -257,25 +294,34 @@ public extension FloorManager {
         defer {
             larsonexit()
         }
+        
+        
+        // Set the current floor
+        guard let targetNumber = currentFloor?.number.advanced(by: count) else {
+            larsondebug("No Valid Target Number.")
+            return
+        }
+        
+        larsondebug("jostling from floor \(currentFloor?.number ?? -1)")
+        
+        self.currentFloor = floor(number: targetNumber)
+        
+        larsondebug("set current floor to \(currentFloor?.number ?? -1)")
+        
         for _ in 0 ..< count {
-            // Remove from array and from parent.
-            let removed = self.floors.remove(at: floors.startIndex)
-            // Add to offhand floors
-            offhandFloors.append(removed)
-            // Remove any surplus floors in offhand floors.
-            if offhandFloors.count > scene.maxOffhandFloors {
-                let last = offhandFloors.removeFirst()
-                last.removeFromParent()
-            }
-            larsondebug("Removed", removed)
-            
+
             // Add next
-            let next = self.next()
+            
+            guard let next = self.next() else {
+                continue
+            }
+            
             self.floors.append(next)
             holder.addChild(next)
+            
             larsondebug("Added", next)
         }
-        // Update floors
+        // Update Floors
         self.update()
     }
     
@@ -283,19 +329,36 @@ public extension FloorManager {
     /// Generate the Next floor based on the current sequence.
     ///
     /// - Returns: generates a new floor based on the current sequence if there is a model, it
-    private func next() -> Floor {
+    private func next() -> Floor? {
+        
+        // Set up debug
+        larsonenter(#function)
+        // Prepare for deinit of function.
+        defer {
+            larsonexit()
+        }
         
         let number = topNumber.advanced(by: 1)
         
+        larsondebug("Generating Floor \(number)")
+        
         guard let model = model else {
-            let floor = Floor(number: topNumber.advanced(by: 1), type: generateNextType(), elevatorSize: elevatorSize, floorSize: floorSize)
-            
-            floor.manager = self
+            let floor = Floor(number: number, type: generateNextType(), elevatorSize: elevatorSize, floorSize: floorSize, manager: self)
             
             return floor
         }
         
-        return Floor.init(number: 0, type: .level, elevatorSize: .zero, floorSize: .zero)
+        larsondebug("Level has Model.")
+        
+        // Check if Model has Next Floor
+        guard let floorModel = model.floorWith(number: number) else {
+            larsondebug("Model does not have a next Floor.")
+            return nil
+        }
+        
+        larsondebug("Loaded Floor from Model \(floorModel.number)", floorSize)
+        
+        return Floor(floorModel, elevatorSize: elevatorSize, floorSize: floorSize, manager: self)
     }
     
     /// Populate the scene of all the current floors
@@ -306,6 +369,56 @@ public extension FloorManager {
         defer {
             larsonexit()
         }
+        
+        // Populating Elevators from Model
+        
+        if model != nil {
+            larsondebug("Has Model. Reloading Elevators")
+            
+            larsondebug("Clearing floor.")
+            floors.forEach { (floor) in
+                floor.baseElevators.forEach({ (elevator) in
+                    elevator.removeFromParent()
+                })
+            }
+            
+            larsondebug("Loading Elevators from Models...")
+            floors.enumerated().forEach { (index, floor) in
+                // Skip if floor isn't maxElevatorsRagne away from end so it doesn't try to connect to floors that don't exist yet.
+                guard self.validFloorRange.contains(floor.number), let floorModel = model?.floorWith(number: floor.number) else {
+                    larsondebug("", index < floors.endIndex - scene.maxElevatorRange, model?.floorWith(number: floor.number) == nil)
+                    return
+                }
+                
+                larsondebug("Loading ElevatorModels from FloorModel \(floorModel.number)")
+                floorModel.baseElevators.forEach({ (elevatorModel) in
+
+                    // Base Floor
+                    guard let base = self.floor(number: elevatorModel.base) else {
+                        larsondebug("Could not find ElevatorModel's base \(elevatorModel.base)")
+                        return
+                    }
+                    
+                    // Destination Floor
+                    guard let destination = self.floor(number: elevatorModel.destination) else {
+                        larsondebug("Could not find ElevatorModel's destination \(elevatorModel.destination)")
+                        return
+                    }
+                    
+                    floor.loadElevator(from: elevatorModel, base: base, destination: destination)
+                    
+                    larsondebug("Loaded Elevator")
+                })
+                
+            }
+            
+            self.populateRopes()
+            
+            return
+        }
+        
+        // Populating Elevatos from Generator
+        
         floors.enumerated().forEach { index, floor in
             // Cannot Populate Floor if it's base elevators are already Populated or
             // is not the maxElevatorRange or more away from the end.

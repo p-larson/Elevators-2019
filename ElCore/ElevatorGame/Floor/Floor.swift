@@ -16,20 +16,44 @@ public class Floor: SKNode {
     public let floorSize: CGSize
     public weak var manager: FloorManager!
     public var connectedElevators = [Elevator]()
-    private var positioned: Bool = false
+    private var isPositioned: Bool = false
     public static let baseZPosition: CGFloat = 4.0
-    public lazy var label: SKLabelNode = _label()
-    public lazy var base: SKSpriteNode = _base()
+    private lazy var label: SKLabelNode = _label()
+    private lazy var base: SKSpriteNode = _base()
     
-    public init(number: Int, type: Classification, elevatorSize: CGSize, floorSize: CGSize) {
+    public init(number: Int, type: Classification, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager) {
         self.number = number
         self.type = type
         self.elevatorSize = elevatorSize
         self.floorSize = floorSize
+        self.manager = manager
         super.init()
-        self.addChild(base)
-        // self.addChild(label)
+        self.setup()
     }
+    
+    
+    public init(_ model: LevelModel.FloorModel, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager) {
+        self.number = model.number
+        self.type = .level
+        self.elevatorSize = elevatorSize
+        self.floorSize = floorSize
+        self.manager = manager
+        super.init()
+        self.setup()
+        
+        print("init from model", elevatorSize, floorSize)
+    }
+    
+    private func setup() {
+        self.addChild(base)
+        
+        if Larson.debugging {
+            self.addChild(label)
+        }
+        
+        print("setup \(base)")
+    }
+
     
     public required init?(coder aDecoder: NSCoder) {
         return nil
@@ -49,7 +73,7 @@ fileprivate extension Floor {
         node.fontSize = 16
         node.zPosition = 10000
         node.position.y = baseSize.height + node.fontSize
-        node.text = "\(number) \(type)"
+        node.text = "\(number) \(type) \(baseElevators.count) \(connectedElevators.count)"
         node.fontColor = GameColors.floor
         return node
     }
@@ -137,6 +161,14 @@ public extension Floor {
         addChild(elevator)
         to.connectedElevators.append(elevator)
     }
+    
+    func loadElevator(from model: LevelModel.FloorModel.ElevatorModel, base: Floor, destination: Floor) {
+        let elevator = Elevator(model: model, base: base, destination: destination, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        
+        elevator.position.x = base.frame.minX + (baseSize.width * model.xPosition)
+        self.isPositioned = true
+        addChild(elevator)
+    }
 }
 
 public extension Floor {
@@ -149,11 +181,11 @@ public extension Floor {
             larsonexit()
         }
         
-        guard !positioned else {
-            larsondebug("already positioned")
+        guard !isPositioned else {
+            larsondebug("already isPositioned")
             return
         }
-        // Keep a reference to which base elevators have been positioned already to add their positions to the blacklisted range for the unpositioned elevators.
+        // Keep a reference to which base elevators have been isPositioned already to add their positions to the blacklisted range for the unisPositioned elevators.
         larsondebug("updating \(baseElevators.count) base elevator's positions...")
         var done = [Elevator]()
         baseElevators.forEach {
@@ -165,7 +197,7 @@ public extension Floor {
             
             larsondebug("blacklisting \(blacklisted.count) elevator positions")
 
-            // Range where elevators cannot be due to the floor's connecting Elevators and any other base Elevator that has been positioned.
+            // Range where elevators cannot be due to the floor's connecting Elevators and any other base Elevator that has been isPositioned.
             let blacklist: [ClosedRange<CGFloat>] = blacklisted.map { ($0.position.x - delta) ... ($0.position.x + delta) }
             // Range where Elevators can be placed in.
             let whitelist: ClosedRange<CGFloat> = (-floorSize.width / 2 + delta) ... (floorSize.width / 2 - delta)
@@ -203,7 +235,7 @@ public extension Floor {
         }
         
         // Flag that this floor is done positioning.
-        positioned = true
+        isPositioned = true
     }
 }
 
@@ -238,7 +270,20 @@ public extension Floor {
 }
 
 public extension Floor {
-    convenience init(_ model: LevelModel.FloorModel, elevatorSize: CGSize, floorSize: CGSize) {
-        self.init(number: model.number, type: .level, elevatorSize: elevatorSize, floorSize: floorSize)
+    
+    static let selected_name = "selected"
+    
+    func setSelected(_ value: Bool = true) {
+        
+        self.childNode(withName: Floor.selected_name)?.removeFromParent()
+        
+        if value {
+            let node = SKSpriteNode()
+            node.color = UIColor.white.withAlphaComponent(0.1)
+            node.size = floorSize
+            node.position.y = node.size.height / 2
+            node.name = Floor.selected_name
+            self.addChild(node)
+        }
     }
 }

@@ -27,7 +27,13 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public var playerBase: CGPoint {
-        return CGPoint.zero.add(0, scene.floorManager.bottomFloor.baseSize.height / 2 + player.size.height / 2)
+        
+        guard let currentFloor = scene.floorManager.currentFloor else {
+            larsondebug("no current floor")
+            return .zero
+        }
+        
+        return CGPoint.zero.add(0, currentFloor.baseSize.height / 2 + player.size.height / 2)
     }
     
     public func playerBase(elevator: Elevator) -> CGPoint {
@@ -52,7 +58,10 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public func move(to elevator: Elevator) -> SKAction {
-        let time = TimeInterval(difference(elevator) / scene.floorManager.bottomFloor.floorSize.width) * (scene.playerSpeed)
+        guard let currentFloor = scene.floorManager.currentFloor else {
+            return SKAction()
+        }
+        let time = TimeInterval(difference(elevator) / currentFloor.floorSize.width) * (scene.playerSpeed)
         return SKAction.moveTo(x: elevator.position.x, duration: time)
     }
     
@@ -61,7 +70,12 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public var rightTarget: Elevator? {
-        return scene.floorManager.bottomFloor.baseElevators.filter({ (elevator) -> Bool in
+        
+        guard let currentFloor = scene.floorManager.currentFloor else {
+            return nil
+        }
+        
+        return currentFloor.baseElevators.filter({ (elevator) -> Bool in
             return elevator.position.x > player.position.x && elevator != target
         }).sorted(by: { (e1, e2) -> Bool in
             return difference(e1) < difference(e2)
@@ -69,7 +83,12 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public var leftTarget: Elevator? {
-        return scene.floorManager.bottomFloor.baseElevators.filter({ (elevator) -> Bool in
+        
+        guard let currentFloor = scene.floorManager.currentFloor else {
+            return nil
+        }
+        
+        return currentFloor.baseElevators.filter({ (elevator) -> Bool in
             return elevator.position.x < player.position.x && elevator != target
         }).sorted(by: { (e1, e2) -> Bool in
             return difference(e1) < difference(e2)
@@ -84,9 +103,13 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public func distance(in time: TimeInterval) -> CGFloat {
+        
+        guard let currentFloor = scene.floorManager.currentFloor else {
+            return 0.0
+        }
         // (12 inch / 1 foot) * 2 feet = 24 inches
         return
-            (scene.floorManager.bottomFloor.baseSize.width * CGFloat(time))
+            (currentFloor.baseSize.width * CGFloat(time))
             /
             CGFloat(scene.playerSpeed)
     }
@@ -100,8 +123,13 @@ public class PlayerManager: ElevatorsGameSceneDependent {
             larsonexit()
         }
         
+        guard let currentFloor = scene.floorManager.currentFloor else {
+            larsondebug("Bottom Floor Invalid")
+            return
+        }
+        
         player.position = self.playerBase
-        player.size = PlayerManager.playerSize(from: scene.floorManager.bottomFloor)
+        player.size = PlayerManager.playerSize(from: currentFloor)
         player.zPosition = PlayerNode.outsideZPosition
         
         if let target = Bool.random() ? (rightTarget ?? leftTarget) : (leftTarget ?? rightTarget) {
@@ -109,19 +137,20 @@ public class PlayerManager: ElevatorsGameSceneDependent {
             self.player.position.x = target.position.x
         }
         
-        scene.floorManager.bottomFloor.addChild(player)
+        currentFloor.addChild(player)
         
         larsondebug("finished player setup. \(player.debugDescription)")
     }
     
     public init(scene: ElevatorsGameScene) {
-        // Scene must have loaded it's floor manager
-        guard let bottomFloor = scene.floorManager.bottomFloor else {
-            fatalError("\(scene) has not loaded the floorManager before initializing the playerManager")
-        }
-
-        self.player = PlayerNode(size: PlayerManager.playerSize(from: bottomFloor))
+        self.player = PlayerNode()
         
         self.scene = scene
+    }
+}
+
+extension PlayerNode {
+    public override var description: String {
+        return "\(position) \(floor?.number ?? -1)"
     }
 }

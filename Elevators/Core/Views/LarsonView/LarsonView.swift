@@ -21,7 +21,6 @@ final public class LarsonView: UIView {
     public var onTouch: LarsonInteraction? = nil
     public var endTouch: LarsonInteraction? = nil
     public var isTouched: Bool = false
-    public var isCanceled: Bool = false
     
     @IBInspectable public var selectAnimationDuration: Double = 0.125
     @IBInspectable public var highlightBorderWidth: CGFloat = 6.0 {
@@ -35,7 +34,7 @@ final public class LarsonView: UIView {
         }
     }
     
-    @IBInspectable public var cornerRadius: CGFloat = 10.0 {
+    @IBInspectable public var cornerRadius: CGFloat = 12.0 {
         didSet {
             self.updateLayers()
         }
@@ -170,7 +169,6 @@ final public class LarsonView: UIView {
         return [
             NSLayoutConstraint(item: labelView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: LarsonView.marginFromTop),
             NSLayoutConstraint(item: labelView, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1.0, constant: self.cornerRadius * -2),
-            //            NSLayoutConstraint(item: labelView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -self.shadowHeight - LarsonView.marginFromShadow),
             NSLayoutConstraint(item: labelView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1.0, constant: -LarsonView.marginFromTop-LarsonView.marginFromShadow-self.shadowHeight),
             NSLayoutConstraint(item: labelView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0)
         ]
@@ -200,10 +198,9 @@ final public class LarsonView: UIView {
         }
         
         return [
-            NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: -LarsonView.marginFromTop),
+            NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: LarsonView.marginFromTop),
             NSLayoutConstraint(item: imageView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: imageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: imageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: self.shadowHeight + LarsonView.marginFromShadow),
+            NSLayoutConstraint(item: imageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -self.shadowHeight - LarsonView.marginFromShadow),
             NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 1.0, constant: 0.0)
         ]
     }()
@@ -293,10 +290,9 @@ public extension LarsonView {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        
-        if canceledTouches(touches) && isPressable && isTouched && !isCanceled {
+        if canceledTouches(touches) && isPressable && isTouched {
             self.animatePress(to: false)
-            self.isCanceled = true
+            self.isTouched = false
         }
     }
     
@@ -306,18 +302,12 @@ public extension LarsonView {
             self.animatePress(to: true)
         }
         
-        self.isCanceled = false
         self.isTouched = true
         
         self.onTouch?.self(self)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if canceledTouches(touches) {
-            self.isTouched = false
-            return
-        }
         
         if isPressable && isTouched {
             self.animatePress(to: false)
@@ -378,7 +368,7 @@ public extension LarsonView {
         labelView?.shadowColor = color.darker()
         
         if fontColor != nil {
-            labelView?.shadowOffset = .init(width: 0, height: (labelView?.font.pointSize ?? 0) * 0.05)
+            labelView?.shadowOffset = .init(width: 0, height: LarsonView.marginFromShadow / 2)
         }
         
         // Move image layer in middle
@@ -481,7 +471,15 @@ public extension LarsonView {
         labelView.numberOfLines = 0
         labelView.textColor = fontColor ?? color.darker()
         
-        labelView.font = self.font.withSize(labelView.frame.height * 0.8)
+        self.updateText()
+    }
+    
+    func updateText() {
+        guard let labelView = labelView else {
+            return
+        }
+        
+        labelView.font = self.font.withSize(labelView.frame.height - LarsonView.marginFromTop - (self.style == .labeled ? LarsonView.marginFromShadow + shadowHeight: 0.0))
         
         if let attributedText = attributedText {
             labelView.text = nil
@@ -603,7 +601,7 @@ extension LarsonView {
         }
         
         attributed.append(NSAttributedString(string: header, attributes: [
-            NSAttributedString.Key.font:larsonview.font.withSize(viewFrame.height / 5)]
+            NSAttributedString.Key.font:larsonview.font.withSize(viewFrame.height / 6)]
         ))
         
         guard let body = larsonview.body else {
