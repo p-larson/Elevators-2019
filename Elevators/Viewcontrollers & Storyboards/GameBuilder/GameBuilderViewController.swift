@@ -14,51 +14,39 @@ public class GameBuilderViewController: UIViewController, ControllerIdentifiable
     
     static let id: String = "GameBuilderViewController"
     
+    @IBAction func onDone(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @IBOutlet weak var gamescene: SKView!
-    @IBOutlet weak var levelNameLabel: UILabel!
-    @IBOutlet weak var editLevelButton: UIButton!
     
-    @IBAction func onEditLevel(_ sender: UIButton) {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: GameBuilderFloorEditorViewController.id) as? GameBuilderFloorEditorViewController else {
-            fatalError()
+    @IBAction func onAddLevel(_ sender: UIBarButtonItem) {
+        scene.addFloor()
+    }
+    
+    @IBAction func onDeleteLevel(_ sender: UIBarButtonItem) {
+        
+        guard let number = self.scene.floorManager.currentFloor?.number else {
+            return
         }
+
+        let alert = UIAlertController(title: "Remove Floor \(number)", message: "Are you sure?", preferredStyle: UIAlertController.Style.alert)
         
-        self.present(controller, animated: true, completion: nil)
-    }
-    
-    @IBAction func onStepChanged(_ sender: UIStepper) {
-        let value = Int(sender.value)
+        // add the actions (buttons)
+        alert.addAction(UIAlertAction(title: "Remove", style: UIAlertAction.Style.destructive, handler: {
+            (alertAction) in
+           self.scene.deleteFloor()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
         
-        print(value, model.floors.count)
-        
-        if value > model.floors.count {
-            print("plus")
-            let newFloor = LevelModel.FloorModel(number: model.floors.count + 1)
-            model.floors.append(newFloor)
-            scene.reloadScene()
-        } else {
-            print("minus")
-        }
-    }
-    
-    @IBAction func saveLevel(_ sender: UIButton) {
-        
-    }
-    
-    public func updateScene() {
-        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
     }
     
     // This Model is shared with GameBuilderScene's floorManager
     public var model: LevelModel!
     
     public let scene = GameBuilderScene()
-}
-
-extension GameBuilderViewController {
-    func updatedSelectedFloor(to floor: Floor?) {
-        self.editLevelButton.isEnabled = floor != nil
-    }
 }
 
 extension GameBuilderViewController {
@@ -76,7 +64,30 @@ extension GameBuilderViewController {
         self.gamescene.allowsTransparency = true
         
         self.gamescene.presentScene(scene)
+    }
+}
+
+extension GameBuilderViewController {
+    static let edit_segue = "edit"
+    
+    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        self.editLevelButton.isEnabled = false
+        switch segue.identifier {
+        case GameBuilderViewController.edit_segue:
+            guard let controller = segue.destination as? GameBuilderFloorEditorViewController else {
+                fatalError("Edit Segue's destination is not \(GameBuilderFloorEditorViewController.self)")
+            }
+            
+            guard let number = self.scene.floorManager.currentFloor?.number, let floorModel = scene.model.floorWith(number: number) else {
+                return
+            }
+            
+            controller.levelModel = scene.model
+            controller.floorModel = floorModel
+            
+            return
+        default:
+            fatalError("Unhandled Segue \(segue.identifier as Any)")
+        }
     }
 }

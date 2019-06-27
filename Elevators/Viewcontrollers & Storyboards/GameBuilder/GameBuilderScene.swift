@@ -15,6 +15,10 @@ public class GameBuilderScene: GameScene {
     
     public weak var controller: GameBuilderViewController!
     
+    public var model: LevelModel {
+        return controller.model
+    }
+    
     public func reloadScene() {
         
         if let currentFloorNumber = floorManager.currentFloor?.number, let floor = floorManager.floor(number: currentFloorNumber) {
@@ -25,15 +29,12 @@ public class GameBuilderScene: GameScene {
     }
     
     public func setSelectedFloor(to floor: Floor, reload: Bool = true) {
-        print("selecting floor \(floor.number)")
         
         self.floorManager.setupGame(preCurrentFloorNumber: floor.number)
         
         self.floorManager.floors.forEach { (floor2) in
             floor2.setSelected(floor == floor2)
         }
-        
-        self.controller.updatedSelectedFloor(to: floorManager.currentFloor)
     }
 }
 
@@ -41,12 +42,12 @@ extension GameBuilderScene {
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             
-            let y = touch.location(in: self).y
+            let point = touch.location(in: self)
             
-            if let selectedFloor = self.floorManager.floors.sorted(by: { (floor1, floor2) -> Bool in
-                return abs(floor1.position.y - y) < abs(floor2.position.y - y)
-            }).first {
-                self.setSelectedFloor(to: selectedFloor)
+            if let selectedFloor = self.floorManager.floors.first(where: { (floor) -> Bool in
+                return CGRect(origin: floor.position, size: floor.floorSize).contains(point)
+            }) {
+                self.setSelectedFloor(to: selectedFloor, reload: false)
             }
             
             
@@ -55,15 +56,30 @@ extension GameBuilderScene {
 }
 
 public extension GameBuilderScene {
-    func appenedFloor(number: Int = -1) {
-        
+    func addFloor() {
+        let newFloor = LevelModel.FloorModel(number: controller.model.floors.count + 1)
+        controller.model.floors.append(newFloor)
+        self.reloadScene()
     }
     
-    func removeFloor(number: Int) {
+    func deleteFloor() {
         
-    }
-    
-    func addElevator(to floor: LevelModel.FloorModel) {
+        guard let selectedFloor = floorManager.currentFloor else {
+            return
+        }
         
+        // Remove from model
+        model.floors = model.floors.filter({ (floorModel) -> Bool in
+            return floorModel.number != selectedFloor.number
+        })
+        
+        // Readjust any floor numbers that were above the floor
+        controller.model.floors.forEach({ (floor) in
+            if selectedFloor.number < floor.number {
+                floor.number = floor.number - 1
+            }
+        })
+        
+        self.reloadScene()
     }
 }

@@ -26,8 +26,6 @@ public protocol ElevatorsGame: ElevatorDelegate {
     var movementManager: MovementManager { get }
     var scoreboardManager: ScoreboardManager { get }
     var waveManager: WaveManager { get }
-    var preferencesManager: PreferencesManager { get }
-    var shopManager: ShopManager { get }
     var gameFrame: CGRect { get }
     var scoreboardLabel: UILabel? { get }
     var saves: UserDefaults { get }

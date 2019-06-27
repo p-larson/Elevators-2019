@@ -10,10 +10,12 @@ import Foundation
 
 public class ShopManager {
     
-    public let scene: ElevatorsGameScene
+    public static private(set) var shared = ShopManager()
     
-    public init(scene: ElevatorsGameScene) {
-        self.scene = scene
+    private init () {}
+    
+    public var selectedElevatorSkin: Skin {
+        return defaultElevator
     }
     
     public var defaultElevator: Skin {

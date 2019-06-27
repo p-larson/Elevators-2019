@@ -63,14 +63,6 @@ public class GameScene: ElevatorsGameScene {
     public lazy var waveManager: WaveManager = {
         return WaveManager(scene: self)
     }()
-    
-    public lazy var shopManager: ShopManager = {
-        return ShopManager(scene: self)
-    }()
-    
-    public lazy var preferencesManager: PreferencesManager = {
-        return PreferencesManager(scene: self)
-    }()
 }
 
 // MARK:    viewDidLoad

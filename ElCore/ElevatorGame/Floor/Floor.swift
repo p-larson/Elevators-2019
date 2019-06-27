@@ -12,16 +12,23 @@ import SpriteKit
 public class Floor: SKNode {
     public let elevatorSize: CGSize
     public let number: Int
-    public let type: Classification
+    public let type: Kind
     public let floorSize: CGSize
-    public weak var manager: FloorManager!
+    public weak var manager: FloorManager? = nil
+    public var model: LevelModel.FloorModel? = nil
     public var connectedElevators = [Elevator]()
     private var isPositioned: Bool = false
     public static let baseZPosition: CGFloat = 4.0
     private lazy var label: SKLabelNode = _label()
     private lazy var base: SKSpriteNode = _base()
     
-    public init(number: Int, type: Classification, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager) {
+    public func loadElevators(from model: LevelModel.FloorModel) {
+        model.baseElevators.forEach { (elevatorModel) in
+            self.addChild(Elevator(model: elevatorModel, size: elevatorSize, base: self)!)
+        }
+    }
+    
+    public init(number: Int, type: Kind, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager) {
         self.number = number
         self.type = type
         self.elevatorSize = elevatorSize
@@ -32,11 +39,12 @@ public class Floor: SKNode {
     }
     
     
-    public init(_ model: LevelModel.FloorModel, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager) {
+    public init(_ model: LevelModel.FloorModel, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager? = nil) {
         self.number = model.number
-        self.type = .level
+        self.type = .Level
         self.elevatorSize = elevatorSize
         self.floorSize = floorSize
+        self.model = model
         self.manager = manager
         super.init()
         self.setup()
@@ -112,11 +120,16 @@ public extension Floor {
 }
 
 extension Floor {
-    public enum Classification {
-        case normal
-        case trap_1
-        case trap_2
-        case level
+    public enum Kind: String, CaseIterable {
+        case Normal, Trap, TrapEnd, Level
+        
+        public static func load(from: Int) -> Kind {
+            if allCases.indices.contains(from) {
+                return allCases[from]
+            } else {
+                return Kind.Normal
+            }
+        }
     }
 }
 
@@ -141,29 +154,33 @@ public extension Floor {
             close(elevator: elevator)
         }
     }
-    
 }
 
 public extension Floor {
+    
+    private var nextNumber: Int {
+        return baseElevators.count + 1
+    }
+    
     func addTrap(to: Floor) {
-        let elevator = Elevator(type: .trap, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        let elevator = Elevator(type: .Trap, base: self, destination: to, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin, number: nextNumber)
         addChild(elevator)
         to.connectedElevators.append(elevator)
     }
     
     func addBroken() {
-        let elevator = Elevator(type: .broken, base: self, destination: self, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        let elevator = Elevator(type: .Broken, base: self, destination: self, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin, number: number)
         addChild(elevator)
     }
     
     func addConnector(to: Floor) {
-        let elevator = Elevator(type: .connector, base: self, destination: to, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        let elevator = Elevator(type: .Connector, base: self, destination: to, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin, number: nextNumber)
         addChild(elevator)
         to.connectedElevators.append(elevator)
     }
     
     func loadElevator(from model: LevelModel.FloorModel.ElevatorModel, base: Floor, destination: Floor) {
-        let elevator = Elevator(model: model, base: base, destination: destination, size: elevatorSize, skin: manager.scene.preferencesManager.selectedElevatorSkin)
+        let elevator = Elevator(model: model, base: base, destination: destination, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin)
         
         elevator.position.x = base.frame.minX + (baseSize.width * model.xPosition)
         self.isPositioned = true
@@ -185,6 +202,12 @@ public extension Floor {
             larsondebug("already isPositioned")
             return
         }
+        
+        if let floorModel = model {
+            floorModel.baseElevators.forEach { (elevatorModel) in
+                self.elevator(for: elevatorModel).position.x
+            }
+        }
         // Keep a reference to which base elevators have been isPositioned already to add their positions to the blacklisted range for the unisPositioned elevators.
         larsondebug("updating \(baseElevators.count) base elevator's positions...")
         var done = [Elevator]()
@@ -193,7 +216,9 @@ public extension Floor {
             // Width each Elevator reserves of space.
             let delta = (elevatorSize.width) / 2 + (elevatorSize.width / 32)
             
-            let blacklisted: [Elevator] = (connectedElevators + done + manager.passovers(on: self))
+            let passovers = manager?.passovers(on: self) ?? []
+            
+            let blacklisted: [Elevator] = (connectedElevators + done + passovers)
             
             larsondebug("blacklisting \(blacklisted.count) elevator positions")
 
@@ -247,11 +272,11 @@ public extension Floor {
         func abbreviate(array: [Elevator]) -> String {
             let characters: [Character] = array.map { elevator -> Character in
                 switch elevator.type {
-                case .connector:
+                case .Connector:
                     return "c"
-                case .broken:
+                case .Broken:
                     return "b"
-                case .trap:
+                case .Trap:
                     return "t"
                 }
             }
@@ -285,5 +310,24 @@ public extension Floor {
             node.name = Floor.selected_name
             self.addChild(node)
         }
+    }
+}
+
+extension Floor {
+    public func position(from percent: CGFloat) -> CGFloat {
+        assert(percent >= 0.0 && percent <= 1.0, "Percent is not in range \(percent).")
+        
+        return base.frame.minX + (baseSize.width * percent)
+    }
+}
+
+extension Floor {
+    public func elevator(for model: LevelModel.FloorModel.ElevatorModel) -> Elevator? {
+        
+        let x = position(from: model.xPosition)
+        
+        return baseElevators.sorted(by: { (elevator1, elevator2) -> Bool in
+            return abs(x - elevator1.position.x) < abs(x - elevator2.position.x)
+        }).first
     }
 }

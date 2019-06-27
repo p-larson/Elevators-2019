@@ -10,12 +10,13 @@ import SpriteKit
 
 public class Elevator: SKSpriteNode {
     
+    public let number: Int
     static let backgroundZPosition: CGFloat = 1.0
     static let doorZPosition: CGFloat = 2.0
     static let ropeZPosition: CGFloat = -1.0
-    
+    public var model: LevelModel.FloorModel.ElevatorModel? = nil
     public var isEnabled = true
-    public let type: Classification
+    public let type: Kind
     public let skin: Skin
     private(set) public weak var destination: Floor!
     private(set) public weak var base: Floor!
@@ -149,7 +150,7 @@ public class Elevator: SKSpriteNode {
         self.addChild(doors)
     }
     
-    init(type: Classification, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
+    init(type: Kind, base: Floor, destination: Floor, size: CGSize, skin: Skin, number: Int) {
         self.type = type
         self.base = base
         self.destination = destination
@@ -159,15 +160,22 @@ public class Elevator: SKSpriteNode {
     }
     
     init(model: LevelModel.FloorModel.ElevatorModel, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
-       
-        guard let type = Classification(rawValue: model.type) else {
-            fatalError("Invalid Type for Model \(model)")
-        }
         
-        self.type = type
+        self.type = model.type
+        self.number = model.number
         self.base = base
         self.destination = destination
         self.skin = skin
+        super.init(texture: skin.base, color: .clear, size: size)
+        self.setupCommon()
+    }
+    
+    init?(model: LevelModel.FloorModel.ElevatorModel, size: CGSize, base: Floor) {
+        self.number = model.number
+        self.type = model.type
+        self.base = base
+        self.destination = base
+        self.skin = ShopManager.shared.defaultElevator
         super.init(texture: skin.base, color: .clear, size: size)
         self.setupCommon()
     }
@@ -198,13 +206,13 @@ extension Elevator: TextureGraphable {
             context.addRect(CGRect.init(origin: .zero, size: this.size))
             
             switch this.type {
-            case .broken:
+            case .Broken:
                 UIColor.gray.setFill()
                 break
-            case .connector:
+            case .Connector:
                 UIColor.blue.setFill()
                 break;
-            case .trap:
+            case .Trap:
                 UIColor.red.setFill()
                 break;
             }
@@ -219,10 +227,16 @@ extension Elevator: TextureGraphable {
         self.texture = Elevator.texture(self)
     }
     
-    public enum Classification: Int {
-        case connector
-        case trap
-        case broken
+    public enum Kind: String, CaseIterable, Encodable, Decodable {
+        case Connector, Trap, Broken
+        
+        public static func load(from: Int) -> Kind {
+            if allCases.indices.contains(from) {
+                return allCases[from]
+            } else {
+                return Kind.Connector
+            }
+        }
     }
 
 }

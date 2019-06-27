@@ -19,53 +19,37 @@ public class GameBuilderPickerViewController: UIViewController, ControllerIdenti
     }()
     
     @IBAction func loadLevel(_ sender: UIButton) {
-    
+        
     }
-    @IBAction func createLevel(_ sender: UIButton) {
-        
-        guard let levelName = levelNameTextField.text, (levelNameTextField.text?.count ?? 0) > 0 else {
-            return
-        }
-        
-        guard LevelsLoader.shared.containsLevel(named: levelName) == false else {
-            
-            // create the alert
-            let alert = UIAlertController(title: "Cannot Create Level", message: "Level Name \"\(levelName)\" is already a Level!", preferredStyle: UIAlertController.Style.alert)
-            
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-            
-            return
-        }
-        
-        // Load GameBuilderViewController
-        
-        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "GameBuilderViewController") as? GameBuilderViewController else {
-            return
-        }
-        
-        controller.model = LevelModel(number: -1, name: levelName, state: .build)
-        
-        self.present(controller, animated: true, completion: nil)
-    }
-    
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        levelNameTextField.endEditing(true)
-    }
-    
-    
-    @IBOutlet weak var levelNameTextField: UITextField!
+
     @IBOutlet weak var levelPickerView: UIPickerView!
+}
+
+extension GameBuilderPickerViewController {
+    
+    static let create_segue = "create"
+    static let load_segue = "load"
+    
+    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let controller = segue.destination as? GameBuilderViewController
+        
+        switch segue.identifier {
+        case GameBuilderPickerViewController.create_segue:
+            controller?.model = LevelModel()
+            return
+        case GameBuilderPickerViewController.load_segue:
+            return
+        default:
+            fatalError("Unhandled Segue \(segue.identifier as Any)")
+        }
+    }
 }
 
 extension GameBuilderPickerViewController {
     public override func viewDidLoad() {
         self.levelPickerView.delegate = self
         self.levelPickerView.dataSource = self
-        self.levelNameTextField.delegate = self
     }
 }
 

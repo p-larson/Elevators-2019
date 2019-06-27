@@ -33,12 +33,16 @@ public class FloorManager: ElevatorsGameSceneDependent {
         return currentFloor?.number ?? 0
     }
     
+    public var maxElevatorRange: Int {
+        return model?.maxElevatorRange ?? scene.maxElevatorRange
+    }
+    
     public var populatedFloorRange: Range<Int> {
         return currentFloorNumber ..< currentFloorNumber + scene.maxFloorsShown
     }
     
     public var validFloorRange: ClosedRange<Int> {
-        return currentFloorNumber - scene.maxElevatorRange ... currentFloorNumber + scene.maxElevatorRange + scene.maxFloorsShown
+        return currentFloorNumber - maxElevatorRange ... currentFloorNumber + maxElevatorRange + scene.maxFloorsShown
     }
     
     /// Mutable public accessable floor list. Not all floors are children of self.holder
@@ -69,15 +73,15 @@ public extension FloorManager {
         }
     }
     
-    private var bottomFloor: Floor? {
+    var bottomFloor: Floor? {
         return floors.first
     }
     
-    private var topFloor: Floor? {
+    var topFloor: Floor? {
         return floors.last
     }
     
-    private var topNumber: Int {
+    var topNumber: Int {
         return topFloor?.number ?? 0
     }
     
@@ -189,7 +193,7 @@ public extension FloorManager {
             larsondebug("has preCurrentFloorNumber", preCurrentFloor, "has preCurrentFloor", preCurrentFloor)
             self.currentFloor = preCurrentFloor
         }
-        larsondebug("current floor: \(currentFloor?.number)")
+        larsondebug("current floor: \(currentFloor?.number as Any)")
         larsondebug("updating floors.")
         // Update floors
         self.update()
@@ -241,7 +245,7 @@ public extension FloorManager {
     private func getFirst(count: Int, offset: Int = 0) -> ArraySlice<Floor> {
         return floors[floors.startIndex + offset ..< floors.endIndex].prefix(count)
     }
-    /// Generate the next Floor Classification based on the current sequence.
+    /// Generate the next Floor Kind based on the current sequence.
     ///
     /// hasAvailableNormalFloor
     ///    true if the last maxElevatorsRange contains a floor that has a normal type in it.
@@ -252,7 +256,7 @@ public extension FloorManager {
     ///             the last element was not normal and random bool is true and the last maxElevatorRange elements does not contain a normal level
     ///         trap_1 if
     ///             the last element was normal and
-    private func generateNextType() -> Floor.Classification {
+    private func generateNextType() -> Floor.Kind {
         // Set up debug
         larsonenter(#function)
         // Prepare for deinit of function.
@@ -261,29 +265,29 @@ public extension FloorManager {
         }
         
         guard let last = floors.last else {
-            return .normal
+            return .Normal
         }
         
-        let hasAvailableNormalFloor = self.getLast(count: scene.maxElevatorRange).filter { $0.type == .normal && $0 != last }.count > 0
+        let hasAvailableNormalFloor = self.getLast(count: scene.maxElevatorRange).filter { $0.type == .Normal && $0 != last }.count > 0
         
-        if last.type == .normal && !hasAvailableNormalFloor {
-            return .normal
+        if last.type == .Normal && !hasAvailableNormalFloor {
+            return .Normal
         }
         
         switch last.type {
-        case .normal:
+        case .Normal:
             
             if !hasAvailableNormalFloor {
-                return .normal
+                return .Normal
             }
             
-            return Bool.random() && self.getLast(count: scene.maxElevatorRange).filter { $0.type == .normal && $0 != last }.count != 0 ? .trap_1 : .normal
-        case .trap_1:
-            return Bool.random() ? .trap_2 : .normal
-        case .trap_2:
-            return .normal
-        case .level:
-            return .normal
+            return Bool.random() && self.getLast(count: scene.maxElevatorRange).filter { $0.type == .Normal && $0 != last }.count != 0 ? .Trap : .Normal
+        case .Trap:
+            return Bool.random() ? .TrapEnd : .Normal
+        case .TrapEnd:
+            return .Normal
+        case .Level:
+            return .Normal
         }
     }
     
@@ -435,18 +439,18 @@ public extension FloorManager {
                 self.debugPrint(nearbyFloors)
             }
             
-            let elevatorCount = floor.type == .normal ? Int.random(in: 1 ... scene.maxElevatorsPerFloor) : Int.random(in: 1 ... scene.maxElevatorsPerTrapFloor)
+            let elevatorCount = floor.type == .Normal ? Int.random(in: 1 ... scene.maxElevatorsPerFloor) : Int.random(in: 1 ... scene.maxElevatorsPerTrapFloor)
             
             larsondebug("adding \(elevatorCount) to floor \(floor.number)")
             // Create scene based on the floor type
             switch floor.type {
-            case .normal:
+            case .Normal:
                 // Priority 1
                 // Normal to Normal
                 larsonenter("normal floor")
                 larsondebug("finding definite nearby normal")
                 let target = nearbyFloors.first {
-                    level in level.type == .normal && level != floor
+                    level in level.type == .Normal && level != floor
                     }!
                 larsondebug("connecting to \(target.number)")
                 // Add elevator to targeted normal floor and connected to target
@@ -461,7 +465,7 @@ public extension FloorManager {
                     if Bool.random() {
                         // Next normal if there is no elevator to it yet from the current floor.
                         if let nextNormalTarget = nearbyFloors.first(where: { (floor2) -> Bool in
-                            return floor2.type == .normal && floor.baseElevators.contains(where: { (elevator2) -> Bool in
+                            return floor2.type == .Normal && floor.baseElevators.contains(where: { (elevator2) -> Bool in
                                 return elevator2.destination != floor2
                             })
                         }) {
@@ -477,7 +481,7 @@ public extension FloorManager {
                     } else {
                         // Next trap if there is no elevator to it yet from the current floor
                         if let nextTrapTarget = nearbyFloors.first(where: { (floor2) -> Bool in
-                            return floor2.type != .normal && floor.baseElevators.contains(where: { (elevator2) -> Bool in
+                            return floor2.type != .Normal && floor.baseElevators.contains(where: { (elevator2) -> Bool in
                                 return elevator2.destination != floor2
                             })
                         }) {
@@ -495,14 +499,14 @@ public extension FloorManager {
                 larsonexit()
                 
                 break
-            case .trap_1:
+            case .Trap:
                 
                 larsonenter("trap 1")
                 
                 // Priority 1
                 // Trap to Trap 2
                 if let nextFloor = nearbyFloors.first {
-                    if nextFloor.type == .trap_2 {
+                    if nextFloor.type == .TrapEnd {
                         floor.addTrap(to: nextFloor)
                         larsondebug("adding prioritized trap elevator to trap 2 floor \(nextFloor.number)")
                     }
@@ -518,7 +522,7 @@ public extension FloorManager {
                 larsonexit()
                 
                 break
-            case .trap_2:
+            case .TrapEnd:
                 
                 larsonenter("trap 2")
                 // Fill with Broken
@@ -531,7 +535,7 @@ public extension FloorManager {
                 larsonexit()
                 
                 break
-            case .level:
+            case .Level:
                 break
             }
             larsonexit()
