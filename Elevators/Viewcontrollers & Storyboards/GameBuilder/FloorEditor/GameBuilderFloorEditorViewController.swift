@@ -17,6 +17,8 @@ public final class GameBuilderFloorEditorViewController: UIViewController {
     public var levelModel: LevelModel!
     public var floorModel: LevelModel.FloorModel!
     
+    public var scene: GameBuilderFloorEditorScene!
+    
     @IBOutlet weak var skview: SKView!
     @IBOutlet weak var positionerSlider: UISlider!
     
@@ -52,6 +54,17 @@ extension GameBuilderFloorEditorViewController {
             picker?.delegate = self
             picker?.dataSource = self
         }
+        
+        scene = GameBuilderFloorEditorScene()
+        
+        scene.model = floorModel
+        scene.scaleMode = .aspectFill
+        scene.size = skview.frame.size
+        scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        scene.backgroundColor = UIColor.clear
+        
+        skview.presentScene(scene)
+        
     }
 }
 

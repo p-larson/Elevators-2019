@@ -21,19 +21,21 @@ public class GameBuilderScene: GameScene {
     
     public func reloadScene() {
         
-        if let currentFloorNumber = floorManager.currentFloor?.number, let floor = floorManager.floor(number: currentFloorNumber) {
-            setSelectedFloor(to: floor, reload: true)
+        if let currentFloorNumber = floorManager.currentFloor?.number, let floorModel = model.floorWith(number: currentFloorNumber) {
+            setSelectedFloor(to: floorModel, reload: true)
         } else {
             self.floorManager.setupGame()
         }
     }
     
-    public func setSelectedFloor(to floor: Floor, reload: Bool = true) {
+    public func setSelectedFloor(to floor: LevelModel.FloorModel, reload: Bool = true) {
         
-        self.floorManager.setupGame(preCurrentFloorNumber: floor.number)
+        if reload {
+            self.floorManager.setupGame(preCurrentFloorNumber: floor.number)
+        }
         
         self.floorManager.floors.forEach { (floor2) in
-            floor2.setSelected(floor == floor2)
+            floor2.setSelected(floor.number == floor2.number)
         }
     }
 }
@@ -47,9 +49,10 @@ extension GameBuilderScene {
             if let selectedFloor = self.floorManager.floors.first(where: { (floor) -> Bool in
                 return CGRect(origin: floor.position, size: floor.floorSize).contains(point)
             }) {
-                self.setSelectedFloor(to: selectedFloor, reload: false)
+                if let floorModel = model.floorWith(number: selectedFloor.number) {
+                    self.setSelectedFloor(to: floorModel, reload: false)
+                }
             }
-            
             
         }
     }
@@ -59,7 +62,7 @@ public extension GameBuilderScene {
     func addFloor() {
         let newFloor = LevelModel.FloorModel(number: controller.model.floors.count + 1)
         controller.model.floors.append(newFloor)
-        self.reloadScene()
+        
     }
     
     func deleteFloor() {

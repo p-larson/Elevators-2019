@@ -14,7 +14,7 @@ public class Elevator: SKSpriteNode {
     static let backgroundZPosition: CGFloat = 1.0
     static let doorZPosition: CGFloat = 2.0
     static let ropeZPosition: CGFloat = -1.0
-    public var model: LevelModel.FloorModel.ElevatorModel? = nil
+    public var model: ElevatorModel? = nil
     public var isEnabled = true
     public let type: Kind
     public let skin: Skin
@@ -155,11 +155,12 @@ public class Elevator: SKSpriteNode {
         self.base = base
         self.destination = destination
         self.skin = skin
+        self.number = number
         super.init(texture: skin.base, color: .clear, size: size)
         self.setupCommon()
     }
     
-    init(model: LevelModel.FloorModel.ElevatorModel, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
+    init(model: ElevatorModel, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
         
         self.type = model.type
         self.number = model.number
@@ -170,7 +171,7 @@ public class Elevator: SKSpriteNode {
         self.setupCommon()
     }
     
-    init?(model: LevelModel.FloorModel.ElevatorModel, size: CGSize, base: Floor) {
+    init?(model: ElevatorModel, size: CGSize, base: Floor) {
         self.number = model.number
         self.type = model.type
         self.base = base

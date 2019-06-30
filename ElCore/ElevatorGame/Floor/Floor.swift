@@ -15,14 +15,14 @@ public class Floor: SKNode {
     public let type: Kind
     public let floorSize: CGSize
     public weak var manager: FloorManager? = nil
-    public var model: LevelModel.FloorModel? = nil
+    public var model: FloorModel? = nil
     public var connectedElevators = [Elevator]()
     private var isPositioned: Bool = false
     public static let baseZPosition: CGFloat = 4.0
     private lazy var label: SKLabelNode = _label()
     private lazy var base: SKSpriteNode = _base()
     
-    public func loadElevators(from model: LevelModel.FloorModel) {
+    public func loadElevators(from model: FloorModel) {
         model.baseElevators.forEach { (elevatorModel) in
             self.addChild(Elevator(model: elevatorModel, size: elevatorSize, base: self)!)
         }
@@ -39,7 +39,7 @@ public class Floor: SKNode {
     }
     
     
-    public init(_ model: LevelModel.FloorModel, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager? = nil) {
+    public init(_ model: FloorModel, elevatorSize: CGSize, floorSize: CGSize, manager: FloorManager? = nil) {
         self.number = model.number
         self.type = .Level
         self.elevatorSize = elevatorSize
@@ -179,7 +179,7 @@ public extension Floor {
         to.connectedElevators.append(elevator)
     }
     
-    func loadElevator(from model: LevelModel.FloorModel.ElevatorModel, base: Floor, destination: Floor) {
+    func loadElevator(from model: ElevatorModel, base: Floor, destination: Floor) {
         let elevator = Elevator(model: model, base: base, destination: destination, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin)
         
         elevator.position.x = base.frame.minX + (baseSize.width * model.xPosition)
@@ -204,59 +204,68 @@ public extension Floor {
         }
         
         if let floorModel = model {
+            larsondebug("has model. updating \(floorModel.baseElevators.count) base elevator's positions from model...")
             floorModel.baseElevators.forEach { (elevatorModel) in
-                self.elevator(for: elevatorModel).position.x
+                
+                let elevator = self.elevator(for: elevatorModel)
+                
+                elevator?.position.x = self.position(from: elevatorModel.xPosition)
+                elevator?.position.y = self.elevatorY
             }
-        }
-        // Keep a reference to which base elevators have been isPositioned already to add their positions to the blacklisted range for the unisPositioned elevators.
-        larsondebug("updating \(baseElevators.count) base elevator's positions...")
-        var done = [Elevator]()
-        baseElevators.forEach {
-            elevator in
-            // Width each Elevator reserves of space.
-            let delta = (elevatorSize.width) / 2 + (elevatorSize.width / 32)
+            larsondebug("finished from model")
+        } else {
+            larsondebug("no model, generating positions.")
             
-            let passovers = manager?.passovers(on: self) ?? []
-            
-            let blacklisted: [Elevator] = (connectedElevators + done + passovers)
-            
-            larsondebug("blacklisting \(blacklisted.count) elevator positions")
-
-            // Range where elevators cannot be due to the floor's connecting Elevators and any other base Elevator that has been isPositioned.
-            let blacklist: [ClosedRange<CGFloat>] = blacklisted.map { ($0.position.x - delta) ... ($0.position.x + delta) }
-            // Range where Elevators can be placed in.
-            let whitelist: ClosedRange<CGFloat> = (-floorSize.width / 2 + delta) ... (floorSize.width / 2 - delta)
-            // Utility to calculate distance from range.
-            func distance(in range: ClosedRange<CGFloat>, of number: CGFloat) -> CGFloat {
-                if range.lowerBound > number {
-                    return range.lowerBound - number
-                } else if range.upperBound < number {
-                    return number - range.upperBound
-                } else {
-                    return 0
+            // Keep a reference to which base elevators have been isPositioned already to add their positions to the blacklisted range for the unisPositioned elevators.
+            larsondebug("updating \(baseElevators.count) base elevator's positions...")
+            var done = [Elevator]()
+            baseElevators.forEach {
+                elevator in
+                // Width each Elevator reserves of space.
+                let delta = (elevatorSize.width) / 2 + (elevatorSize.width / 32)
+                
+                let passovers = manager?.passovers(on: self) ?? []
+                
+                let blacklisted: [Elevator] = (connectedElevators + done + passovers)
+                
+                larsondebug("blacklisting \(blacklisted.count) elevator positions")
+                
+                // Range where elevators cannot be due to the floor's connecting Elevators and any other base Elevator that has been isPositioned.
+                let blacklist: [ClosedRange<CGFloat>] = blacklisted.map { ($0.position.x - delta) ... ($0.position.x + delta) }
+                // Range where Elevators can be placed in.
+                let whitelist: ClosedRange<CGFloat> = (-floorSize.width / 2 + delta) ... (floorSize.width / 2 - delta)
+                // Utility to calculate distance from range.
+                func distance(in range: ClosedRange<CGFloat>, of number: CGFloat) -> CGFloat {
+                    if range.lowerBound > number {
+                        return range.lowerBound - number
+                    } else if range.upperBound < number {
+                        return number - range.upperBound
+                    } else {
+                        return 0
+                    }
                 }
+                
+                // Generate a random x coordinate in the whitelist range, regenerate if the x is delta away from a blacklisted range.
+                larsonenter("searching for x position...")
+                var x = CGFloat.random(in: whitelist)
+                var attempts = 1
+                let maxAttempts = manager?.scene.maxGenerateElevatorFails ?? 1
+                repeat {
+                    attempts += 1
+                    larsondebug("retry attempt \(attempts)")
+                    x = CGFloat.random(in: whitelist)
+                } while blacklist.contains {
+                    range in distance(in: range, of: x) < delta
+                    } && attempts < maxAttempts
+                larsondebug("found after \(attempts) attempts")
+                larsonexit()
+                // Update position
+                elevator.position.x = x
+                // Move elevator up by half it's height so it's on the ground.
+                elevator.position.y = elevatorY
+                // Add to done.
+                done.append(elevator)
             }
-            
-            // Generate a random x coordinate in the whitelist range, regenerate if the x is delta away from a blacklisted range.
-            larsonenter("searching for x position...")
-            var x = CGFloat.random(in: whitelist)
-            var attempts = 1
-            let maxAttempts = manager?.scene.maxGenerateElevatorFails ?? 1
-            repeat {
-                attempts += 1
-                larsondebug("retry attempt \(attempts)")
-                x = CGFloat.random(in: whitelist)
-            } while blacklist.contains {
-                range in distance(in: range, of: x) < delta
-            } && attempts < maxAttempts
-            larsondebug("found after \(attempts) attempts")
-            larsonexit()
-            // Update position
-            elevator.position.x = x
-            // Move elevator up by half it's height so it's on the ground.
-            elevator.position.y = elevatorY
-            // Add to done.
-            done.append(elevator)
         }
         
         // Flag that this floor is done positioning.
@@ -294,20 +303,20 @@ public extension Floor {
     }
 }
 
-public extension Floor {
+public extension SKNode {
     
     static let selected_name = "selected"
     
     func setSelected(_ value: Bool = true) {
         
-        self.childNode(withName: Floor.selected_name)?.removeFromParent()
+        self.childNode(withName: SKNode.selected_name)?.removeFromParent()
         
         if value {
             let node = SKSpriteNode()
             node.color = UIColor.white.withAlphaComponent(0.1)
-            node.size = floorSize
+            node.size = calculateAccumulatedFrame().size
             node.position.y = node.size.height / 2
-            node.name = Floor.selected_name
+            node.name = SKNode.selected_name
             self.addChild(node)
         }
     }
@@ -322,7 +331,7 @@ extension Floor {
 }
 
 extension Floor {
-    public func elevator(for model: LevelModel.FloorModel.ElevatorModel) -> Elevator? {
+    public func elevator(for model: ElevatorModel) -> Elevator? {
         
         let x = position(from: model.xPosition)
         
@@ -331,3 +340,20 @@ extension Floor {
         }).first
     }
 }
+
+//extension Floor: Modelable {
+//    
+//    public func modeled() -> Model {
+//        let model = Model(number: self.number)
+//        
+//        self.baseElevators.forEach { (elevator) in
+////            model.baseElevators.append(elevator.modeled())
+//        }
+//        
+//        return model
+//    }
+//    
+//    public typealias Model = FloorModel
+//    
+//
+//}

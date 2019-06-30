@@ -19,12 +19,23 @@ public final class GameBuilderFloorEditorScene: SKScene {
     
     private var floor: Floor!
     
-    public override func didMove(to view: SKView) {
-        // Create Floor
+    public func reload() {
+        
+        self.removeAllChildren()
+        
         floor = Floor(model, elevatorSize: elevatorSize, floorSize: frame.size)
+        
+        floor.position.y = frame.minY / 2
         
         self.addChild(floor)
         
         floor.updateElevatorPositions()
+        
+        larsondebug(self.calculateAccumulatedFrame(), "loaded")
+    }
+    
+    public override func didMove(to view: SKView) {
+        // Create Floor
+        self.reload()
     }
 }

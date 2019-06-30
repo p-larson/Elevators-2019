@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dPQ-F1-jSR">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -44,6 +44,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Level Loader" id="T6Y-Yc-v2n">
+                        <barButtonItem key="leftBarButtonItem" title="Info" id="r0U-h2-vQj"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="ven-F9-KOu">
                             <connections>
                                 <segue destination="wQh-gE-fx7" kind="show" identifier="create" id="DPO-P9-sQj"/>
@@ -104,7 +105,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Title" id="bOy-Aj-rdF">
+                    <navigationItem key="navigationItem" title="File" id="bOy-Aj-rdF">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="FdJ-es-44N">
                             <connections>
                                 <action selector="onDone:" destination="wQh-gE-fx7" id="nUI-eN-j6c"/>
@@ -134,22 +135,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <skView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xpt-Gf-31a">
-                                <rect key="frame" x="0.0" y="88" width="414" height="179"/>
+                                <rect key="frame" x="0.0" y="88.000000000000014" width="414" height="179.33333333333337"/>
                             </skView>
                             <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="n9A-m0-Tqu">
-                                <rect key="frame" x="-2" y="274.5" width="418" height="31"/>
+                                <rect key="frame" x="-2" y="274.66666666666669" width="418" height="31"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="minimumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="maximumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </slider>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QyO-2s-QuG">
-                                <rect key="frame" x="0.0" y="312.5" width="138" height="216"/>
+                                <rect key="frame" x="0.0" y="312.66666666666669" width="138" height="216.00000000000006"/>
                             </pickerView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yBU-r9-CdY">
-                                <rect key="frame" x="138" y="312.5" width="138" height="216"/>
+                                <rect key="frame" x="138" y="312.66666666666669" width="138" height="216.00000000000006"/>
                             </pickerView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fOj-bg-Kqc">
-                                <rect key="frame" x="276" y="312.5" width="138" height="216"/>
+                                <rect key="frame" x="276" y="312.66666666666669" width="138" height="216.00000000000006"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
