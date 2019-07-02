@@ -14,19 +14,9 @@ public class FloorModel: Encodable & Decodable {
     public var baseElevators: [ElevatorModel]
     public var coins: [CoinModel]
     
-    public class CoinModel: Encodable & Decodable & Positionable {
-        public var xPosition: CGFloat
-    }
-    
     public init(number: Int) {
         self.number = number
         self.baseElevators = []
         self.coins = []
-    }
-    
-    public func elevatorAt(x: CGFloat) -> ElevatorModel? {
-        return baseElevators.sorted(by: { (elevator1, elevator2) -> Bool in
-            return abs(elevator1.xPosition - x) < abs(elevator2.xPosition - x)
-        }).first
     }
 }

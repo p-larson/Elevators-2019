@@ -29,7 +29,6 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     public var playerBase: CGPoint {
         
         guard let currentFloor = scene.floorManager.currentFloor else {
-            larsondebug("no current floor")
             return .zero
         }
         
@@ -115,16 +114,8 @@ public class PlayerManager: ElevatorsGameSceneDependent {
     }
     
     public func setupPlayer() {
-        // Set up debug
-        larsonenter(#function)
-        
-        // Prepare for deinit of function.
-        defer {
-            larsonexit()
-        }
         
         guard let currentFloor = scene.floorManager.currentFloor else {
-            larsondebug("Bottom Floor Invalid")
             return
         }
         
@@ -138,8 +129,6 @@ public class PlayerManager: ElevatorsGameSceneDependent {
         }
         
         currentFloor.addChild(player)
-        
-        larsondebug("finished player setup. \(player.debugDescription)")
     }
     
     public init(scene: ElevatorsGameScene) {

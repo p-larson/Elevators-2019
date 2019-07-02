@@ -65,7 +65,9 @@
 		D097C2C422C9473700796250 /* Positionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EABFB322C91D320083C96E /* Positionable.swift */; };
 		D097C2C522C9473700796250 /* FloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EABFAC22C91C850083C96E /* FloorModel.swift */; };
 		D097C2C622C9474200796250 /* Elevator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E593AD220687030082B293 /* Elevator.swift */; };
-		D09A06DB223839C000A9CAB1 /* Larson.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09A06DA223839C000A9CAB1 /* Larson.swift */; };
+		D097C2C922C94B2700796250 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097C2C822C94B2700796250 /* CoinModel.swift */; };
+		D097C2CA22C94B2700796250 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097C2C822C94B2700796250 /* CoinModel.swift */; };
+		D0A019A622CBDD570048C05A /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A019A522CBDD570048C05A /* Blocks.swift */; };
 		D0A1B241226E61E9003F53E7 /* WaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B240226E61E9003F53E7 /* WaveManager.swift */; };
 		D0AADE2A221C8E6800BF71B3 /* ElCore.h in Headers */ = {isa = PBXBuildFile; fileRef = D0AADE28221C8E6800BF71B3 /* ElCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0AADE2D221C8E6800BF71B3 /* ElCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0AADE26221C8E6800BF71B3 /* ElCore.framework */; };
@@ -170,7 +172,8 @@
 		D06FC7322274DF6C00C1478D /* Unlockable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unlockable.swift; sourceTree = "<group>"; };
 		D06FC7342274DF7400C1478D /* ShopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopManager.swift; sourceTree = "<group>"; };
 		D096F8B5225E93B5002CC444 /* JoystickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickView.swift; sourceTree = "<group>"; };
-		D09A06DA223839C000A9CAB1 /* Larson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Larson.swift; sourceTree = "<group>"; };
+		D097C2C822C94B2700796250 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
+		D0A019A522CBDD570048C05A /* Blocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
 		D0A1B240226E61E9003F53E7 /* WaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveManager.swift; sourceTree = "<group>"; };
 		D0AADE26221C8E6800BF71B3 /* ElCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ElCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0AADE28221C8E6800BF71B3 /* ElCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElCore.h; sourceTree = "<group>"; };
@@ -323,7 +326,7 @@
 				D0D8523F220693BB00ED606C /* ElevatorsGameColors.swift */,
 				D0305FDF22235AEC00C76819 /* ElevatorsGame.swift */,
 				D05ED160229D75CE00137DBA /* Elevators.swift */,
-				D09A06DA223839C000A9CAB1 /* Larson.swift */,
+				D0A019A522CBDD570048C05A /* Blocks.swift */,
 				D0305FE122235B5300C76819 /* ElevatorsGameScene.swift */,
 				D0305FEA22235CCE00C76819 /* ElevatorsGameSceneDependable.swift */,
 				D0ADF85B227A418D00614910 /* NearbyFriendsManager.swift */,
@@ -520,9 +523,9 @@
 		D0AADE39221C8FB000BF71B3 /* Floor */ = {
 			isa = PBXGroup;
 			children = (
+				D0AADE37221C8F2600BF71B3 /* FloorManager.swift */,
 				D0305FED22235DE000C76819 /* Elevator */,
 				D0E593AB220686B30082B293 /* Floor.swift */,
-				D0AADE37221C8F2600BF71B3 /* FloorManager.swift */,
 				D0EABFB022C91C950083C96E /* Models */,
 			);
 			path = Floor;
@@ -599,6 +602,7 @@
 				D097C2C722C9477500796250 /* Protocols */,
 				D0298356228B417A00174222 /* LevelModel.swift */,
 				D0EABFAC22C91C850083C96E /* FloorModel.swift */,
+				D097C2C822C94B2700796250 /* CoinModel.swift */,
 				D0EABFAE22C91C8D0083C96E /* ElevatorModel.swift */,
 			);
 			path = Models;
@@ -844,8 +848,8 @@
 				D0ADF85C227A418D00614910 /* NearbyFriendsManager.swift in Sources */,
 				D097C2C222C9473700796250 /* FloorModel.swift in Sources */,
 				D0AADE34221C8E7900BF71B3 /* Graphics.swift in Sources */,
-				D09A06DB223839C000A9CAB1 /* Larson.swift in Sources */,
 				D06FC7352274DF7400C1478D /* ShopManager.swift in Sources */,
+				D097C2C922C94B2700796250 /* CoinModel.swift in Sources */,
 				D097C2BC22C9473100796250 /* ElevatorModel.swift in Sources */,
 				D097C2C022C9473700796250 /* Modelable.swift in Sources */,
 				D0305FEB22235CCE00C76819 /* ElevatorsGameSceneDependable.swift in Sources */,
@@ -876,6 +880,7 @@
 				D0298370228B45EA00174222 /* ElevatorTouchHandler.swift in Sources */,
 				D029836D228B45DD00174222 /* LevelModel.swift in Sources */,
 				D097C2C622C9474200796250 /* Elevator.swift in Sources */,
+				D097C2CA22C94B2700796250 /* CoinModel.swift in Sources */,
 				D0D3A022228B24B2009FE1DC /* Skin.swift in Sources */,
 				D097C2C422C9473700796250 /* Positionable.swift in Sources */,
 				D029836F228B45E600174222 /* Floor.swift in Sources */,
@@ -895,6 +900,7 @@
 				D0E96B94229C778A00CFD0A5 /* UIColor.swift in Sources */,
 				D05ED19F229DC31100137DBA /* ControllerIdentifiable.swift in Sources */,
 				D05ED195229DC30000137DBA /* LevelCell.swift in Sources */,
+				D0A019A622CBDD570048C05A /* Blocks.swift in Sources */,
 				D05ED196229DC30000137DBA /* LevelSelectedViewController.swift in Sources */,
 				D06FC7302273B9F800C1478D /* Assets.swift in Sources */,
 				D011C27A22B73A5200B7F09E /* OverlayLayer.swift in Sources */,

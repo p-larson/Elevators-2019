@@ -28,7 +28,9 @@ public class GameBuilderScene: GameScene {
         }
     }
     
-    public func setSelectedFloor(to floor: LevelModel.FloorModel, reload: Bool = true) {
+    public func setSelectedFloor(to floor: FloorModel, reload: Bool = true) {
+        
+        print("selecting", floor.number)
         
         if reload {
             self.floorManager.setupGame(preCurrentFloorNumber: floor.number)
@@ -46,12 +48,13 @@ extension GameBuilderScene {
             
             let point = touch.location(in: self)
             
-            if let selectedFloor = self.floorManager.floors.first(where: { (floor) -> Bool in
-                return CGRect(origin: floor.position, size: floor.floorSize).contains(point)
-            }) {
-                if let floorModel = model.floorWith(number: selectedFloor.number) {
-                    self.setSelectedFloor(to: floorModel, reload: false)
-                }
+            let selected = floorManager.floors.first(where: { (floor) -> Bool in
+                return floor.container.contains(point)
+            })
+            
+            
+            if let selected = selected, let model = model.floorWith(number: selected.number) {
+                self.setSelectedFloor(to: model, reload: true)
             }
             
         }
@@ -60,9 +63,9 @@ extension GameBuilderScene {
 
 public extension GameBuilderScene {
     func addFloor() {
-        let newFloor = LevelModel.FloorModel(number: controller.model.floors.count + 1)
+        let newFloor = FloorModel(number: controller.model.floors.count + 1)
         controller.model.floors.append(newFloor)
-        
+        self.setSelectedFloor(to: newFloor, reload: true)
     }
     
     func deleteFloor() {

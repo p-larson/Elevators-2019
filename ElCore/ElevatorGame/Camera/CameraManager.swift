@@ -50,7 +50,7 @@ public class CameraManager: ElevatorsGameSceneDependent {
         return move
     }
     
-    public func move(_ action: SKAction, completion: Block? = nil) {
+    public func move(_ action: SKAction, completion: BlockOperation? = nil) {
         camera.run(SKAction.withCompletionHandler(action, completion: completion))
     }
     

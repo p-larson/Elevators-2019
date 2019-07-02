@@ -93,7 +93,7 @@ public class Elevator: SKSpriteNode {
         return doors.action(forKey: Elevator.doors_opening_move) != nil
     }
     
-    private func closingAction(completion: @escaping Block) -> SKAction {
+    private func closingAction(completion: BlockOperation) -> SKAction {
         return SKAction.sequence(
             [
                 SKAction.run {
@@ -102,13 +102,13 @@ public class Elevator: SKSpriteNode {
                 SKAction.animate(with: Array<SKTexture>(skin.frames2), timePerFrame: 1.0 / 72.0),
                 SKAction.run {
                     self.status = .Closed
-                    completion()
+                    completion.start()
                 }
             ]
         )
     }
     
-    private func openingAction(completion: @escaping Block) -> SKAction {
+    private func openingAction(completion: BlockOperation) -> SKAction {
         return SKAction.sequence(
             [
                 SKAction.run {
@@ -117,7 +117,7 @@ public class Elevator: SKSpriteNode {
                 SKAction.animate(with: Array<SKTexture>(skin.frames1), timePerFrame: 1.0 / 72.0),
                 SKAction.run {
                     self.status = .Open
-                    completion()
+                    completion.start()
                 }
             ]
         )
@@ -128,7 +128,7 @@ public class Elevator: SKSpriteNode {
         doors.removeAction(forKey: Elevator.doors_opening_move)
     }
     
-    public func close(completion: @escaping Block = {}) {
+    public func close(completion: BlockOperation = BlockOperation()) {
         guard [Status.Closed, Status.Closing].contains(status) == false else {
             return
         }
@@ -136,7 +136,7 @@ public class Elevator: SKSpriteNode {
         doors.run(closingAction(completion: completion), withKey: Elevator.doors_closing_move)
     }
     
-    public func open(completion: @escaping Block = {}) {
+    public func open(completion: BlockOperation = BlockOperation()) {
         guard [Status.Open, Status.Opening].contains(status) == false else {
             return
         }
@@ -240,4 +240,18 @@ extension Elevator: TextureGraphable {
         }
     }
 
+}
+
+extension Elevator: Modelable {
+    public typealias Model = ElevatorModel
+    
+    public func modeled() -> ElevatorModel {
+        return ElevatorModel(
+            xPosition: base.percent(from: self),
+            base: base.number,
+            destination: destination.number,
+            type: type,
+            number: number
+        )
+    }
 }

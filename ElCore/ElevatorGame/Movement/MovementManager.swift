@@ -38,21 +38,14 @@ public class MovementManager: ElevatorsGameSceneDependent {
         return cycling
     }
 
-    public func cycle(_ count: Int = 1, completion: @escaping Block = {}) {
-        // Set up debug
-        larsonenter(#function)
-        // Prepare for deinit of function.
+    public func cycle(_ count: Int = 1, completion: BlockOperation = BlockOperation()) {
         defer {
-            larsonexit()
             self.cycling = false
         }
         guard !isCycling && count > 0 && count < scene.maxFloorsLoaded else {
-            larsondebug("failed cycle attempt, leaving elevator.")
             self.exitElevator()
             return
         }
-        
-        larsondebug("cycling \(count) floors")
         
         self.cycling = true
         
@@ -77,16 +70,14 @@ public class MovementManager: ElevatorsGameSceneDependent {
         // Hide Player
         self.scene.playerManager.player.isHidden = true
         
-        self.scene.cameraManager.move(cameraMove, completion: {
+        self.scene.cameraManager.move(cameraMove, completion: BlockOperation(block: {
             guard let elevator = self.scene.playerManager.elevator else {
-                larsondebug("Could not finish elevator move: elevator does not exist")
                 return
             }
             // Jostle the floors.
             self.scene.floorManager.jostle(count: count)
             // Current Floor after being jostled
             guard let currentFloor = self.scene.floorManager.currentFloor else {
-                larsondebug("No Current Floor")
                 return
             }
             // Reset camera position.
@@ -102,18 +93,15 @@ public class MovementManager: ElevatorsGameSceneDependent {
             // Open Floor
             currentFloor.openElevators()
             // Open Elevator
-            elevator.open(completion: {
+            elevator.open(completion: BlockOperation(block: {
                 // Unhide player
                 self.scene.playerManager.player.isHidden = false
                 // Leave elevator
                 self.exitElevator()
                 // Call Completion Handler
-                completion()
-                // Debug
-                larsondebug("Moved back. Done with cycle.")
-                larsondebug(self.scene.playerManager.player.floor?.number ?? -1, elevator.floor?.number ?? -1, self.scene.floorManager.currentFloor?.number ?? -1)
-            })
-        })
+                completion.start()
+            }))
+        }))
         // Apply same action to the Elevator and Player.
         self.scene.playerManager.player.run(elevatorMove)
         self.scene.playerManager.elevator?.run(elevatorMove)
@@ -150,35 +138,26 @@ extension MovementManager {
         }
         
         scene.playerManager.status = .Elevator_Moving
-        
-        self.cycle(elevator.destination.number - (scene.floorManager.currentFloor?.number ?? 0)) {
+
+        self.cycle(elevator.destination.number - (scene.floorManager.currentFloor?.number ?? 0), completion: BlockOperation(block: {
             self.scene.playerManager.status = .Elevator_Idle
-        }
+        }))
     }
 }
 
 // Movement 2.0
 extension MovementManager {
     @objc func moveRight() {
-        larsonenter(#function)
-        // Prepare for deinit of function.
-        defer {
-            larsonexit()
-        }
         guard
             [PlayerManager.Status.Moving, PlayerManager.Status.Standing].contains(scene.playerManager.status),
             let target = scene.playerManager.rightTarget
         else {
-            larsondebug("failed \(scene.playerManager.rightTarget == nil)")
             return
         }
         
         scene.playerManager.target = target
         
-        larsondebug("## target \(target)")
-        
         scene.playerManager.status = .Moving
-        larsondebug("RUNNING")
         scene.playerManager.player.run(
             SKAction.sequence(
                 [scene.playerManager.move(to: target),
@@ -188,16 +167,10 @@ extension MovementManager {
     }
     
     @objc func moveLeft() {
-        larsonenter(#function)
-        // Prepare for deinit of function.
-        defer {
-            larsonexit()
-        }
         guard
             [PlayerManager.Status.Moving, PlayerManager.Status.Standing].contains(scene.playerManager.status),
             let target = scene.playerManager.leftTarget
         else {
-            larsondebug("failed \(scene.playerManager.leftTarget == nil)")
             return
         }
         
@@ -213,13 +186,7 @@ extension MovementManager {
     }
     
     @objc func enterElevator() {
-        // Set up debug
-        larsonenter(#function)
-        // Prepare for deinit of function.
-        defer {
-            larsonexit()
-        }
-        
+
         if [PlayerManager.Status.Elevator_Leaving, PlayerManager.Status.Elevator_Entering, PlayerManager.Status.Elevator_Moving].contains(scene.playerManager.status) {
             return
         }
@@ -227,17 +194,12 @@ extension MovementManager {
         if let target = scene.playerManager.target {
             
             guard target.isEnabled && target.status == .Open else {
-                larsondebug("elevator is disabled or not open, cannot enter.")
                 return
             }
             
             guard abs(target.position.x - scene.playerManager.player.position.x) < target.size.width / 2 else {
-                larsondebug("player is too far away from the elevator to enter.")
                 return
             }
-            
-            larsondebug("player entered elevator on floor \(target.base.number) to floor \(target.destination.number)")
-            larsondebug("entered elevator: \(target)")
             
             self.stopMovement()
             self.scene.waveManager.stop()
@@ -261,7 +223,6 @@ extension MovementManager {
     
     @objc func exitElevator() {
         if let elevator = scene.playerManager.elevator {
-            larsondebug("exiting elevator \(elevator)")
             self.stopMovement()
             scene.playerManager.status = .Elevator_Leaving
             scene.playerManager.player.position = scene.playerManager.onboard(elevator: elevator)

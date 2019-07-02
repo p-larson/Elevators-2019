@@ -135,13 +135,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <skView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xpt-Gf-31a">
-                                <rect key="frame" x="0.0" y="88.000000000000014" width="414" height="179.33333333333337"/>
+                                <rect key="frame" x="32" y="88.000000000000014" width="350" height="179.33333333333337"/>
                             </skView>
                             <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="n9A-m0-Tqu">
-                                <rect key="frame" x="-2" y="274.66666666666669" width="418" height="31"/>
+                                <rect key="frame" x="30" y="274.66666666666669" width="354" height="31"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="minimumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="maximumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="onValueChange:" destination="XOj-Wg-3CR" eventType="valueChanged" id="tfw-5g-pxn"/>
+                                </connections>
                             </slider>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QyO-2s-QuG">
                                 <rect key="frame" x="0.0" y="312.66666666666669" width="138" height="216.00000000000006"/>
@@ -155,7 +158,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Xpt-Gf-31a" firstAttribute="width" secondItem="Ne1-vp-Cex" secondAttribute="width" id="1te-Rr-kHY"/>
+                            <constraint firstItem="Xpt-Gf-31a" firstAttribute="width" secondItem="Ne1-vp-Cex" secondAttribute="width" constant="-64" id="1te-Rr-kHY"/>
                             <constraint firstItem="yBU-r9-CdY" firstAttribute="width" secondItem="Ne1-vp-Cex" secondAttribute="width" multiplier="1:3" id="1v0-wA-aDb"/>
                             <constraint firstItem="n9A-m0-Tqu" firstAttribute="centerX" secondItem="Ne1-vp-Cex" secondAttribute="centerX" id="3dA-Vh-JXc"/>
                             <constraint firstAttribute="trailing" secondItem="fOj-bg-Kqc" secondAttribute="trailing" id="7ts-yT-Y1A"/>
@@ -165,7 +168,7 @@
                             <constraint firstItem="n9A-m0-Tqu" firstAttribute="top" secondItem="Xpt-Gf-31a" secondAttribute="bottom" constant="7.5" id="HJ9-Ee-x3x"/>
                             <constraint firstItem="fOj-bg-Kqc" firstAttribute="width" secondItem="Ne1-vp-Cex" secondAttribute="width" multiplier="1:3" id="IEB-hL-tBa"/>
                             <constraint firstItem="Xpt-Gf-31a" firstAttribute="top" secondItem="Wip-3s-e7C" secondAttribute="bottom" id="arX-ft-M2w"/>
-                            <constraint firstItem="n9A-m0-Tqu" firstAttribute="width" secondItem="Ne1-vp-Cex" secondAttribute="width" id="b9i-s7-fhS"/>
+                            <constraint firstItem="n9A-m0-Tqu" firstAttribute="width" secondItem="Xpt-Gf-31a" secondAttribute="width" id="b9i-s7-fhS"/>
                             <constraint firstItem="Xpt-Gf-31a" firstAttribute="centerX" secondItem="Ne1-vp-Cex" secondAttribute="centerX" id="gF0-zj-IhK"/>
                             <constraint firstItem="QyO-2s-QuG" firstAttribute="leading" secondItem="Ne1-vp-Cex" secondAttribute="leading" id="h4D-e5-fFA"/>
                             <constraint firstItem="fOj-bg-Kqc" firstAttribute="top" secondItem="n9A-m0-Tqu" secondAttribute="bottom" constant="8" id="srD-Kc-WvV"/>

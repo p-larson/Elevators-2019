@@ -15,7 +15,7 @@ public final class GameBuilderFloorEditorViewController: UIViewController {
 
     // Never will have a scenario where these aren't loaded.
     public var levelModel: LevelModel!
-    public var floorModel: LevelModel.FloorModel!
+    public var floorModel: FloorModel!
     
     public var scene: GameBuilderFloorEditorScene!
     
@@ -27,11 +27,11 @@ public final class GameBuilderFloorEditorViewController: UIViewController {
     @IBOutlet weak var toPicker: UIPickerView!
     
     @IBAction func onDelete(_ sender: UIBarButtonItem) {
-        
+        self.scene.remove()
     }
     
     @IBAction func onCreate(_ sender: Any) {
-        
+        self.scene.add()
     }
     
     public enum TypePick: String, CaseIterable {
@@ -46,10 +46,16 @@ public final class GameBuilderFloorEditorViewController: UIViewController {
         }
     }
     
+    @IBAction func onValueChange(_ sender: Any) {
+        
+    }
+    
 }
 
 extension GameBuilderFloorEditorViewController {
     public override func viewDidLoad() {
+        self.setBackground(image: #imageLiteral(resourceName: "Backgrounds-1"))
+        
         [typePicker, elevatorTypePicker, toPicker].forEach { (picker) in
             picker?.delegate = self
             picker?.dataSource = self
@@ -62,15 +68,20 @@ extension GameBuilderFloorEditorViewController {
         scene.size = skview.frame.size
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scene.backgroundColor = UIColor.clear
+        scene.controller = self
         
         skview.presentScene(scene)
+        skview.allowsTransparency = true
         
+        scene.load(from: floorModel)
+        
+        self.updateViews()
     }
 }
 
 extension GameBuilderFloorEditorViewController {
-    public var nearbyFloors: [LevelModel.FloorModel] {
-        var list = [LevelModel.FloorModel]()
+    public var nearbyFloors: [FloorModel] {
+        var list = [FloorModel]()
         
         let whitelist = floorModel.number - levelModel.maxElevatorRange ... floorModel.number + levelModel.maxElevatorRange
         
@@ -133,18 +144,40 @@ extension GameBuilderFloorEditorViewController {
 extension GameBuilderFloorEditorViewController {
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        self.updatePickers()
+        self.updateViews()
     }
     
-    public func updatePickers() {
-        let type = TypePick.load(from: typePicker.selectedRow(inComponent: 0))
+    public func updateViews() {
         
-        let bool = type != TypePick.Coin
+        let pickers = [typePicker, elevatorTypePicker, toPicker]
         
-        self.enable(view: toPicker, value: bool)
-        self.enable(view: elevatorTypePicker, value: bool)
-        
-        print(type)
+        if let positionable = scene.selected {
+            if let elevator = positionable as? Elevator {
+                // Enable all pickers
+                self.enable(view: typePicker, value: true)
+                self.enable(view: elevatorTypePicker, value: true)
+                self.enable(view: toPicker, value: true)
+                // Set type picker to elevator
+                typePicker.selectRow(0, inComponent: 0, animated: true)
+                // Select the elvator type
+                if let row = Elevator.Kind.allCases.firstIndex(where: { (kind) -> Bool in
+                    return elevator.type == kind
+                }) {
+                    elevatorTypePicker.selectRow(row, inComponent: 0, animated: true)
+                }
+                
+                let value = Float(scene.floor.percent(from: elevator))
+                
+                positionerSlider.setValue(value, animated: true)
+            }
+            
+            positionerSlider.isEnabled = true
+            
+        } else {
+            pickers.forEach { (picker) in
+                self.enable(view: picker!, value: false)
+            }
+        }
     }
 }
 

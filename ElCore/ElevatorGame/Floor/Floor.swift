@@ -48,18 +48,11 @@ public class Floor: SKNode {
         self.manager = manager
         super.init()
         self.setup()
-        
-        print("init from model", elevatorSize, floorSize)
     }
     
     private func setup() {
         self.addChild(base)
-        
-        if Larson.debugging {
-            self.addChild(label)
-        }
-        
-        print("setup \(base)")
+        self.addChild(label)
     }
 
     
@@ -133,7 +126,6 @@ extension Floor {
     }
 }
 
-
 public extension Floor {
     func open(elevator: Elevator) {
         elevator.open()
@@ -162,49 +154,49 @@ public extension Floor {
         return baseElevators.count + 1
     }
     
-    func addTrap(to: Floor) {
+    @discardableResult
+    func addTrap(to: Floor) -> Elevator {
         let elevator = Elevator(type: .Trap, base: self, destination: to, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin, number: nextNumber)
         addChild(elevator)
         to.connectedElevators.append(elevator)
+        return elevator
     }
     
-    func addBroken() {
+    @discardableResult
+    func addBroken() -> Elevator {
         let elevator = Elevator(type: .Broken, base: self, destination: self, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin, number: number)
         addChild(elevator)
+        return elevator
     }
     
-    func addConnector(to: Floor) {
+    @discardableResult
+    func addConnector(to: Floor) -> Elevator {
         let elevator = Elevator(type: .Connector, base: self, destination: to, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin, number: nextNumber)
         addChild(elevator)
         to.connectedElevators.append(elevator)
+        return elevator
     }
     
-    func loadElevator(from model: ElevatorModel, base: Floor, destination: Floor) {
+    @discardableResult
+    func loadElevator(from model: ElevatorModel, base: Floor, destination: Floor) -> Elevator {
         let elevator = Elevator(model: model, base: base, destination: destination, size: elevatorSize, skin: ShopManager.shared.selectedElevatorSkin)
         
         elevator.position.x = base.frame.minX + (baseSize.width * model.xPosition)
         self.isPositioned = true
         addChild(elevator)
+        return elevator
     }
 }
 
 public extension Floor {
     
     func updateElevatorPositions() {
-        // Set up debug
-        larsonenter(#function)
-        // Prepare for deinit of function.
-        defer {
-            larsonexit()
-        }
         
         guard !isPositioned else {
-            larsondebug("already isPositioned")
             return
         }
         
         if let floorModel = model {
-            larsondebug("has model. updating \(floorModel.baseElevators.count) base elevator's positions from model...")
             floorModel.baseElevators.forEach { (elevatorModel) in
                 
                 let elevator = self.elevator(for: elevatorModel)
@@ -212,12 +204,9 @@ public extension Floor {
                 elevator?.position.x = self.position(from: elevatorModel.xPosition)
                 elevator?.position.y = self.elevatorY
             }
-            larsondebug("finished from model")
         } else {
-            larsondebug("no model, generating positions.")
             
             // Keep a reference to which base elevators have been isPositioned already to add their positions to the blacklisted range for the unisPositioned elevators.
-            larsondebug("updating \(baseElevators.count) base elevator's positions...")
             var done = [Elevator]()
             baseElevators.forEach {
                 elevator in
@@ -227,8 +216,6 @@ public extension Floor {
                 let passovers = manager?.passovers(on: self) ?? []
                 
                 let blacklisted: [Elevator] = (connectedElevators + done + passovers)
-                
-                larsondebug("blacklisting \(blacklisted.count) elevator positions")
                 
                 // Range where elevators cannot be due to the floor's connecting Elevators and any other base Elevator that has been isPositioned.
                 let blacklist: [ClosedRange<CGFloat>] = blacklisted.map { ($0.position.x - delta) ... ($0.position.x + delta) }
@@ -246,19 +233,16 @@ public extension Floor {
                 }
                 
                 // Generate a random x coordinate in the whitelist range, regenerate if the x is delta away from a blacklisted range.
-                larsonenter("searching for x position...")
                 var x = CGFloat.random(in: whitelist)
                 var attempts = 1
                 let maxAttempts = manager?.scene.maxGenerateElevatorFails ?? 1
                 repeat {
                     attempts += 1
-                    larsondebug("retry attempt \(attempts)")
                     x = CGFloat.random(in: whitelist)
                 } while blacklist.contains {
                     range in distance(in: range, of: x) < delta
                     } && attempts < maxAttempts
-                larsondebug("found after \(attempts) attempts")
-                larsonexit()
+
                 // Update position
                 elevator.position.x = x
                 // Move elevator up by half it's height so it's on the ground.
@@ -303,30 +287,20 @@ public extension Floor {
     }
 }
 
-public extension SKNode {
-    
-    static let selected_name = "selected"
-    
-    func setSelected(_ value: Bool = true) {
-        
-        self.childNode(withName: SKNode.selected_name)?.removeFromParent()
-        
-        if value {
-            let node = SKSpriteNode()
-            node.color = UIColor.white.withAlphaComponent(0.1)
-            node.size = calculateAccumulatedFrame().size
-            node.position.y = node.size.height / 2
-            node.name = SKNode.selected_name
-            self.addChild(node)
-        }
-    }
-}
-
 extension Floor {
     public func position(from percent: CGFloat) -> CGFloat {
         assert(percent >= 0.0 && percent <= 1.0, "Percent is not in range \(percent).")
         
         return base.frame.minX + (baseSize.width * percent)
+    }
+    
+    public func percent(from elevator: Elevator) -> CGFloat {
+        guard elevator.parent == self else {
+            return 0.0
+        }
+        
+        return (elevator.position.x - base.frame.minX) / baseSize.width
+        
     }
 }
 
@@ -341,19 +315,27 @@ extension Floor {
     }
 }
 
-//extension Floor: Modelable {
-//    
-//    public func modeled() -> Model {
-//        let model = Model(number: self.number)
-//        
-//        self.baseElevators.forEach { (elevator) in
-////            model.baseElevators.append(elevator.modeled())
-//        }
-//        
-//        return model
-//    }
-//    
-//    public typealias Model = FloorModel
-//    
-//
-//}
+extension Floor: Modelable {
+
+    public typealias Model = FloorModel
+    
+    public func modeled() -> FloorModel {
+        
+        let model = FloorModel(number: number)
+        
+        baseElevators.forEach { (elevator) in
+            model.baseElevators.append(elevator.modeled())
+        }
+        
+        // TODO: Coins
+        
+        return model
+    }
+}
+
+public extension Floor {
+    
+    var container: CGRect {
+        return CGRect(origin: position.sub(0, floorSize.height / 2), size: floorSize)
+    }
+}

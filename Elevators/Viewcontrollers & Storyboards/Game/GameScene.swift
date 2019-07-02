@@ -70,23 +70,6 @@ extension GameScene {
     
     public override func didMove(to view: SKView) {
         
-        Larson.debugging = true
-        
-        larsonenter("settings")
-        
-        larsondebug("frame", frame)
-        larsondebug("maxElevatorRange", maxElevatorRange)
-        larsondebug("maxElevatorsPerFloor", maxElevatorsPerFloor)
-        larsondebug("maxElevatorsPerTrapFloor", maxElevatorsPerTrapFloor)
-        larsondebug("maxFloorsLoaded", maxFloorsLoaded)
-        larsondebug("maxFloorsShown", maxFloorsShown)
-        larsondebug("elevatorSpeed", elevatorSpeed)
-        larsondebug("floorManager.elevatorSize", floorManager.elevatorSize)
-        larsondebug("floorManager.floorSize", floorManager.floorSize)
-        larsondebug("floorSize", floorManager.floorSize)
-        
-        larsonexit()
-        
         self.floorManager.setupGame()
         self.playerManager.setupPlayer()
         self.cameraManager.setupCamera()
@@ -111,11 +94,8 @@ extension GameScene {
         node.size = gameFrame.size
         node.position = gameFrame.origin
         node.anchorPoint = .zero
-        
-        if Larson.debugging {
-            node.color = UIColor.red.withAlphaComponent(0.2)
-            node.colorBlendFactor = 1
-        }
+        node.color = UIColor.red.withAlphaComponent(0.2)
+        node.colorBlendFactor = 1
         node.name = "gameframe"
         self.addChild(node)
     }

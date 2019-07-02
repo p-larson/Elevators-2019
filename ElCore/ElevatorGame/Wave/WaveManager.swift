@@ -27,11 +27,6 @@ public class WaveManager: ElevatorsGameSceneDependent {
     }
     
     public func start() {// Set up debug
-        larsonenter(#function)
-        // Prepare for deinit of function.
-        defer {
-            larsonexit()
-        }
         guard isMoving == false else {
             return
         }

@@ -9,12 +9,12 @@
 import SpriteKit
 
 public extension SKAction {
-    static func withCompletionHandler(_ action: SKAction, completion: Block?) -> SKAction {
+    static func withCompletionHandler(_ action: SKAction, completion: BlockOperation?) -> SKAction {
         var actions = [action]
         
-        if let block = completion {
-            actions.append(SKAction.run(block))
-        }
+        actions.append(SKAction.run {
+            completion?.start()
+        })
         
         return SKAction.sequence(actions)
     }
@@ -29,5 +29,28 @@ public extension SKNode {
             p = node.parent
         }
         return z
+    }
+}
+
+public extension SKNode {
+    
+    static let selected_name = "selected"
+    
+    func setSelected(_ value: Bool = true) {
+        
+        self.childNode(withName: SKNode.selected_name)?.removeFromParent()
+        
+        if value {
+            let node = SKSpriteNode()
+            node.color = UIColor.white.withAlphaComponent(0.25)
+            node.size = calculateAccumulatedFrame().size
+            node.position = .zero
+            node.name = SKNode.selected_name
+            self.addChild(node)
+            
+            print(node.size)
+        }
+        
+        alpha = value ? 1.0 : 0.5
     }
 }
