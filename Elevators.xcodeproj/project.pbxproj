@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F1CC45DD07AFA8C4AD2C8B8 /* Pods_Elevators.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B531B5B5A390211DCD96CFEC /* Pods_Elevators.framework */; };
-		808B46939EB8BD3B3A503A3A /* Pods_ElCore_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCF95D1EFF4AD8B631BA3B8 /* Pods_ElCore_iOS.framework */; };
+		D001D21922D9213C009B5A8B /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = D0ECEC3822D91CEE002269E0 /* Podfile */; };
 		D003FAEB226D1E3600C86CB0 /* ScoreboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D003FAEA226D1E3600C86CB0 /* ScoreboardManager.swift */; };
 		D011C27922B73A5200B7F09E /* LarsonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011C27722B73A5100B7F09E /* LarsonView.swift */; };
 		D011C27A22B73A5200B7F09E /* OverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011C27822B73A5200B7F09E /* OverlayLayer.swift */; };
@@ -107,10 +106,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		04D327B765BFF2A280E479E8 /* Pods-Elevators.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elevators.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Elevators/Pods-Elevators.debug.xcconfig"; sourceTree = "<group>"; };
-		8FCF95D1EFF4AD8B631BA3B8 /* Pods_ElCore_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ElCore_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B531B5B5A390211DCD96CFEC /* Pods_Elevators.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elevators.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCF632BE79FCFC7544FE82A9 /* Pods-ElCore-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ElCore-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ElCore-iOS/Pods-ElCore-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		886890095574EE061099C975 /* Pods-Elevators.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elevators.debug.xcconfig"; path = "Target Support Files/Pods-Elevators/Pods-Elevators.debug.xcconfig"; sourceTree = "<group>"; };
+		AEF2092B9B35E6E7D99DA18D /* Pods-Elevators.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elevators.release.xcconfig"; path = "Target Support Files/Pods-Elevators/Pods-Elevators.release.xcconfig"; sourceTree = "<group>"; };
 		D003FAEA226D1E3600C86CB0 /* ScoreboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardManager.swift; sourceTree = "<group>"; };
 		D011C27722B73A5100B7F09E /* LarsonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LarsonView.swift; sourceTree = "<group>"; };
 		D011C27822B73A5200B7F09E /* OverlayLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayLayer.swift; sourceTree = "<group>"; };
@@ -192,8 +189,7 @@
 		D0ECEC3222D91C07002269E0 /* LevelInfoEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoEditorViewController.swift; sourceTree = "<group>"; };
 		D0ECEC3822D91CEE002269E0 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		D0F0D6C6224855030040E595 /* MovementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementManager.swift; sourceTree = "<group>"; };
-		D7A2331550DF9CA0D0F8D2C0 /* Pods-ElCore-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ElCore-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ElCore-iOS/Pods-ElCore-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		E9C297405771683F024FDD4F /* Pods-Elevators.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elevators.release.xcconfig"; path = "Pods/Target Support Files/Pods-Elevators/Pods-Elevators.release.xcconfig"; sourceTree = "<group>"; };
+		F40E1D99CCB5FC0B7EA5CB9A /* Pods_Elevators.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Elevators.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,7 +197,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				808B46939EB8BD3B3A503A3A /* Pods_ElCore_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,13 +206,21 @@
 			files = (
 				D0638387227B9BCB00C44441 /* ExternalAccessory.framework in Frameworks */,
 				D0AADE2D221C8E6800BF71B3 /* ElCore.framework in Frameworks */,
-				3F1CC45DD07AFA8C4AD2C8B8 /* Pods_Elevators.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47036458E69206D609D64196 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				886890095574EE061099C975 /* Pods-Elevators.debug.xcconfig */,
+				AEF2092B9B35E6E7D99DA18D /* Pods-Elevators.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		D003FAE9226D1E2600C86CB0 /* Scoreboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,8 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				D0638386227B9BCB00C44441 /* ExternalAccessory.framework */,
-				8FCF95D1EFF4AD8B631BA3B8 /* Pods_ElCore_iOS.framework */,
-				B531B5B5A390211DCD96CFEC /* Pods_Elevators.framework */,
+				F40E1D99CCB5FC0B7EA5CB9A /* Pods_Elevators.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -511,11 +513,11 @@
 			isa = PBXGroup;
 			children = (
 				D0ECEC3822D91CEE002269E0 /* Podfile */,
-				D0ECEC3422D91CDD002269E0 /* Pods */,
 				D0AE27172201564D00D29E62 /* Elevators */,
 				D0AADE27221C8E6800BF71B3 /* ElCore */,
 				D0AE27162201564D00D29E62 /* Products */,
 				D0ADF7BC227A399B00614910 /* Frameworks */,
+				47036458E69206D609D64196 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -571,41 +573,6 @@
 			path = "Fira Sans";
 			sourceTree = "<group>";
 		};
-		D0ECEC3422D91CDD002269E0 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D0ECEC3522D91CDD002269E0 /* Target Support Files */,
-				D0ECEC3622D91CDD002269E0 /* Local Podspecs */,
-				D0ECEC3722D91CDD002269E0 /* Headers */,
-				D7A2331550DF9CA0D0F8D2C0 /* Pods-ElCore-iOS.debug.xcconfig */,
-				CCF632BE79FCFC7544FE82A9 /* Pods-ElCore-iOS.release.xcconfig */,
-				04D327B765BFF2A280E479E8 /* Pods-Elevators.debug.xcconfig */,
-				E9C297405771683F024FDD4F /* Pods-Elevators.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		D0ECEC3522D91CDD002269E0 /* Target Support Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Target Support Files";
-			sourceTree = "<group>";
-		};
-		D0ECEC3622D91CDD002269E0 /* Local Podspecs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Local Podspecs";
-			sourceTree = "<group>";
-		};
-		D0ECEC3722D91CDD002269E0 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Headers;
-			sourceTree = "<group>";
-		};
 		D0F0D6C5224854F20040E595 /* Movement */ = {
 			isa = PBXGroup;
 			children = (
@@ -633,12 +600,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0AADE2F221C8E6800BF71B3 /* Build configuration list for PBXNativeTarget "ElCore-iOS" */;
 			buildPhases = (
-				2F48487C20F9E013D12932B6 /* [CP] Check Pods Manifest.lock */,
 				D0AADE21221C8E6800BF71B3 /* Headers */,
 				D0AADE22221C8E6800BF71B3 /* Sources */,
 				D0AADE23221C8E6800BF71B3 /* Frameworks */,
 				D0AADE24221C8E6800BF71B3 /* Resources */,
-				BDB79AB6EC9B0D7375139C78 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -653,13 +618,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0AE272D2201564F00D29E62 /* Build configuration list for PBXNativeTarget "Elevators" */;
 			buildPhases = (
-				F9F059784B2B7AB04DBBDF99 /* [CP] Check Pods Manifest.lock */,
+				661D71E4DECAE8435452F3E6 /* [CP] Check Pods Manifest.lock */,
 				D0AE27112201564D00D29E62 /* Sources */,
 				D0AE27122201564D00D29E62 /* Frameworks */,
 				D0AE27132201564D00D29E62 /* Resources */,
 				D00EAC61221C8CE500161C8F /* Embed Frameworks */,
-				D8F98D7564934DCB69579DFA /* [CP] Embed Pods Frameworks */,
-				1AFFA0DEF8826867187A352D /* [CP] Copy Pods Resources */,
+				903032E499E416B8B06C8BDF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -723,6 +687,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D001D21922D9213C009B5A8B /* Podfile in Resources */,
 				D0298369228B45A200174222 /* 1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -746,88 +711,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1AFFA0DEF8826867187A352D /* [CP] Copy Pods Resources */ = {
+		661D71E4DECAE8435452F3E6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Elevators/Pods-Elevators-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2F48487C20F9E013D12932B6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ElCore-iOS-checkManifestLockResult.txt",
+			outputFileListPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BDB79AB6EC9B0D7375139C78 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ElCore-iOS/Pods-ElCore-iOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D8F98D7564934DCB69579DFA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Elevators/Pods-Elevators-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Elevators/Pods-Elevators-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F9F059784B2B7AB04DBBDF99 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Elevators-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		903032E499E416B8B06C8BDF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Elevators/Pods-Elevators-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Elevators/Pods-Elevators-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Elevators/Pods-Elevators-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -928,7 +848,6 @@
 /* Begin XCBuildConfiguration section */
 		D0AADE30221C8E6800BF71B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7A2331550DF9CA0D0F8D2C0 /* Pods-ElCore-iOS.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -940,7 +859,11 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ElCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCore;
 				PRODUCT_NAME = ElCore;
 				SKIP_INSTALL = YES;
@@ -953,7 +876,6 @@
 		};
 		D0AADE31221C8E6800BF71B3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CCF632BE79FCFC7544FE82A9 /* Pods-ElCore-iOS.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -965,7 +887,11 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ElCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.ElCore;
 				PRODUCT_NAME = ElCore;
 				SKIP_INSTALL = YES;
@@ -1096,7 +1022,7 @@
 		};
 		D0AE272E2201564F00D29E62 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04D327B765BFF2A280E479E8 /* Pods-Elevators.debug.xcconfig */;
+			baseConfigurationReference = 886890095574EE061099C975 /* Pods-Elevators.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1105,7 +1031,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = Elevators/Core/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.Elevators;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1116,7 +1045,7 @@
 		};
 		D0AE272F2201564F00D29E62 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E9C297405771683F024FDD4F /* Pods-Elevators.release.xcconfig */;
+			baseConfigurationReference = AEF2092B9B35E6E7D99DA18D /* Pods-Elevators.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1125,7 +1054,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FKDE872F3V;
 				INFOPLIST_FILE = Elevators/Core/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.larson.Elevators;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
