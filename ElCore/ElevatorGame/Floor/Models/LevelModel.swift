@@ -13,7 +13,7 @@ public class LevelModel: Encodable & Decodable {
     public var name: String
     public var floors: [FloorModel]
     public var state: State
-    public var maxElevatorRange: Int
+    public var firstFloor: Int
     
     public enum State: Int, Encodable & Decodable {
         case locked, unlocked, build
@@ -24,7 +24,7 @@ public class LevelModel: Encodable & Decodable {
         self.name = name
         self.state = state
         self.floors = []
-        self.maxElevatorRange = 3
+        self.firstFloor = 1
     }
     
     public init() {
@@ -32,7 +32,15 @@ public class LevelModel: Encodable & Decodable {
         self.name = "Untitled"
         self.state = .build
         self.floors = []
-        self.maxElevatorRange = 3
+        self.firstFloor = 0
+    }
+    
+    public init(name: String) {
+        self.number = -1
+        self.name = name
+        self.state = .build
+        self.floors = []
+        self.firstFloor = 0
     }
     
     public func floorWith(number: Int) -> FloorModel? {
@@ -40,19 +48,8 @@ public class LevelModel: Encodable & Decodable {
             return floor.number == number
         }
     }
-}
-
-
-fileprivate let jsonEncoder = JSONEncoder()
-
-extension LevelModel: CustomStringConvertible {
-    public var description: String {
-        
-        do {
-            let data = try jsonEncoder.encode(self)
-            return String(data: data, encoding: .utf8)!
-        } catch {
-            return error.localizedDescription
-        }
+    
+    public static var empty: LevelModel {
+        return .init()
     }
 }

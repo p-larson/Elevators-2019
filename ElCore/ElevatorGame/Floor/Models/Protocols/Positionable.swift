@@ -9,13 +9,19 @@
 import CoreGraphics
 
 public protocol Positionable {
-    var xPosition: CGFloat { get }
+    var xPosition: CGFloat { get set }
 }
 
 import SpriteKit
 
 extension SKNode: Positionable {
     public var xPosition: CGFloat {
-        return position.x
+        get {
+            return position.x
+        }
+        
+        set {
+            position.x = newValue
+        }
     }
 }

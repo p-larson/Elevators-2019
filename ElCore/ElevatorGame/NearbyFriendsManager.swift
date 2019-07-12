@@ -120,9 +120,7 @@ extension NearbyFriendsManager: CBPeripheralManagerDelegate {
     }
     
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
-        
-        print("starting advertising")
-        
+                
         guard peripheral.state == .poweredOn else {
             return
         }

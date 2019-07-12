@@ -47,7 +47,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Info" id="r0U-h2-vQj"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="ven-F9-KOu">
                             <connections>
-                                <segue destination="wQh-gE-fx7" kind="show" identifier="create" id="DPO-P9-sQj"/>
+                                <action selector="createLevel:" destination="gai-ue-NDA" id="9uk-F8-QXx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -93,7 +93,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Crc-hY-lOD"/>
-                        <barButtonItem systemItem="edit" id="HyM-Uh-QwM">
+                        <barButtonItem enabled="NO" systemItem="edit" id="HyM-Uh-QwM">
                             <connections>
                                 <segue destination="XOj-Wg-3CR" kind="show" identifier="edit" id="WIl-rc-zhB"/>
                             </connections>
@@ -115,6 +115,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="editButton" destination="HyM-Uh-QwM" id="GJX-Th-eFg"/>
                         <outlet property="gamescene" destination="eeD-vB-EwJ" id="jrJ-c1-dLB"/>
                     </connections>
                 </viewController>
@@ -134,7 +135,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <skView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xpt-Gf-31a">
+                            <skView contentMode="scaleToFill" allowsTransparency="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xpt-Gf-31a">
                                 <rect key="frame" x="32" y="88.000000000000014" width="350" height="179.33333333333337"/>
                             </skView>
                             <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="n9A-m0-Tqu">
@@ -227,7 +228,4 @@
             <point key="canvasLocation" x="-1123.1884057971015" y="72.991071428571431"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="DPO-P9-sQj"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -8,14 +8,11 @@
 
 import Foundation
 
-public protocol ElevatorsGame: ElevatorDelegate {
+public protocol ElevatorsGame {
+    var maxFloorsShown: Int { get }
     var maxElevatorRange: Int { get }
     var maxElevatorsPerFloor: Int { get }
     var maxElevatorsPerTrapFloor: Int { get }
-    var maxFloorsLoaded: Int { get }
-    var maxFloorsShown: Int { get }
-    var maxOffhandFloors: Int { get }
-    var maxGenerateElevatorFails: Int { get }
     var elevatorSpeed: TimeInterval { get }
     var playerSpeed: TimeInterval { get }
     var boardingSpeed: TimeInterval { get }

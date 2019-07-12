@@ -23,7 +23,7 @@ public class GameViewController: UIViewController, ControllerIdentifiable, EndGa
         controller.modalPresentationStyle = .custom
         
         present(controller, animated: true) {
-            print("game end")
+            
         }
     }
     

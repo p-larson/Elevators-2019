@@ -16,42 +16,57 @@ public class Elevator: SKSpriteNode {
     static let ropeZPosition: CGFloat = -1.0
     public var model: ElevatorModel? = nil
     public var isEnabled = true
-    public let type: Kind
-    public let skin: Skin
-    private(set) public weak var destination: Floor!
-    private(set) public weak var base: Floor!
+    public var type: Kind
+    public var skin: Skin
+    public var destination: Int
+    public var base: Int
     
     public var floor: Floor? {
         return parent as? Floor
     }
     
-    public var hasRope: Bool {
-        return rope.parent != nil
+    var baseFloor: Floor? {
+        return floor?.manager?.floor(numbered: base)
+    }
+    
+    var destinationFloor: Floor? {
+        return floor?.manager?.floor(numbered: destination)
     }
     
     var pointOfFinalDestination: CGPoint {
+        
+        guard let destinationY = destinationFloor?.position.y, let baseY = baseFloor?.position.y else {
+            return CGPoint.zero
+        }
+        
         return CGPoint(
             x: 0,
-            y: -size.height / 2 + (destination.position.y - base.position.y)
+            y: -size.height / 2 + (destinationY - baseY)
         )
     }
     
     var pointOfLine: CGPoint {
+        
+        guard let destinationY = destinationFloor?.position.y, let baseY = baseFloor?.position.y else {
+            return CGPoint.zero
+        }
+        
         return CGPoint(
             x: position.x,
-            y: position.x + (destination.position.y - base.position.y ) - size.height / 2
+            y: position.x + (destinationY - baseY) - size.height / 2
         )
     }
     
-    public func drawRope() {
-        if destination != base {
-            floor?.addChild(rope)
-        }
-    }
+    public static let rope_name = "rope"
     
-    lazy var rope: SKSpriteNode = {
+    public func drawRope(_ needsRedraw: Bool = false) {
+        
+        if !needsRedraw && floor?.childNode(withName: Elevator.rope_name) != nil {
+            return // No need to redraw because the nodes already drawn.
+        }
+        
         let node = SKSpriteNode()
-        let height = base.manager?.distance(from: base, to: destination) ?? 0
+        let height = self.floor?.manager?.distance(from: base, to: destination) ?? 0
         node.size = CGSize(width: size.width / 10, height: height)
         node.texture = Graphics.texture(of: size, block: { (context) in
             context.addRect(CGRect(origin: .zero, size: self.size))
@@ -61,8 +76,9 @@ public class Elevator: SKSpriteNode {
         node.position.x = position.x
         node.position.y = height / 2
         node.zPosition = Elevator.ropeZPosition
-        return node
-    }()
+        floor?.childNode(withName: Elevator.rope_name)?.removeFromParent()
+        floor?.addChild(node)
+    }
     
     public lazy var doors: SKSpriteNode = {
         let node = SKSpriteNode()
@@ -146,11 +162,10 @@ public class Elevator: SKSpriteNode {
     
     private func setupCommon() {
         self.zPosition = Elevator.backgroundZPosition
-        self.isUserInteractionEnabled = true
         self.addChild(doors)
     }
     
-    init(type: Kind, base: Floor, destination: Floor, size: CGSize, skin: Skin, number: Int) {
+    init(type: Kind, base: Int, destination: Int, size: CGSize, skin: Skin, number: Int) {
         self.type = type
         self.base = base
         self.destination = destination
@@ -160,7 +175,7 @@ public class Elevator: SKSpriteNode {
         self.setupCommon()
     }
     
-    init(model: ElevatorModel, base: Floor, destination: Floor, size: CGSize, skin: Skin) {
+    init(model: ElevatorModel, base: Int, destination: Int, size: CGSize, skin: Skin) {
         
         self.type = model.type
         self.number = model.number
@@ -171,7 +186,7 @@ public class Elevator: SKSpriteNode {
         self.setupCommon()
     }
     
-    init?(model: ElevatorModel, size: CGSize, base: Floor) {
+    init?(model: ElevatorModel, size: CGSize, base: Int) {
         self.number = model.number
         self.type = model.type
         self.base = base
@@ -185,16 +200,8 @@ public class Elevator: SKSpriteNode {
         return nil
     }
     
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        (scene as? ElevatorsGameScene)?.touched(elevator: self)
-    }
-    
-    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        (scene as? ElevatorDelegate)?.untouched(elevator: self)
-    }
-    
     public override var description: String {
-        return "\(type) @ \(floor?.number ?? -1) \(base.number) -> \(destination.number)"
+        return "\(type) @ \(floor?.number ?? -1) \(base) -> \(destination)"
     }
     
 }
@@ -219,7 +226,7 @@ extension Elevator: TextureGraphable {
             }
             context.fillPath()
             
-            ("\(String(describing: this.type).prefix(1)) \(this.destination.number)" as NSString).draw(in: CGRect(origin: .zero, size: this.size), withAttributes: [NSAttributedString.Key.strokeColor : UIColor.white])
+            ("\(String(describing: this.type).prefix(1)) \(this.destination)" as NSString).draw(in: CGRect(origin: .zero, size: this.size), withAttributes: [NSAttributedString.Key.strokeColor : UIColor.white])
             
         })
     }
@@ -247,9 +254,9 @@ extension Elevator: Modelable {
     
     public func modeled() -> ElevatorModel {
         return ElevatorModel(
-            xPosition: base.percent(from: self),
-            base: base.number,
-            destination: destination.number,
+            xPosition: floor?.percent(from: self) ?? 0.0,
+            base: base,
+            destination: destination,
             type: type,
             number: number
         )

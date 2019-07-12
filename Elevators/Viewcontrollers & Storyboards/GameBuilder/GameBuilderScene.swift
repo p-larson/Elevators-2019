@@ -20,25 +20,35 @@ public class GameBuilderScene: GameScene {
     }
     
     public func reloadScene() {
-        
-        if let currentFloorNumber = floorManager.currentFloor?.number, let floorModel = model.floorWith(number: currentFloorNumber) {
-            setSelectedFloor(to: floorModel, reload: true)
-        } else {
-            self.floorManager.setupGame()
-        }
+        floorManager.setupFloors(shouldResetFloorNumber: false)
     }
     
     public func setSelectedFloor(to floor: FloorModel, reload: Bool = true) {
         
-        print("selecting", floor.number)
+        let x = floorManager.currentFloorNumber - floor.number
         
-        if reload {
-            self.floorManager.setupGame(preCurrentFloorNumber: floor.number)
+        for _ in 0 ..< abs(x) {
+            if x > 0 {
+                floorManager.jostle(up: false)
+            } else {
+                floorManager.jostle(up: true)
+            }
         }
-        
+                
+//        if reload {
+//            self.floorManager.setupGame(preCurrentFloorNumber: floor.number)
+//        }
+//
         self.floorManager.floors.forEach { (floor2) in
             floor2.setSelected(floor.number == floor2.number)
         }
+//
+//        if !reload {
+//            self.floorManager.currentFloor = floorManager.floor(number: floor.number)
+//            self.floorManager.updateFloorPositions()
+//        }
+        
+        controller.editButton.isEnabled = true
     }
 }
 
@@ -48,13 +58,10 @@ extension GameBuilderScene {
             
             let point = touch.location(in: self)
             
-            let selected = floorManager.floors.first(where: { (floor) -> Bool in
+            if let selected = floorManager.floors.first(where: { (floor) -> Bool in
                 return floor.container.contains(point)
-            })
-            
-            
-            if let selected = selected, let model = model.floorWith(number: selected.number) {
-                self.setSelectedFloor(to: model, reload: true)
+            }), let model = model.floorWith(number: selected.number) {
+                self.setSelectedFloor(to: model, reload: false)
             }
             
         }
@@ -65,6 +72,7 @@ public extension GameBuilderScene {
     func addFloor() {
         let newFloor = FloorModel(number: controller.model.floors.count + 1)
         controller.model.floors.append(newFloor)
+        
         self.setSelectedFloor(to: newFloor, reload: true)
     }
     

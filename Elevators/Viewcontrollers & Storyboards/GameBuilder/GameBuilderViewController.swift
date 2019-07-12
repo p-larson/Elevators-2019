@@ -12,6 +12,8 @@ import SpriteKit
 
 public class GameBuilderViewController: UIViewController, ControllerIdentifiable {
     
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    
     static let id: String = "GameBuilderViewController"
     
     @IBAction func onDone(_ sender: UIBarButtonItem) {
@@ -59,11 +61,13 @@ extension GameBuilderViewController {
         self.scene.backgroundColor = .clear
         self.scene.controller = self
         
-        self.scene.floorManager.model = model
+        self.scene.floorManager.setModel(to: model)
         
         self.gamescene.allowsTransparency = true
         
         self.gamescene.presentScene(scene)
+        
+        self.navigationController?.title = model.name
     }
 }
 
@@ -71,7 +75,6 @@ extension GameBuilderViewController {
     static let edit_segue = "edit"
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         switch segue.identifier {
         case GameBuilderViewController.edit_segue:
             guard let controller = segue.destination as? GameBuilderFloorEditorViewController else {
@@ -84,10 +87,17 @@ extension GameBuilderViewController {
             
             controller.levelModel = scene.model
             controller.floorModel = floorModel
+            controller.maxElevatorRange = scene.maxElevatorRange
             
             return
         default:
             fatalError("Unhandled Segue \(segue.identifier as Any)")
         }
+    }
+}
+
+extension GameBuilderViewController {
+    public override func viewWillAppear(_ animated: Bool) {
+        scene.reloadScene()
     }
 }

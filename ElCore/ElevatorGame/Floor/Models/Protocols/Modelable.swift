@@ -14,3 +14,36 @@ public protocol Modelable {
     
     func modeled() -> Model
 }
+
+fileprivate let jsonEncoder = JSONEncoder()
+
+extension LevelModel: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        do {
+            let data = try jsonEncoder.encode(self)
+            return String(data: data, encoding: .utf8)!
+        } catch {
+            return error.localizedDescription
+        }
+    }
+}
+extension FloorModel: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        do {
+            let data = try jsonEncoder.encode(self)
+            return String(data: data, encoding: .utf8)!
+        } catch {
+            return error.localizedDescription
+        }
+    }
+}
+extension ElevatorModel: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        do {
+            let data = try jsonEncoder.encode(self)
+            return String(data: data, encoding: .utf8)!
+        } catch {
+            return error.localizedDescription
+        }
+    }
+}

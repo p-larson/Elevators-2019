@@ -19,12 +19,9 @@ public final class GameBuilderFloorEditorScene: SKScene {
     }
     
     public func load(from model: FloorModel) {
+        self.removeAllChildren()
         self.floor = Floor(model, elevatorSize: elevatorSize, floorSize: frame.size)
-        
         floor.position.y = frame.minY / 2
-        
-        floor.updateElevatorPositions()
-        
         self.addChild(floor)
     }
     
@@ -37,7 +34,6 @@ public final class GameBuilderFloorEditorScene: SKScene {
         self.selected = select
         
         for node in floor.baseElevators {
-            print(node == select)
             node.setSelected(node == select)
         }
         
@@ -55,9 +51,7 @@ public final class GameBuilderFloorEditorScene: SKScene {
     public func remove() {
         if let node = selected as? SKNode {
             node.removeFromParent()
-        }
-        
-        floor.updateElevatorPositions()
+        }        
     }
 }
 
@@ -66,7 +60,6 @@ extension GameBuilderFloorEditorScene {
         for touch in touches {
             for case let elevator as Elevator in nodes(at: touch.location(in: self)) {
                 self.select(select: elevator)
-                print("selected", elevator)
             }
         }
     }

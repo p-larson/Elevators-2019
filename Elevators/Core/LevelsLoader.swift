@@ -26,9 +26,9 @@ extension LevelsLoader {
             
             let string = String(data: data, encoding: .utf8)!
             
-            print(string)
+            debugPrint(string)
         } catch {
-            print("failed to print encoded model", error)
+            debugPrint("failed to print encoded model", error)
         }
     }
     
@@ -39,7 +39,7 @@ extension LevelsLoader {
             do {
                 try FileManager.default.removeItem(at: url)
             } catch {
-                print(error)
+                debugPrint(error)
             }
             
             return true
@@ -54,7 +54,7 @@ extension LevelsLoader {
             
             return try decoder.decode(T.self, from: data)
         } catch {
-            print("failed to load", url.deletingPathExtension().lastPathComponent, error)
+            debugPrint("failed to load", url.deletingPathExtension().lastPathComponent, error)
         }
         
         return nil
@@ -75,7 +75,7 @@ extension LevelsLoader {
             
             return true
         } catch {
-            print("failed to save", name, error)
+            debugPrint("failed to save", name, error)
             return false
         }
     }

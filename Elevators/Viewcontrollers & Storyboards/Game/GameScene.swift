@@ -41,7 +41,7 @@ public class GameScene: ElevatorsGameScene {
     }
     
     public lazy var floorManager: FloorManager = {
-        return FloorManager(scene: self)
+        return FloorManager(game: self, generator: EndlessGenerator.shared)
     }()
     
     public lazy var playerManager: PlayerManager = {
@@ -70,7 +70,7 @@ extension GameScene {
     
     public override func didMove(to view: SKView) {
         
-        self.floorManager.setupGame()
+        self.floorManager.setupFloors()
         self.playerManager.setupPlayer()
         self.cameraManager.setupCamera()
         self.scoreboardManager.setupScoreboard()

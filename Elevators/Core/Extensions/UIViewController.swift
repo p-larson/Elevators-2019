@@ -22,7 +22,6 @@ extension UIViewController {
             
             if imageView.superview == nil {
                 view.insertSubview(imageView, at: 0)
-                print("Added")
             }
             
             return imageView

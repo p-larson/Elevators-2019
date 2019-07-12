@@ -36,21 +36,26 @@ public extension SKNode {
     
     static let selected_name = "selected"
     
-    func setSelected(_ value: Bool = true) {
-        
-        self.childNode(withName: SKNode.selected_name)?.removeFromParent()
-        
-        if value {
-            let node = SKSpriteNode()
-            node.color = UIColor.white.withAlphaComponent(0.25)
-            node.size = calculateAccumulatedFrame().size
-            node.position = .zero
-            node.name = SKNode.selected_name
-            self.addChild(node)
-            
-            print(node.size)
-        }
-        
+    @objc func setSelected(_ value: Bool = true) {
         alpha = value ? 1.0 : 0.5
     }
 }
+
+//public extension Floor {
+//    override func setSelected(_ value: Bool = true) {
+//        super.setSelected(value)
+//
+//        let node = (childNode(withName: SKNode.selected_name) as? SKSpriteNode)
+//        node?.position = .init(x: 0, y: floorSize.height / 2)
+//        node?.size = floorSize
+//
+//    }
+//}
+
+//extension Elevator {
+//    public override func setSelected(_ value: Bool = true) {
+//        super.setSelected(value)
+//        
+//        childNode(withName: SKNode.selected_name)?.zPosition = Elevator.doorZPosition.advanced(by: 1)
+//    }
+//}

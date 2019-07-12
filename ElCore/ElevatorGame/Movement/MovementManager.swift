@@ -42,7 +42,7 @@ public class MovementManager: ElevatorsGameSceneDependent {
         defer {
             self.cycling = false
         }
-        guard !isCycling && count > 0 && count < scene.maxFloorsLoaded else {
+        guard !isCycling && count > 0 && count < scene.floorManager.loadedZone.count else {
             self.exitElevator()
             return
         }
@@ -57,37 +57,41 @@ public class MovementManager: ElevatorsGameSceneDependent {
         
         let elevatorMove = scene.cameraManager.movement(dx: 0, dy: elevatorDistance, duration: totalDuration)
         
-        let scoreboardUpdate = SKAction.sequence([
+        let jostle = SKAction.sequence([
             SKAction.wait(forDuration: scene.elevatorSpeed),
             SKAction.run {
-            // Scoreboard update
+            self.scene.floorManager.jostle()
             self.scene.scoreboardManager.increment()
         }])
         
         // Update scoreboard, by incrementing it every time the elevator passes a floor.
-        self.scene.run(SKAction.repeat(scoreboardUpdate, count: count))
+        self.scene.run(SKAction.repeat(jostle, count: count))
         
         // Hide Player
         self.scene.playerManager.player.isHidden = true
         
-        self.scene.cameraManager.move(cameraMove, completion: BlockOperation(block: {
+        let move = SKAction.group([.wait(forDuration: scene.elevatorSpeed * Double(count)), cameraMove])
+        
+        self.scene.cameraManager.move(move, completion: BlockOperation(block: {
             guard let elevator = self.scene.playerManager.elevator else {
                 return
             }
-            // Jostle the floors.
-            self.scene.floorManager.jostle(count: count)
             // Current Floor after being jostled
             guard let currentFloor = self.scene.floorManager.currentFloor else {
                 return
             }
+            // Update Floor Positions
+            self.scene.floorManager.updateFloors()
             // Reset camera position.
             self.scene.cameraManager.set(self.scene.cameraManager.basePosition)
             // Move the player to the floor's child hierarchy.
             self.scene.playerManager.player.move(toParent: currentFloor)
             self.scene.playerManager.elevator?.move(toParent: currentFloor)
             // After the move, reset the player's and elevator's y position
-            self.scene.playerManager.player.position.y = self.scene.playerManager.playerBase.y
-            self.scene.playerManager.elevator?.position.y = currentFloor.elevatorY
+            if let target = self.scene.playerManager.target {
+                self.scene.playerManager.player.position = self.scene.playerManager.playerBase(elevator: target)
+                target.position.y = currentFloor.elevatorY
+            }
             // Move Elevator to current floor and disable it.
             self.scene.playerManager.elevator?.isEnabled = false
             // Open Floor
@@ -139,7 +143,7 @@ extension MovementManager {
         
         scene.playerManager.status = .Elevator_Moving
 
-        self.cycle(elevator.destination.number - (scene.floorManager.currentFloor?.number ?? 0), completion: BlockOperation(block: {
+        self.cycle(elevator.destination - (scene.floorManager.currentFloor?.number ?? 0), completion: BlockOperation(block: {
             self.scene.playerManager.status = .Elevator_Idle
         }))
     }

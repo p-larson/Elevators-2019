@@ -21,7 +21,28 @@ public class GameBuilderPickerViewController: UIViewController, ControllerIdenti
     @IBAction func loadLevel(_ sender: UIButton) {
         
     }
-
+    
+    @IBAction func createLevel(_ sender: Any) {
+        let alertController = UIAlertController(title: "Create new Floor", message: nil, preferredStyle: .alert)
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Name (You can edit this later)."
+        }
+        
+        let saveAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { alert -> Void in
+            // Nothing :)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Create", style: .default, handler: { (action: UIAlertAction!) -> Void in
+            self.performSegue(withIdentifier: GameBuilderPickerViewController.create_segue, sender: nil)
+        })
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     @IBOutlet weak var levelPickerView: UIPickerView!
 }
 
@@ -31,12 +52,12 @@ extension GameBuilderPickerViewController {
     static let load_segue = "load"
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         let controller = segue.destination as? GameBuilderViewController
         
         switch segue.identifier {
         case GameBuilderPickerViewController.create_segue:
-            controller?.model = LevelModel()
+            let name = (sender as? String) ?? "No Name"
+            controller?.model = LevelModel(name: name)
             return
         case GameBuilderPickerViewController.load_segue:
             return

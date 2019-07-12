@@ -16,12 +16,10 @@ public final class GameBuilderFloorEditorViewController: UIViewController {
     // Never will have a scenario where these aren't loaded.
     public var levelModel: LevelModel!
     public var floorModel: FloorModel!
-    
+    public var maxElevatorRange: Int!
     public var scene: GameBuilderFloorEditorScene!
-    
     @IBOutlet weak var skview: SKView!
     @IBOutlet weak var positionerSlider: UISlider!
-    
     @IBOutlet weak var typePicker: UIPickerView!
     @IBOutlet weak var elevatorTypePicker: UIPickerView!
     @IBOutlet weak var toPicker: UIPickerView!
@@ -41,17 +39,15 @@ public final class GameBuilderFloorEditorViewController: UIViewController {
             if allCases.indices.contains(from) {
                 return allCases[from]
             }
-            
             return TypePick.Elevator
         }
     }
     
     @IBAction func onValueChange(_ sender: Any) {
-        
+        let value = scene.floor.position(from: CGFloat(positionerSlider.value))
+        scene.selected?.xPosition = value
     }
-    
 }
-
 extension GameBuilderFloorEditorViewController {
     public override func viewDidLoad() {
         self.setBackground(image: #imageLiteral(resourceName: "Backgrounds-1"))
@@ -60,21 +56,20 @@ extension GameBuilderFloorEditorViewController {
             picker?.delegate = self
             picker?.dataSource = self
         }
-        
+    }
+}
+extension GameBuilderFloorEditorViewController {
+    public override func viewWillAppear(_ animated: Bool) {
         scene = GameBuilderFloorEditorScene()
-        
         scene.model = floorModel
         scene.scaleMode = .aspectFill
         scene.size = skview.frame.size
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scene.backgroundColor = UIColor.clear
         scene.controller = self
-        
         skview.presentScene(scene)
         skview.allowsTransparency = true
-        
         scene.load(from: floorModel)
-        
         self.updateViews()
     }
 }
@@ -82,19 +77,15 @@ extension GameBuilderFloorEditorViewController {
 extension GameBuilderFloorEditorViewController {
     public var nearbyFloors: [FloorModel] {
         var list = [FloorModel]()
-        
-        let whitelist = floorModel.number - levelModel.maxElevatorRange ... floorModel.number + levelModel.maxElevatorRange
-        
+        let whitelist = floorModel.number - maxElevatorRange ... floorModel.number + maxElevatorRange
         levelModel.floors.filter { (floor) -> Bool in
             return whitelist.contains(floor.number)
         }.forEach { (floor) in
             list.append(floor)
         }
-        
         return list
     }
 }
-
 extension GameBuilderFloorEditorViewController: UIPickerViewDelegate {
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch pickerView {
@@ -109,7 +100,6 @@ extension GameBuilderFloorEditorViewController: UIPickerViewDelegate {
         }
     }
 }
-
 extension GameBuilderFloorEditorViewController: UIPickerViewDataSource {
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1 // For All
@@ -130,27 +120,36 @@ extension GameBuilderFloorEditorViewController: UIPickerViewDataSource {
     
     
 }
-
 extension GameBuilderFloorEditorViewController {
     public func enable(view: UIPickerView, value: Bool) {
         UIView.animate(withDuration: 0.125) {
             view.alpha = value ? 1.0 : 0.25
         }
-        
         view.isUserInteractionEnabled = value
     }
 }
-
 extension GameBuilderFloorEditorViewController {
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
+        switch pickerView {
+        case self.typePicker:
+            break
+        case self.elevatorTypePicker:
+            guard let elevator = scene.selected as? Elevator else {
+                return
+            }
+            elevator.type = Elevator.Kind.load(from: row)
+            break
+        case self.toPicker:
+            (scene.selected as? Elevator)?.destination = nearbyFloors[row].number
+            break
+        default:
+            fatalError("PickerView not Handled in \(#function)")
+        }
         self.updateViews()
     }
     
     public func updateViews() {
-        
         let pickers = [typePicker, elevatorTypePicker, toPicker]
-        
         if let positionable = scene.selected {
             if let elevator = positionable as? Elevator {
                 // Enable all pickers
@@ -165,14 +164,10 @@ extension GameBuilderFloorEditorViewController {
                 }) {
                     elevatorTypePicker.selectRow(row, inComponent: 0, animated: true)
                 }
-                
                 let value = Float(scene.floor.percent(from: elevator))
-                
                 positionerSlider.setValue(value, animated: true)
             }
-            
             positionerSlider.isEnabled = true
-            
         } else {
             pickers.forEach { (picker) in
                 self.enable(view: picker!, value: false)
@@ -180,8 +175,18 @@ extension GameBuilderFloorEditorViewController {
         }
     }
 }
-
-
 extension GameBuilderFloorEditorViewController: ControllerIdentifiable {
     static let id: String = "GameBuilderFloorEditorViewController"
+}
+extension GameBuilderFloorEditorViewController {
+    public override func viewWillDisappear(_ animated: Bool) {
+        guard let controller = navigationController?.topViewController as? GameBuilderViewController else {
+            return
+        }
+        if let floorIndex = controller.model.floors.firstIndex(where: { (floorModel) -> Bool in
+            return floorModel.number == self.floorModel.number
+        }) {
+            controller.model.floors[floorIndex] = self.scene.floor.modeled()
+        }
+    }
 }

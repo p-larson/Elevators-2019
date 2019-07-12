@@ -26,21 +26,21 @@ public class PlayerManager: ElevatorsGameSceneDependent {
         case Elevator_Idle
     }
     
-    public var playerBase: CGPoint {
+    public func playerBase(elevator: Elevator) -> CGPoint {
         
         guard let currentFloor = scene.floorManager.currentFloor else {
             return .zero
         }
         
-        return CGPoint.zero.add(0, currentFloor.baseSize.height / 2 + player.size.height / 2)
-    }
-    
-    public func playerBase(elevator: Elevator) -> CGPoint {
-        return CGPoint(x: elevator.position.x, y: playerBase.y)
+        return CGPoint(x: elevator.position.x, y: currentFloor.baseSize.height / 2 + player.size.height / 2)
     }
     
     public func onboard(elevator: Elevator) -> CGPoint {
-        return CGPoint(x: elevator.position.x, y: playerBase.y)
+        guard let currentFloor = scene.floorManager.currentFloor else {
+            return .zero
+        }
+        
+        return playerBase(elevator: elevator).add(0, currentFloor.baseSize.height / 2)
     }
     
     public var status: Status = .Standing {
@@ -119,13 +119,12 @@ public class PlayerManager: ElevatorsGameSceneDependent {
             return
         }
         
-        player.position = self.playerBase
         player.size = PlayerManager.playerSize(from: currentFloor)
         player.zPosition = PlayerNode.outsideZPosition
         
         if let target = Bool.random() ? (rightTarget ?? leftTarget) : (leftTarget ?? rightTarget) {
             self.target = target
-            self.player.position.x = target.position.x
+            self.player.position = playerBase(elevator: target)
         }
         
         currentFloor.addChild(player)
