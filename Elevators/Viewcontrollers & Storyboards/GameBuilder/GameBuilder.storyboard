@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wKQ-MP-sJz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="dPQ-F1-jSR">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Level Loader-->
+        <!--Levels-->
         <scene sceneID="sgp-gr-CH8">
             <objects>
                 <viewController storyboardIdentifier="GameBuilderPickerViewController" id="gai-ue-NDA" customClass="GameBuilderPickerViewController" customModule="Elevators" customModuleProvider="target" sceneMemberID="viewController">
@@ -28,8 +28,7 @@
                                 <rect key="frame" x="170" y="312" width="74" height="30"/>
                                 <state key="normal" title="Load Level"/>
                                 <connections>
-                                    <action selector="loadLevel:" destination="gai-ue-NDA" eventType="touchUpInside" id="wmy-3l-lIE"/>
-                                    <segue destination="wQh-gE-fx7" kind="show" identifier="load" id="Qex-lT-fLg"/>
+                                    <action selector="loadLevel:" destination="gai-ue-NDA" eventType="touchUpInside" id="eJE-Ih-w0G"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -43,8 +42,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Level Loader" id="T6Y-Yc-v2n">
-                        <barButtonItem key="leftBarButtonItem" title="Info" id="r0U-h2-vQj"/>
+                    <navigationItem key="navigationItem" title="Levels" id="T6Y-Yc-v2n">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="ven-F9-KOu">
                             <connections>
                                 <action selector="createLevel:" destination="gai-ue-NDA" id="9uk-F8-QXx"/>
@@ -54,6 +52,8 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="levelPickerView" destination="jjv-vT-dXX" id="cbN-fl-D6u"/>
+                        <segue destination="wQh-gE-fx7" kind="show" identifier="create" id="ovn-rG-cyZ"/>
+                        <segue destination="wQh-gE-fx7" kind="show" identifier="load" id="w73-p2-ti3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U8d-D4-dco" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -105,13 +105,12 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="File" id="bOy-Aj-rdF">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="FdJ-es-44N">
+                    <navigationItem key="navigationItem" title="Editor" id="bOy-Aj-rdF">
+                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="M7k-Sh-0cY">
                             <connections>
-                                <action selector="onDone:" destination="wQh-gE-fx7" id="nUI-eN-j6c"/>
+                                <segue destination="wKQ-MP-sJz" kind="show" identifier="review" id="4Nz-pe-CS7"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="play" id="M7k-Sh-0cY"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -205,10 +204,10 @@
             </objects>
             <point key="canvasLocation" x="1618.840579710145" y="72.991071428571431"/>
         </scene>
-        <!--Level Info Editor View Controller-->
+        <!--Review-->
         <scene sceneID="AVa-2W-QIf">
             <objects>
-                <viewController id="wKQ-MP-sJz" customClass="LevelInfoEditorViewController" customModule="Elevators" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Review" id="wKQ-MP-sJz" customClass="ReviewLevelViewController" customModule="Elevators" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8fx-r2-UiO"/>
                         <viewControllerLayoutGuide type="bottom" id="n8v-ow-1oh"/>
@@ -221,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vn7-VZ-jtN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1612" y="18"/>
+            <point key="canvasLocation" x="625" y="-654"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ujO-aa-f5f">
@@ -246,4 +245,7 @@
             <point key="canvasLocation" x="-1123.1884057971015" y="72.991071428571431"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="w73-p2-ti3"/>
+    </inferredMetricsTieBreakers>
 </document>

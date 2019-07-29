@@ -14,15 +14,23 @@ public class GameBuilderPickerViewController: UIViewController, ControllerIdenti
     
     static let id: String = "GameBuilderPickerViewController"
     
-    public lazy var levelURLs: [URL] = {
+    public var levelURLs: [URL] = {
         return LevelsLoader.shared.levelURLs()
     }()
     
     @IBAction func loadLevel(_ sender: UIButton) {
+        let url = LevelsLoader.shared.levelURLs()[levelPickerView.selectedRow(inComponent: 0)]
+        
+        guard let model = LevelsLoader.shared.load(decodable: LevelModel.self, from: url) as? LevelModel else {
+            return
+        }
+        print("loading", model.name)
+        self.performSegue(withIdentifier: GameBuilderPickerViewController.load_segue, sender: model)
         
     }
     
     @IBAction func createLevel(_ sender: Any) {
+        
         let alertController = UIAlertController(title: "Create new Floor", message: nil, preferredStyle: .alert)
         
         alertController.addTextField { (textField : UITextField!) -> Void in
@@ -34,7 +42,7 @@ public class GameBuilderPickerViewController: UIViewController, ControllerIdenti
         })
         
         let cancelAction = UIAlertAction(title: "Create", style: .default, handler: { (action: UIAlertAction!) -> Void in
-            self.performSegue(withIdentifier: GameBuilderPickerViewController.create_segue, sender: nil)
+            self.performSegue(withIdentifier: GameBuilderPickerViewController.create_segue, sender: alertController.textFields![0].text)
         })
         
         alertController.addAction(saveAction)
@@ -56,10 +64,18 @@ extension GameBuilderPickerViewController {
         
         switch segue.identifier {
         case GameBuilderPickerViewController.create_segue:
-            let name = (sender as? String) ?? "No Name"
+            let name = (sender as? String) ?? "Untitled"
             controller?.model = LevelModel(name: name)
             return
         case GameBuilderPickerViewController.load_segue:
+            
+            guard let model = sender as? LevelModel else {
+                return
+            }
+            
+            controller?.model = model
+            
+            
             return
         default:
             fatalError("Unhandled Segue \(segue.identifier as Any)")
@@ -95,5 +111,12 @@ extension GameBuilderPickerViewController: UITextFieldDelegate {
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return true
+    }
+}
+
+extension GameBuilderPickerViewController {
+    public override func viewWillAppear(_ animated: Bool) {
+        self.levelPickerView.reloadInputViews()
+        print("will appear")
     }
 }

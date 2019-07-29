@@ -13,6 +13,7 @@ import SpriteKit
 public class GameBuilderViewController: UIViewController, ControllerIdentifiable {
     
     @IBOutlet weak var editButton: UIBarButtonItem!
+    public var needsSave = false
     
     static let id: String = "GameBuilderViewController"
     
@@ -24,6 +25,7 @@ public class GameBuilderViewController: UIViewController, ControllerIdentifiable
     
     @IBAction func onAddLevel(_ sender: UIBarButtonItem) {
         scene.addFloor()
+        self.needsSave = true
     }
     
     @IBAction func onDeleteLevel(_ sender: UIBarButtonItem) {
@@ -31,13 +33,14 @@ public class GameBuilderViewController: UIViewController, ControllerIdentifiable
         guard let number = self.scene.floorManager.currentFloor?.number else {
             return
         }
-
+        
         let alert = UIAlertController(title: "Remove Floor \(number)", message: "Are you sure?", preferredStyle: UIAlertController.Style.alert)
         
         // add the actions (buttons)
         alert.addAction(UIAlertAction(title: "Remove", style: UIAlertAction.Style.destructive, handler: {
             (alertAction) in
-           self.scene.deleteFloor()
+            self.scene.deleteFloor()
+            self.needsSave = true
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
         
@@ -88,6 +91,18 @@ extension GameBuilderViewController {
             controller.levelModel = scene.model
             controller.floorModel = floorModel
             controller.maxElevatorRange = scene.maxElevatorRange
+            
+            self.needsSave = true
+            
+            return
+        case ReviewLevelViewController.review_segue:
+            
+            guard let controller = segue.destination as? ReviewLevelViewController else {
+                fatalError("Review Segue's destination is not \(ReviewLevelViewController.self)")
+            }
+            
+            controller.model = model
+            controller.needsSave = self.needsSave
             
             return
         default:

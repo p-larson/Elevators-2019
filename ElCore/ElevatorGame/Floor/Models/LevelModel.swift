@@ -8,12 +8,25 @@
 
 import Foundation
 
-public class LevelModel: Encodable & Decodable {
+public class LevelModel: Encodable & Decodable & Positionable {
+    
     public var number: Int
     public var name: String
+    
     public var floors: [FloorModel]
     public var state: State
+    
     public var firstFloor: Int
+    
+    public var xPosition: CGFloat
+    
+    public var pickups: Int? = nil
+    public var time: Double? = nil
+    public var moves: Int? = nil
+    
+    public var author: String? = nil
+    public var instagram: String? = nil
+    public var lastSaved: Date? = nil
     
     public enum State: Int, Encodable & Decodable {
         case locked, unlocked, build
@@ -25,22 +38,16 @@ public class LevelModel: Encodable & Decodable {
         self.state = state
         self.floors = []
         self.firstFloor = 1
-    }
-    
-    public init() {
-        self.number = -1
-        self.name = "Untitled"
-        self.state = .build
-        self.floors = []
-        self.firstFloor = 0
+        self.xPosition = 0
     }
     
     public init(name: String) {
-        self.number = -1
+        self.number = 0
         self.name = name
         self.state = .build
         self.floors = []
         self.firstFloor = 0
+        self.xPosition = 0
     }
     
     public func floorWith(number: Int) -> FloorModel? {
@@ -50,6 +57,6 @@ public class LevelModel: Encodable & Decodable {
     }
     
     public static var empty: LevelModel {
-        return .init()
+        return .init(name: "Empty Template")
     }
 }

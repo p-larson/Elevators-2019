@@ -139,6 +139,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c39-b1-iA1" customClass="LarsonView" customModule="Elevators" customModuleProvider="target">
+                                <rect key="frame" x="319.5" y="55" width="74.5" height="74.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleAdapter" value="image"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="build"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXY-xS-jTF" userLabel="Score" customClass="LarsonView" customModule="Elevators" customModuleProvider="target">
                                 <rect key="frame" x="20" y="286" width="177" height="179"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -149,17 +160,6 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="fontColor">
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c39-b1-iA1" customClass="LarsonView" customModule="Elevators" customModuleProvider="target">
-                                <rect key="frame" x="319.5" y="55" width="74.5" height="74.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                        <color key="value" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="styleAdapter" value="image"/>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="build"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
